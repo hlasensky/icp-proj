@@ -17,9 +17,9 @@ MainWindow::MainWindow(QWidget *parent)
 
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(updateScene()));
-    timer->start(50); // Update every 30 milliseconds
+    timer->start(30); // Update every 30 milliseconds
 
-
+    //set boundaries
     QGraphicsRectItem *sceneBoundary = new QGraphicsRectItem(0, 0, -500,height);
     scene->addItem(sceneBoundary);
     QGraphicsRectItem *sceneBoundary2 = new QGraphicsRectItem(-100, 0, 200+width,-500);
@@ -33,18 +33,16 @@ MainWindow::MainWindow(QWidget *parent)
 }
 
 void MainWindow::keyPressEvent(QKeyEvent *event) {
-    std::cout << "sjfalsdjfl" << std::endl;
-    if (event->key() == Qt::Key_Up or event->key() == Qt::Key_W) {
+    std::cout << event->key() << std::endl;
+    if (event->key() == Qt::UpArrow or event->key() == Qt::Key_W) {
         lastKeyPressed = Qt::Key_Up;
-    } else if (event->key() == Qt::Key_Down or event->key() == Qt::Key_S) {
+    } else if (event->key() == Qt::DownArrow or event->key() == Qt::Key_S) {
         lastKeyPressed = Qt::Key_Down;
-    } else if (event->key() == Qt::Key_Left or event->key() == Qt::Key_A) {
+    } else if (event->key() == Qt::LeftArrow or event->key() == Qt::Key_A) {
         lastKeyPressed = Qt::Key_Left;
-    } else if (event->key() == Qt::Key_Right or event->key() == Qt::Key_D) {
+    } else if (event->key() == Qt::RightArrow or event->key() == Qt::Key_D) {
         lastKeyPressed = Qt::Key_Right;
-    } else
-        std::cout << "wtf" << std::endl;
-
+    }
 }
 
 void MainWindow::updateScene() {
@@ -53,10 +51,17 @@ void MainWindow::updateScene() {
     isActiveRRC = dynamic_cast<RumbaRC*>(activeItem);
     isActiveO = dynamic_cast<Obstacle*>(activeItem);
 
+
     for (auto rumba : rumbas) {
+        if (rumba->isUnderMouse() && QApplication::mouseButtons() & Qt::LeftButton) {
+            activeItem = rumba;
+            ui->tabWidget->setCurrentIndex(0);
+        }
+
         rumba->setBrush(Qt::blue);
         if (isActiveR != nullptr)
         {
+            //set UI on active rumba's values
             isActiveR->setBrush(Qt::red);
             ui->detectionLenDisplay->display(isActiveR->getAtributes().detectionLen);
             ui->rotationDisplay->display(isActiveR->getAtributes().rotationStep);
@@ -68,11 +73,6 @@ void MainWindow::updateScene() {
             else ui->radioButton_2->setChecked(true);
         }
 
-        if (rumba->isUnderMouse() && QApplication::mouseButtons() & Qt::LeftButton) {
-            activeItem = rumba;
-            ui->tabWidget->setCurrentIndex(0);
-        }
-
         rumba->testMove();
         if (CheckCollision(rumba))
             rumba->changeDirection();
@@ -81,16 +81,16 @@ void MainWindow::updateScene() {
     }
 
     for (auto rumba : rumbasRC) {
-        rumba->setBrush(Qt::lightGray);
-
         if (rumba->isUnderMouse() && QApplication::mouseButtons() & Qt::LeftButton) {
             activeItem = rumba;
             ui->tabWidget->setCurrentIndex(1);
         }
 
+        rumba->setBrush(Qt::lightGray);
+
         if (isActiveRRC != nullptr)
         {
-
+            //set UI on active rc rumba's values
             isActiveRRC->setBrush(Qt::darkGreen);
             ui->detectionLenDisplay->display(isActiveRRC->getAtributes().detectionLen);
             ui->horizontalSlider->setValue(isActiveRRC->getAtributes().detectionLen);
@@ -108,20 +108,22 @@ void MainWindow::updateScene() {
                 isActiveRRC->move();
             }
         }
+
     }
 
     for (auto obstacle : obstacles) {
-        obstacle->setBrush(Qt::green);
-        if (isActiveO != nullptr)
-        {
-            isActiveO->setBrush(Qt::red);
-            ui->horizontalSlider_2->setValue(isActiveO->QGraphicsRectItem::rect().width());
-            ui->horizontalSlider_3->setValue(isActiveO->QGraphicsRectItem::rect().height());
-        }
-
         if (obstacle->isUnderMouse() && QApplication::mouseButtons() & Qt::LeftButton) {
             activeItem = obstacle;
             ui->tabWidget->setCurrentIndex(2);
+        }
+
+        obstacle->setBrush(Qt::green);
+        if (isActiveO != nullptr)
+        {
+            //set UI on active obstacle's values
+            isActiveO->setBrush(Qt::red);
+            ui->horizontalSlider_2->setValue(isActiveO->QGraphicsRectItem::rect().width());
+            ui->horizontalSlider_3->setValue(isActiveO->QGraphicsRectItem::rect().height());
         }
     }
 }
@@ -152,6 +154,8 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+//menu for RumbaRC class
+
 void MainWindow::on_spinBox_valueChanged(int arg1)
 {
     if (rumbas.size() < arg1)
@@ -159,7 +163,7 @@ void MainWindow::on_spinBox_valueChanged(int arg1)
         int radius = 25;
         for (int hI = 0; hI < ui->graphicsView->height(); hI = (hI + radius * 2)) {
             for (int wI = 0; wI < ui->graphicsView->width(); wI = (wI + radius * 2)) {
-                auto r = new Rumba(wI, hI, radius, 45, 10, 10);
+                auto r = new Rumba(wI, hI, radius, 45, 5, 10);
                 scene->addItem(r);
                 if (!CheckCollision(r))
                 {
@@ -184,14 +188,7 @@ void MainWindow::on_spinBox_valueChanged(int arg1)
 }
 
 
-void MainWindow::on_horizontalSlider_valueChanged(int value)
-{
-    if (isActiveR != nullptr)
-    {
-        isActiveR->changeDetectionLen(value);
-        ui->detectionLenDisplay->display(value);
-    }
-}
+//Menu for Obstacle class
 
 /**
 * Change width of active obstacle
@@ -249,6 +246,17 @@ void MainWindow::on_spinBox_2_valueChanged(int arg1)
     }
 }
 
+
+//Menu for Rumba class
+
+void MainWindow::on_horizontalSlider_valueChanged(int value)
+{
+    if (isActiveR != nullptr)
+    {
+        isActiveR->changeDetectionLen(value);
+        ui->detectionLenDisplay->display(value);
+    }
+}
 
 void MainWindow::on_dial_valueChanged(int value)
 {

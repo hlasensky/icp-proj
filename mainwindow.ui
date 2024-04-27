@@ -59,9 +59,9 @@
    <widget class="QTabWidget" name="tabWidget">
     <property name="geometry">
      <rect>
-      <x>1110</x>
+      <x>1100</x>
       <y>20</y>
-      <width>271</width>
+      <width>281</width>
       <height>791</height>
      </rect>
     </property>
@@ -75,7 +75,7 @@
      <widget class="QWidget" name="verticalLayoutWidget">
       <property name="geometry">
        <rect>
-        <x>0</x>
+        <x>10</x>
         <y>0</y>
         <width>261</width>
         <height>749</height>
@@ -212,7 +212,7 @@
        <item>
         <widget class="QLabel" name="label">
          <property name="text">
-          <string>Počet rumbů</string>
+          <string>Přidat/odebrat rumbi</string>
          </property>
         </widget>
        </item>
@@ -229,7 +229,7 @@
      <widget class="QWidget" name="verticalLayoutWidget_5">
       <property name="geometry">
        <rect>
-        <x>0</x>
+        <x>10</x>
         <y>0</y>
         <width>261</width>
         <height>721</height>
@@ -246,7 +246,7 @@
        <item>
         <widget class="QLabel" name="label_13">
          <property name="text">
-          <string>Počet ovládaných rumbů</string>
+          <string>Přidat/odebrat ovládacného rumbu</string>
          </property>
         </widget>
        </item>
@@ -276,7 +276,7 @@
      <widget class="QWidget" name="verticalLayoutWidget_4">
       <property name="geometry">
        <rect>
-        <x>0</x>
+        <x>10</x>
         <y>0</y>
         <width>261</width>
         <height>749</height>
@@ -365,7 +365,7 @@
        <item>
         <widget class="QLabel" name="label_9">
          <property name="text">
-          <string>Počet překážek</string>
+          <string>Přidat/odebrat překážeku</string>
          </property>
         </widget>
        </item>

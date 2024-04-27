@@ -48,10 +48,10 @@ void RumbaRC::testMove(Qt::Key key)
 {
     switch (key) {
     case Qt::Key_Left:
-        rotation -= 5;
+        rotation -= 10;
         break;
     case Qt::Key_Right:
-        rotation += 5;
+        rotation += 10;
         break;
     case Qt::Key_Up:
         speed = 5;

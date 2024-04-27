@@ -10,8 +10,6 @@ class Obstacle : public QWidget , public QGraphicsRectItem
 public:
     // Constructor
     Obstacle(int x, int y, int width, int height);
-    void changeW(int val);
-    void changeH(int val);
 
 private:
     int x;

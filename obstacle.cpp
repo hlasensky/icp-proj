@@ -12,13 +12,3 @@ Obstacle::Obstacle(int x, int y, int width, int height) : QGraphicsRectItem(0, 0
     setFlag(QGraphicsItem::ItemIsSelectable);
     setAcceptHoverEvents(true);
 }
-
-void Obstacle::changeW(int val)
-{
-    width = val;
-}
-
-void Obstacle::changeH(int val)
-{
-    height = val;
-}
