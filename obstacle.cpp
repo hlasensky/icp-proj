@@ -1,6 +1,7 @@
 #include "obstacle.h"
 
-Obstacle::Obstacle(int x, int y, int width, int height) : QGraphicsRectItem(0, 0, width, height) {
+Obstacle::Obstacle(int x, int y, int width, int height) : QGraphicsRectItem(0, 0, width, height)
+{
     this->x = x;
     this->y = y;
     this->width = width;
@@ -12,11 +13,12 @@ Obstacle::Obstacle(int x, int y, int width, int height) : QGraphicsRectItem(0, 0
     setAcceptHoverEvents(true);
 }
 
-void Obstacle::changeW(int val){
+void Obstacle::changeW(int val)
+{
     width = val;
 }
 
-void Obstacle::changeH(int val){
+void Obstacle::changeH(int val)
+{
     height = val;
 }
-

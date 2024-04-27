@@ -15,16 +15,9 @@ MainWindow::MainWindow(QWidget *parent)
     view = new QGraphicsView(scene, this);
     ui->graphicsView->setViewport(view);
 
-    QGraphicsScene *sceneR = new QGraphicsScene(this);
-    QGraphicsView *viewR = new QGraphicsView(sceneR, this);
-    ui->graphicsView_rumbas->setViewport(viewR);
-    auto o = new Obstacle(300, 100, 250, 450);
-    sceneR->addItem(o);
-    o->setAcceptedMouseButtons(Qt::LeftButton);
-
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(updateScene()));
-    timer->start(100); // Update every 30 milliseconds
+    timer->start(50); // Update every 30 milliseconds
 
 
     QGraphicsRectItem *sceneBoundary = new QGraphicsRectItem(0, 0, -500,height);
@@ -39,17 +32,36 @@ MainWindow::MainWindow(QWidget *parent)
     show();
 }
 
+void MainWindow::keyPressEvent(QKeyEvent *event) {
+    std::cout << "sjfalsdjfl" << std::endl;
+    if (event->key() == Qt::Key_Up or event->key() == Qt::Key_W) {
+        lastKeyPressed = Qt::Key_Up;
+    } else if (event->key() == Qt::Key_Down or event->key() == Qt::Key_S) {
+        lastKeyPressed = Qt::Key_Down;
+    } else if (event->key() == Qt::Key_Left or event->key() == Qt::Key_A) {
+        lastKeyPressed = Qt::Key_Left;
+    } else if (event->key() == Qt::Key_Right or event->key() == Qt::Key_D) {
+        lastKeyPressed = Qt::Key_Right;
+    } else
+        std::cout << "wtf" << std::endl;
+
+}
+
 void MainWindow::updateScene() {
     // Update Rumba positions and handle collisions
+    isActiveR = dynamic_cast<Rumba*>(activeItem);
+    isActiveRRC = dynamic_cast<RumbaRC*>(activeItem);
+    isActiveO = dynamic_cast<Obstacle*>(activeItem);
+
     for (auto rumba : rumbas) {
-
         rumba->setBrush(Qt::blue);
-
-        if (isActiveR)
+        if (isActiveR != nullptr)
         {
             isActiveR->setBrush(Qt::red);
             ui->detectionLenDisplay->display(isActiveR->getAtributes().detectionLen);
             ui->rotationDisplay->display(isActiveR->getAtributes().rotationStep);
+            ui->dial->setValue(isActiveR->getAtributes().rotationStep);
+            ui->horizontalSlider->setValue(isActiveR->getAtributes().detectionLen);
 
             if (isActiveR->getAtributes().direction)
                 ui->radioButton->setChecked(true);
@@ -57,10 +69,9 @@ void MainWindow::updateScene() {
         }
 
         if (rumba->isUnderMouse() && QApplication::mouseButtons() & Qt::LeftButton) {
-            isActiveR = rumba;
+            activeItem = rumba;
+            ui->tabWidget->setCurrentIndex(0);
         }
-
-        std::cout << isActiveR << std::endl;
 
         rumba->testMove();
         if (CheckCollision(rumba))
@@ -69,31 +80,70 @@ void MainWindow::updateScene() {
             rumba->move();
     }
 
-    for (auto obstacle : obstacles) {
+    for (auto rumba : rumbasRC) {
+        rumba->setBrush(Qt::lightGray);
 
-        obstacle->setBrush(Qt::green);
-
-        if (isActiveO)
-            isActiveO->setBrush(Qt::red);
-
-        if (obstacle->isUnderMouse() && QApplication::mouseButtons() & Qt::LeftButton) {
-            isActiveO = obstacle;
+        if (rumba->isUnderMouse() && QApplication::mouseButtons() & Qt::LeftButton) {
+            activeItem = rumba;
+            ui->tabWidget->setCurrentIndex(1);
         }
 
-        std::cout << isActiveO << std::endl;
+        if (isActiveRRC != nullptr)
+        {
 
+            isActiveRRC->setBrush(Qt::darkGreen);
+            ui->detectionLenDisplay->display(isActiveRRC->getAtributes().detectionLen);
+            ui->horizontalSlider->setValue(isActiveRRC->getAtributes().detectionLen);
+            ui->dial->setValue(isActiveRRC->getAtributes().rotation);
+            ui->rotationDisplay->display(isActiveRRC->getAtributes().rotation);
+
+            isActiveRRC->testMove(lastKeyPressed);
+            lastKeyPressed = Qt::Key_unknown;
+
+            if (CheckCollision(isActiveRRC) or isActiveRRC->getAtributes().speed == 0)
+            {
+                isActiveRRC->stop();
+            } else
+            {
+                isActiveRRC->move();
+            }
+        }
     }
 
+    for (auto obstacle : obstacles) {
+        obstacle->setBrush(Qt::green);
+        if (isActiveO != nullptr)
+        {
+            isActiveO->setBrush(Qt::red);
+            ui->horizontalSlider_2->setValue(isActiveO->QGraphicsRectItem::rect().width());
+            ui->horizontalSlider_3->setValue(isActiveO->QGraphicsRectItem::rect().height());
+        }
 
+        if (obstacle->isUnderMouse() && QApplication::mouseButtons() & Qt::LeftButton) {
+            activeItem = obstacle;
+            ui->tabWidget->setCurrentIndex(2);
+        }
+    }
 }
 
 bool MainWindow::CheckCollision (Rumba *rumba){
-
-
     // Check for collisions with scene boundaries
 
     QList<QGraphicsItem*> colliding_items = rumba->collidingItems();
+    return colliding_items.size() != 0;
+}
 
+bool MainWindow::CheckCollision (RumbaRC *rumba){
+    // Check for collisions with scene boundaries
+
+    QList<QGraphicsItem*> colliding_items = rumba->collidingItems();
+    return colliding_items.size() != 0;
+}
+
+bool MainWindow::CheckCollision (Obstacle *obstacle){
+    // Check for collisions with scene boundaries
+
+    QList<QGraphicsItem*> colliding_items = obstacle->collidingItems();
     return colliding_items.size() != 0;
 }
 
@@ -106,38 +156,53 @@ void MainWindow::on_spinBox_valueChanged(int arg1)
 {
     if (rumbas.size() < arg1)
     {
-        auto r = new Rumba(100, 100, 25, 45, 10, 10);
-        scene->addItem(r);
-        r->setAcceptedMouseButtons(Qt::LeftButton);
-        rumbas.push_back(r);
+        int radius = 25;
+        for (int hI = 0; hI < ui->graphicsView->height(); hI = (hI + radius * 2)) {
+            for (int wI = 0; wI < ui->graphicsView->width(); wI = (wI + radius * 2)) {
+                auto r = new Rumba(wI, hI, radius, 45, 10, 10);
+                scene->addItem(r);
+                if (!CheckCollision(r))
+                {
+                    r->setAcceptedMouseButtons(Qt::LeftButton);
+                    rumbas.push_back(r);
+                    return;
+                }
+                else
+                {
+                    scene->removeItem(r);
+                    continue;
+                }
+
+            };
+        };
+
     } else
     {
         scene->removeItem(rumbas.back());
         rumbas.pop_back();
     }
-
 }
 
 
 void MainWindow::on_horizontalSlider_valueChanged(int value)
 {
-    if(isActiveR)
+    if (isActiveR != nullptr)
     {
         isActiveR->changeDetectionLen(value);
-
         ui->detectionLenDisplay->display(value);
     }
 }
-
-
 
 /**
 * Change width of active obstacle
 */
 void MainWindow::on_horizontalSlider_2_valueChanged(int value)
 {
-    if(isActiveO)
-        isActiveO->setRect(isActiveO->rect().x(), isActiveO->rect().y(), value, isActiveO->rect().height());
+    if (isActiveO != nullptr)
+    {
+        isActiveO->setRect(isActiveO->QGraphicsRectItem::rect().x(), isActiveO->QGraphicsRectItem::rect().y(), value, isActiveO->QGraphicsRectItem::rect().height());
+        ui->widthObstacleDisplay->display(value);
+    }
 }
 
 /**
@@ -145,32 +210,49 @@ void MainWindow::on_horizontalSlider_2_valueChanged(int value)
 */
 void MainWindow::on_horizontalSlider_3_valueChanged(int value)
 {
-    if(isActiveO)
-        isActiveO->setRect(isActiveO->rect().x(), isActiveO->rect().y(), isActiveO->rect().width(), value);
+    if (isActiveO != nullptr)
+    {
+        isActiveO->setRect(isActiveO->QGraphicsRectItem::rect().x(), isActiveO->QGraphicsRectItem::rect().y(), isActiveO->QGraphicsRectItem::rect().width(), value);
+        ui->heightObstacleDisplay->display(value);
+    }
 }
 
 void MainWindow::on_spinBox_2_valueChanged(int arg1)
 {
     if (obstacles.size() < arg1)
     {
-        auto o = new Obstacle(300, 100, 250, 450);
-        scene->addItem(o);
-        o->setAcceptedMouseButtons(Qt::LeftButton);
-        obstacles.push_back(o);
-    } else
+        int width = randomGen->bounded(50, 300);
+        int height = randomGen->bounded(50, 300);
+        for (int hI = 0; hI < ui->graphicsView->height(); hI = (hI + width)) {
+            for (int wI = 0; wI < ui->graphicsView->width(); wI = (wI + height)) {
+                auto o = new Obstacle(wI, hI, width, height);
+                scene->addItem(o);
+                if (!CheckCollision(o))
+                {
+                    o->setAcceptedMouseButtons(Qt::LeftButton);
+                    obstacles.push_back(o);
+                    return;
+                }
+                else
+                {
+                    scene->removeItem(o);
+                    continue;
+                }
+
+            };
+        };
+        ui->spinBox_2->setValue(obstacles.size());
+    } else if (obstacles.size() > arg1)
     {
         scene->removeItem(obstacles.back());
         obstacles.pop_back();
     }
 }
 
-void MainWindow::mouseMoveEvent(QMouseEvent *event){
-    cursorPos = event->position();
-}
 
 void MainWindow::on_dial_valueChanged(int value)
 {
-    if(isActiveR)
+    if (isActiveR != nullptr)
     {
         isActiveR->changeRotation(value);
         ui->rotationDisplay->display(value);
@@ -180,11 +262,41 @@ void MainWindow::on_dial_valueChanged(int value)
 
 void MainWindow::on_radioButton_toggled(bool checked)
 {
-    if(isActiveR){
+    if (isActiveR != nullptr)
+    {
         isActiveR->changeDirection(checked);
     }
 }
 
 
+void MainWindow::on_spinBox_3_valueChanged(int arg1)
+{   
+    if (rumbasRC.size() < arg1)
+    {
+        int radius = 25;
+        for (int hI = 0; hI < ui->graphicsView->height(); hI = (hI + radius * 2)) {
+            for (int wI = 0; wI < ui->graphicsView->width(); wI = (wI + radius * 2)) {
+                auto r = new RumbaRC(wI, hI, radius, 0, 0, 10);
+                scene->addItem(r);
+                if (!CheckCollision(r))
+                {
+                    r->setAcceptedMouseButtons(Qt::LeftButton);
+                    rumbasRC.push_back(r);
+                    return;
+                }
+                else
+                {
+                    scene->removeItem(r);
+                    continue;
+                }
 
+            };
+        };
+
+    } else
+    {
+        scene->removeItem(rumbasRC.back());
+        rumbasRC.pop_back();
+    }
+}
 

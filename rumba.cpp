@@ -14,6 +14,7 @@ Rumba::Rumba(int x_in, int y_in, int radius_in, int rotation_in , int speed_in, 
     setBrush(Qt::blue);
 
     setTransformOriginPoint(x/2, y/2);
+    setPos(x, y);
 }
 
 Rumba::s Rumba::getAtributes()
@@ -36,9 +37,8 @@ void Rumba::changeDirection(bool val){
 
 void Rumba::move()
 {
-
-    x += (speed + detectionLen) * qCos(qDegreesToRadians(rotation + 180));
-    y += (speed + detectionLen) * qSin(qDegreesToRadians(rotation + 180));
+    x = last_x;
+    y = last_y;
 
     x += speed * qCos(qDegreesToRadians(rotation));
     y += speed * qSin(qDegreesToRadians(rotation));
@@ -49,6 +49,9 @@ void Rumba::move()
 void Rumba::testMove()
 {
     // Update the x and y positions based on the current rotation
+    last_x = x;
+    last_y = y;
+
     x += (speed + detectionLen) * qCos(qDegreesToRadians(rotation));
     y += (speed + detectionLen) * qSin(qDegreesToRadians(rotation));
 
@@ -57,8 +60,8 @@ void Rumba::testMove()
 
 void Rumba::changeDirection()
 {
-    x += (speed + detectionLen) * qCos(qDegreesToRadians(rotation + 180));
-    y += (speed + detectionLen) * qSin(qDegreesToRadians(rotation + 180));
+    x = last_x;
+    y = last_y;
 
     setPos(x, y);
 

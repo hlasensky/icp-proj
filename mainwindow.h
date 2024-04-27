@@ -10,6 +10,7 @@
 #include <vector>
 #include <iostream>
 #include <QSpinBox>
+#include <QDebug>
 
 
 #include "rumba.h"
@@ -30,22 +31,29 @@ public:
     ~MainWindow();
 
 private:
+    QRandomGenerator *randomGen = QRandomGenerator::global();
     Ui::MainWindow *ui;
     QGraphicsScene *scene;
     QGraphicsView *view;
-    std::vector<Rumba*> rumbas;
-    std::vector<Obstacle*> obstacles;
-    Rumba *isActiveR = NULL;
-    Obstacle *isActiveO = NULL;
-    QPointF cursorPos;
 
+    std::vector<Rumba*> rumbas;
+    std::vector<RumbaRC*> rumbasRC;
+    std::vector<Obstacle*> obstacles;
+
+    Rumba *isActiveR = NULL;
+    RumbaRC *isActiveRRC = NULL;
+    Obstacle *isActiveO = NULL;
+    QWidget* activeItem = nullptr;
+    Qt::Key lastKeyPressed = Qt::Key_unknown;
 
     QTimer *timer;
 
 public slots:
     void updateScene();
     bool CheckCollision (Rumba *r);
-    void mouseMoveEvent(QMouseEvent *event);
+    bool CheckCollision(Obstacle *o);
+    bool CheckCollision (RumbaRC *rumba);
+    void keyPressEvent(QKeyEvent *event);
 
 private slots:
     void on_spinBox_valueChanged(int arg1);
@@ -55,5 +63,6 @@ private slots:
     void on_dial_valueChanged(int value);
     void on_radioButton_toggled(bool checked);
     void on_horizontalSlider_3_valueChanged(int value);
+    void on_spinBox_3_valueChanged(int arg1);
 };
 #endif // MAINWINDOW_H

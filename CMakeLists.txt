@@ -25,7 +25,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         ${PROJECT_SOURCES}
         rumba.h rumba.cpp
         rumbaRc.cpp
-        rumbaAuto.cpp
+
         obstacle.h obstacle.cpp
     )
 # Define target properties for Android with Qt 6 as:

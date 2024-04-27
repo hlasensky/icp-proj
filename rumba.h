@@ -22,6 +22,8 @@ public:
 protected:
     int x;
     int y;
+    int last_x;
+    int last_y;
     int radius;
     int speed;
     int rotationStep;
@@ -41,8 +43,36 @@ public:
 
 };
 
-class RumbaRC : public Rumba {
-public:
+class RumbaRC : public QWidget , public QGraphicsEllipseItem {
+        Q_OBJECT
+    public:
+        RumbaRC(int x, int y, int radius, int rotation , int speed, int detectionLen);
+        
+        void move();
+        void testMove(Qt::Key key);
+        void changeDirection();
+        void changeDetectionLen(int val);
+        void stop();
+
+    protected:
+        int x;
+        int y;
+        int last_x;
+        int last_y;
+        int radius;
+        int speed;
+        int rotation;
+        int detectionLen;
+
+        struct s {
+            int detectionLen;
+            int rotation;
+            int speed;
+        };
+
+    public:
+        s getAtributes();
+
 
 };
 

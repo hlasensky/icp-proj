@@ -2,9 +2,11 @@
 #define OBSTACLE_H
 
 #include <QGraphicsRectItem>
+#include <QWidget>
 
-class Obstacle : public QGraphicsRectItem
+class Obstacle : public QWidget , public QGraphicsRectItem
 {
+    Q_OBJECT
 public:
     // Constructor
     Obstacle(int x, int y, int width, int height);
