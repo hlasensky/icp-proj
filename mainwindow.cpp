@@ -12,8 +12,10 @@ MainWindow::MainWindow(QWidget *parent)
 
     scene = new QGraphicsScene(this);
     scene->setSceneRect(0, 0, width, height);
+    scene->setBackgroundBrush(QColor(0, 0, 30));
     view = new QGraphicsView(scene, this);
     ui->graphicsView->setViewport(view);
+
 
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(updateScene()));
@@ -34,13 +36,14 @@ MainWindow::MainWindow(QWidget *parent)
 
 void MainWindow::keyPressEvent(QKeyEvent *event) {
     std::cout << event->key() << std::endl;
-    if (event->key() == Qt::UpArrow or event->key() == Qt::Key_W) {
+
+    if (event->key() == Qt::Key_Up or event->key() == Qt::Key_W) {
         lastKeyPressed = Qt::Key_Up;
-    } else if (event->key() == Qt::DownArrow or event->key() == Qt::Key_S) {
+    } else if (event->key() == Qt::Key_Down or event->key() == Qt::Key_S) {
         lastKeyPressed = Qt::Key_Down;
-    } else if (event->key() == Qt::LeftArrow or event->key() == Qt::Key_A) {
+    } else if (event->key() == Qt::Key_Left or event->key() == Qt::Key_A) {
         lastKeyPressed = Qt::Key_Left;
-    } else if (event->key() == Qt::RightArrow or event->key() == Qt::Key_D) {
+    } else if (event->key() == Qt::Key_Right or event->key() == Qt::Key_D) {
         lastKeyPressed = Qt::Key_Right;
     }
 }
