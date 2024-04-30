@@ -11,10 +11,16 @@
 #include <iostream>
 #include <QSpinBox>
 #include <QDebug>
-
+#include <QJsonObject>
+#include <QJsonDocument>
+#include <QFile>
+#include <QDebug>
+#include <QJsonArray>
 
 #include "rumba.h"
 #include "obstacle.h"
+
+class StateManager;
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -29,8 +35,23 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+    std::vector<Rumba*> getRumbas();
+    std::vector<RumbaRC*> getRumbasRC();
+    std::vector<Obstacle*> getObstacles();
+    struct otherAtributes {
+        QWidget* activeItem;
+        Qt::Key lastKeyPressed;
+    };
+    otherAtributes getOtherAtr();
+    void setRumbas(std::vector<Rumba::s> v);
+    void setRumbasRC(std::vector<RumbaRC::s> v);
+    void setObstacles(std::vector<Obstacle::s> v);
+    bool loading;
+
 
 private:
+    StateManager *stateManager;
+
     QRandomGenerator *randomGen = QRandomGenerator::global();
     Ui::MainWindow *ui;
     QGraphicsScene *scene;
@@ -55,6 +76,7 @@ public slots:
     bool CheckCollision (RumbaRC *rumba);
     void keyPressEvent(QKeyEvent *event);
 
+
 private slots:
     void on_spinBox_valueChanged(int arg1);
     void on_horizontalSlider_valueChanged(int value);
@@ -64,5 +86,30 @@ private slots:
     void on_radioButton_toggled(bool checked);
     void on_horizontalSlider_3_valueChanged(int value);
     void on_spinBox_3_valueChanged(int arg1);
+    void on_pushButton_clicked(bool checked);
+    void on_pushButton_2_clicked();
+};
+
+class StateManager {
+public:
+    StateManager();
+
+    void saveStateToJson(const QString& fileName, MainWindow *perent);
+    void loadStateFromJson(const QString& fileName, MainWindow* perent);
+
+private:
+    QJsonObject  structToJson( QWidget *obj);
+
+    RumbaRC::s  jsonToRumbaRCStruct(const QJsonObject& jsonObject);
+    QJsonObject  structToJson( RumbaRC::s myStruct);
+
+    Rumba::s  jsonToRumbaStruct(const QJsonObject& jsonObject);
+    QJsonObject  structToJson( Rumba::s myStruct);
+
+    Obstacle::s jsonToObstacleStruct(const QJsonObject& jsonObject);
+    QJsonObject  structToJson( Obstacle::s obstacle);
+
+
+
 };
 #endif // MAINWINDOW_H

@@ -1,17 +1,21 @@
 #include "rumba.h"
 
-Rumba::Rumba(int x_in, int y_in, int radius_in, int rotation_in , int speed_in, int detectionLen_in)
-    : QGraphicsEllipseItem(0, 0, radius_in * 2 , radius_in *2)
+Rumba::Rumba(qreal x_in, qreal y_in, qreal last_x_in, qreal last_y_in, int radius_in, int speed_in, int rotationStep_in, int rotation_in, int detectionLen_in, bool direction_in):
+    QGraphicsEllipseItem(0, 0, radius_in * 2 , radius_in *2)
 {
     x = x_in;
     y = y_in;
+    last_x = last_x_in;
+    last_y = last_y_in;
     radius = radius_in;
+    rotationStep = rotationStep_in;
     rotation = rotation_in;
-    rotationStep = 35;
-    direction = 1;
+    direction = direction_in;
     speed = speed_in;
     detectionLen = detectionLen_in + radius;
+
     setBrush(Qt::blue);
+
 
     setTransformOriginPoint(x/2, y/2);
     setPos(x, y);
@@ -19,7 +23,19 @@ Rumba::Rumba(int x_in, int y_in, int radius_in, int rotation_in , int speed_in, 
 
 Rumba::s Rumba::getAtributes()
 {
-   Rumba::s atr ={rotationStep, detectionLen, direction};
+   Rumba::s atr ={
+    x,
+    y,
+    last_x,
+    last_y,
+    radius,
+    speed,
+    rotationStep,
+    rotation,
+    detectionLen,
+    direction
+    };
+
    return atr;
 }
 

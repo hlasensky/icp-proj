@@ -12,3 +12,10 @@ Obstacle::Obstacle(int x, int y, int width, int height) : QGraphicsRectItem(0, 0
     setFlag(QGraphicsItem::ItemIsSelectable);
     setAcceptHoverEvents(true);
 }
+
+
+Obstacle::s Obstacle::getAtributes()
+{
+    Obstacle::s atr = {x,y,width, height};
+    return atr;
+}

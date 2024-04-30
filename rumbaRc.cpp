@@ -1,14 +1,17 @@
 #include "rumba.h"
 
-RumbaRC::RumbaRC(int x_in, int y_in, int radius_in, int rotation_in, int speed_in, int detectionLen_in)
+RumbaRC::RumbaRC(qreal x_in, qreal y_in, qreal last_x_in, qreal last_y_in, int radius_in, int speed_in , int rotation_in, int detectionLen_in)
     : QGraphicsEllipseItem(0, 0, radius_in * 2, radius_in * 2)
 {
     x = x_in;
     y = y_in;
+    last_x = last_x_in;
+    last_y = last_y_in;
     radius = radius_in;
     rotation = rotation_in;
     speed = speed_in;
     detectionLen = detectionLen_in + radius;
+
 
     setTransformOriginPoint(x / 2, y / 2);
     setPos(x, y);
@@ -16,7 +19,16 @@ RumbaRC::RumbaRC(int x_in, int y_in, int radius_in, int rotation_in, int speed_i
 
 RumbaRC::s RumbaRC::getAtributes()
 {
-    RumbaRC::s atr = {detectionLen, rotation, speed};
+    RumbaRC::s atr = {
+        x,
+        y,
+        last_x,
+        last_y,
+        radius,
+        speed,
+        rotation,
+        detectionLen,
+    };
     return atr;
 }
 

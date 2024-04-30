@@ -10,10 +10,17 @@ class Obstacle : public QWidget , public QGraphicsRectItem
 public:
     // Constructor
     Obstacle(int x, int y, int width, int height);
+    struct s{
+        qreal x;
+        qreal y;
+        int width;
+        int height;
+    };
+    s getAtributes();
 
 private:
-    int x;
-    int y;
+    qreal x;
+    qreal y;
     int width;
     int height;
 };

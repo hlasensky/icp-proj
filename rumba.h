@@ -6,11 +6,13 @@
 #include <iostream>
 #include <QPen>
 #include <QKeyEvent>
+#include <QGraphicsLineItem>
+#include <QGradient>
 
 class Rumba : public QWidget , public QGraphicsEllipseItem{
 Q_OBJECT
 public:
-    Rumba(int x, int y, int radius, int rotation , int speed, int detectionLen);
+    Rumba(qreal x, qreal y, qreal last_x, qreal last_y, int radius, int speed, int rotationStep, int rotation , int detectionLen, bool direction);
 
     void move();
     void testMove();
@@ -20,10 +22,10 @@ public:
     void changeDirection(bool val);
 
 protected:
-    int x;
-    int y;
-    int last_x;
-    int last_y;
+    qreal x;
+    qreal y;
+    qreal last_x;
+    qreal last_y;
     int radius;
     int speed;
     int rotationStep;
@@ -32,22 +34,30 @@ protected:
     int detectionLen;
     bool direction;
 
+
+public:
     struct s {
+        qreal x;
+        qreal y;
+        qreal last_x;
+        qreal last_y;
+        int radius;
+        int speed;
         int rotationStep;
+        int rotation;
         int detectionLen;
         bool direction;
     };
-
-public:
     s getAtributes();
+
 
 };
 
 class RumbaRC : public QWidget , public QGraphicsEllipseItem {
         Q_OBJECT
     public:
-        RumbaRC(int x, int y, int radius, int rotation , int speed, int detectionLen);
-        
+        RumbaRC(qreal x, qreal y, qreal last_x, qreal last_y, int radius, int speed , int rotation, int detectionLen);
+
         void move();
         void testMove(Qt::Key key);
         void changeDirection();
@@ -55,30 +65,30 @@ class RumbaRC : public QWidget , public QGraphicsEllipseItem {
         void stop();
 
     protected:
-        int x;
-        int y;
-        int last_x;
-        int last_y;
+        qreal x;
+        qreal y;
+        qreal last_x;
+        qreal last_y;
         int radius;
         int speed;
         int rotation;
         int detectionLen;
 
-        struct s {
-            int detectionLen;
-            int rotation;
-            int speed;
-        };
 
     public:
+        struct s {
+            qreal x;
+            qreal y;
+            qreal last_x;
+            qreal last_y;
+            int radius;
+            int speed;
+            int rotation;
+            int detectionLen;
+        };
         s getAtributes();
 
 
-};
-
-class RumbaAuto : public Rumba{
-public:
-    void rotate();
 };
 
 #endif // RUMBA_H
