@@ -13,8 +13,22 @@ RumbaRC::RumbaRC(qreal x_in, qreal y_in, qreal last_x_in, qreal last_y_in, int r
     detectionLen = detectionLen_in + radius;
 
 
-    setTransformOriginPoint(x / 2, y / 2);
+    //directionIndicator = new QGraphicsLineItem(0, 0, radius, 0, this);
+    //directionIndicator->setPen(QPen(Qt::black, 4));
+    //directionIndicator->setZValue(1);
+
+    setInitialDirection(rotation);
+
+    setTransformOriginPoint(radius, radius);
+
     setPos(x, y);
+}
+
+void RumbaRC::setInitialDirection(qreal initialRotation)
+{
+    //setRotation(initialRotation);
+    //directionIndicator->setRotation(initialRotation);
+    //directionIndicator->setPos(radius, radius);
 }
 
 RumbaRC::s RumbaRC::getAtributes()
@@ -76,6 +90,8 @@ void RumbaRC::testMove(Qt::Key key)
         break;
     }
 
+    //directionIndicator->setRotation(rotation);
+    //directionIndicator->setPos(radius, radius);
     last_x = x;
     last_y = y;
 

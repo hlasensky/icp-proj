@@ -21,6 +21,8 @@ public:
     void changeRotation(int val);
     void changeDirection(bool val);
 
+
+
 protected:
     qreal x;
     qreal y;
@@ -33,6 +35,7 @@ protected:
     int rotation;
     int detectionLen;
     bool direction;
+
 
 
 public:
@@ -63,19 +66,8 @@ class RumbaRC : public QWidget , public QGraphicsEllipseItem {
         void changeDirection();
         void changeDetectionLen(int val);
         void stop();
-
-    protected:
-        qreal x;
-        qreal y;
-        qreal last_x;
-        qreal last_y;
-        int radius;
-        int speed;
-        int rotation;
-        int detectionLen;
-
-
-    public:
+        void updateDirectionIndicator();
+        void setInitialDirection(qreal initialRotation);
         struct s {
             qreal x;
             qreal y;
@@ -88,6 +80,16 @@ class RumbaRC : public QWidget , public QGraphicsEllipseItem {
         };
         s getAtributes();
 
+    protected:
+        qreal x;
+        qreal y;
+        qreal last_x;
+        qreal last_y;
+        int radius;
+        int speed;
+        int rotation;
+        int detectionLen;
+        QGraphicsLineItem *directionIndicator;
 
 };
 

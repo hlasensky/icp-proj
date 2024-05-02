@@ -16,6 +16,8 @@
 #include <QFile>
 #include <QDebug>
 #include <QJsonArray>
+#include <QMenuBar>
+#include <QMenu>
 
 #include "rumba.h"
 #include "obstacle.h"
@@ -46,7 +48,7 @@ public:
     void setRumbas(std::vector<Rumba::s> v);
     void setRumbasRC(std::vector<RumbaRC::s> v);
     void setObstacles(std::vector<Obstacle::s> v);
-    bool loading;
+    bool loading=false;
 
 
 private:
@@ -56,6 +58,11 @@ private:
     Ui::MainWindow *ui;
     QGraphicsScene *scene;
     QGraphicsView *view;
+    QMenuBar *menuBar;
+    QMenu *gameMenu;
+
+    QAction* pauseAction;
+
 
     std::vector<Rumba*> rumbas;
     std::vector<RumbaRC*> rumbasRC;
@@ -67,7 +74,9 @@ private:
     QWidget* activeItem = nullptr;
     Qt::Key lastKeyPressed = Qt::Key_unknown;
 
+    bool isPaused;
     QTimer *timer;
+    int timeStep;
 
 public slots:
     void updateScene();
@@ -75,7 +84,7 @@ public slots:
     bool CheckCollision(Obstacle *o);
     bool CheckCollision (RumbaRC *rumba);
     void keyPressEvent(QKeyEvent *event);
-
+    void onPauseGame();
 
 private slots:
     void on_spinBox_valueChanged(int arg1);

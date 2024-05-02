@@ -4,7 +4,7 @@ StateManager::StateManager() {}
 
 void StateManager::saveStateToJson(const QString& fileName, MainWindow *perent) {
     QFile file(fileName);
-    if (!file.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Truncate)) {
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
         qWarning() << "Couldn't open file for writing:" << file.errorString();
         return;
     }

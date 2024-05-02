@@ -5,7 +5,41 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
+
     ui->setupUi(this);
+
+    menuBar = new QMenuBar(this);
+    setMenuBar(menuBar);
+
+    // Create a "Game" menu
+    gameMenu = new QMenu("Game", this);
+    menuBar->addMenu(gameMenu);
+
+    // Add a "New Game" menu item
+    pauseAction = new QAction("Pause Game", this);
+    gameMenu->addAction(pauseAction);
+    connect(pauseAction, &QAction::triggered, this, &MainWindow::onPauseGame);
+
+    // Add a "New Game" menu item
+    QAction* newGameAction = new QAction("New Game", this);
+    gameMenu->addAction(newGameAction);
+
+    // Add a "Save Game" menu item
+    QAction* saveGameAction = new QAction("Save Game", this);
+    gameMenu->addAction(saveGameAction);
+
+    // Add a "Save Game" menu item
+    QAction* loadGameAction = new QAction("Load Game", this);
+    gameMenu->addAction(loadGameAction);
+
+    // Add a separator
+    gameMenu->addSeparator();
+
+    // Add a "Quit" menu item
+    QAction* quitAction = new QAction("Quit", this);
+    gameMenu->addAction(quitAction);
+    connect(quitAction, &QAction::triggered, qApp, QApplication::quit);
+
     int width = ui->graphicsView->width()-10;
     int height = ui->graphicsView->height()-10;
 
@@ -17,7 +51,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(updateScene()));
-    timer->start(30); // Update every 30 milliseconds
+    timeStep = 30;
+    timer->start(timeStep); // Update every 30 milliseconds
 
     // Vytvoření pera s požadovanou barvou a šířkou
     QPen pen(Qt::blue); // Modrá barva ohraničení
@@ -46,16 +81,44 @@ MainWindow::MainWindow(QWidget *parent)
     show();
 }
 
+void MainWindow::onPauseGame() {
+    if (isPaused) {
+        timer->start(timeStep);
+        isPaused = false;
+        pauseAction->setText("Pause Game");
+    } else {
+        timer->stop();
+        isPaused = true;
+        pauseAction->setText("Resume Game");
+    }
+}
+
+
+
 void MainWindow::keyPressEvent(QKeyEvent *event) {
     if (event->key() == Qt::Key_Up or event->key() == Qt::Key_W) {
-        lastKeyPressed = Qt::Key_Up;
+        {
+            ui->wKey->setFlat(true);
+            lastKeyPressed = Qt::Key_Up;
+        }
     } else if (event->key() == Qt::Key_Down or event->key() == Qt::Key_S) {
-        lastKeyPressed = Qt::Key_Down;
+        {
+            ui->sKey->setFlat(true);
+            lastKeyPressed = Qt::Key_Down;}
     } else if (event->key() == Qt::Key_Left or event->key() == Qt::Key_A) {
-        lastKeyPressed = Qt::Key_Left;
+        {
+            ui->aKey->setFlat(true);
+            lastKeyPressed = Qt::Key_Left;}
     } else if (event->key() == Qt::Key_Right or event->key() == Qt::Key_D) {
-        lastKeyPressed = Qt::Key_Right;
+        {
+            ui->dKey->setFlat(true);
+            lastKeyPressed = Qt::Key_Right;}
     }
+    ui->wKey->setFlat(false);
+    ui->aKey->setFlat(false);
+    ui->sKey->setFlat(false);
+    ui->dKey->setFlat(false);
+
 }
 
 void MainWindow::updateScene() {
