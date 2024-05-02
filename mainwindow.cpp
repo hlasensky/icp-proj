@@ -98,27 +98,30 @@ void MainWindow::onPauseGame() {
 void MainWindow::keyPressEvent(QKeyEvent *event) {
     if (event->key() == Qt::Key_Up or event->key() == Qt::Key_W) {
         {
-            ui->wKey->setFlat(true);
+            ui->wKey->setFlat(!ui->wKey->isFlat());
+            ui->aKey->setFlat(false);
+            ui->sKey->setFlat(false);
+            ui->dKey->setFlat(false);
             lastKeyPressed = Qt::Key_Up;
         }
     } else if (event->key() == Qt::Key_Down or event->key() == Qt::Key_S) {
         {
-            ui->sKey->setFlat(true);
+            ui->sKey->setFlat(!ui->sKey->isFlat());
+            ui->wKey->setFlat(false);
+            ui->aKey->setFlat(false);
+            ui->dKey->setFlat(false);
             lastKeyPressed = Qt::Key_Down;}
     } else if (event->key() == Qt::Key_Left or event->key() == Qt::Key_A) {
         {
             ui->aKey->setFlat(true);
+            ui->dKey->setFlat(false);
             lastKeyPressed = Qt::Key_Left;}
     } else if (event->key() == Qt::Key_Right or event->key() == Qt::Key_D) {
         {
             ui->dKey->setFlat(true);
+            ui->aKey->setFlat(false);
             lastKeyPressed = Qt::Key_Right;}
     }
-    ui->wKey->setFlat(false);
-    ui->aKey->setFlat(false);
-    ui->sKey->setFlat(false);
-    ui->dKey->setFlat(false);
-
 }
 
 void MainWindow::updateScene() {
@@ -215,7 +218,7 @@ bool MainWindow::CheckCollision (RumbaRC *rumba){
     // Check for collisions with scene boundaries
 
     QList<QGraphicsItem*> colliding_items = rumba->collidingItems();
-    return colliding_items.size() != 0;
+    return colliding_items.size() != 1;
 }
 
 bool MainWindow::CheckCollision (Obstacle *obstacle){
