@@ -8,6 +8,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->setupUi(this);
 
+    //Create Bar menu
     menuBar = new QMenuBar(this);
     setMenuBar(menuBar);
 
@@ -15,31 +16,30 @@ MainWindow::MainWindow(QWidget *parent)
     gameMenu = new QMenu("Game", this);
     menuBar->addMenu(gameMenu);
 
-    // Add a "New Game" menu item
     pauseAction = new QAction("Pause Game", this);
     gameMenu->addAction(pauseAction);
-    connect(pauseAction, &QAction::triggered, this, &MainWindow::onPauseGame);
+    connect(pauseAction, &QAction::triggered, this, &MainWindow::on_pauseBtn_clicked);
 
-    // Add a "New Game" menu item
     QAction* newGameAction = new QAction("New Game", this);
     gameMenu->addAction(newGameAction);
+    connect(newGameAction, &QAction::triggered, this, &MainWindow::newGame);
 
-    // Add a "Save Game" menu item
     QAction* saveGameAction = new QAction("Save Game", this);
     gameMenu->addAction(saveGameAction);
+    connect(saveGameAction, &QAction::triggered, this, &MainWindow::on_saveBtn_clicked);
 
-    // Add a "Save Game" menu item
     QAction* loadGameAction = new QAction("Load Game", this);
     gameMenu->addAction(loadGameAction);
+    connect(saveGameAction, &QAction::triggered, this, &MainWindow::on_loadBtn_clicked);
 
-    // Add a separator
     gameMenu->addSeparator();
 
-    // Add a "Quit" menu item
     QAction* quitAction = new QAction("Quit", this);
     gameMenu->addAction(quitAction);
     connect(quitAction, &QAction::triggered, qApp, QApplication::quit);
 
+
+    //setting all thats needed for window, scene and view
     int width = ui->graphicsView->width()-10;
     int height = ui->graphicsView->height()-10;
 
@@ -49,16 +49,16 @@ MainWindow::MainWindow(QWidget *parent)
     view = new QGraphicsView(scene, this);
     ui->graphicsView->setViewport(view);
 
+    isPaused = false;
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(updateScene()));
     timeStep = 30;
     timer->start(timeStep); // Update every 30 milliseconds
 
-    // Vytvoření pera s požadovanou barvou a šířkou
-    QPen pen(Qt::blue); // Modrá barva ohraničení
-    pen.setWidth(4); // Šířka ohraničení
+    QPen pen(Qt::blue);
+    pen.setWidth(4);
 
-    // Nastavení hranic okolo pohledu
+    // Set all boundaries
     QGraphicsRectItem *viewBoundaryTop = new QGraphicsRectItem(-5, -5, width + 10, 5);
     viewBoundaryTop->setPen(pen);
     scene->addItem(viewBoundaryTop);
@@ -75,24 +75,27 @@ MainWindow::MainWindow(QWidget *parent)
     viewBoundaryBottom->setPen(pen);
     scene->addItem(viewBoundaryBottom);
 
-    this->setStyleSheet("background-color: #2E2E2E;");
-
+    // ui colors
+    this->setStyleSheet("background-color: #2E2E2E; color: #FFFFFF;");
+    ui->tabWidget->setStyleSheet("background: #444C54;");
+    ui->tabWidget->tabBar()->setAutoFillBackground(false);
+    ui->tabWidget->tabBar()->setStyleSheet("color: #32383E;");
 
     show();
 }
 
-void MainWindow::onPauseGame() {
-    if (isPaused) {
-        timer->start(timeStep);
-        isPaused = false;
-        pauseAction->setText("Pause Game");
-    } else {
-        timer->stop();
-        isPaused = true;
-        pauseAction->setText("Resume Game");
+void MainWindow::newGame() {
+    activeItem = nullptr;
+    for (auto r : rumbas) {
+        delete(r);
+    }
+    for (auto rc : rumbasRC) {
+        delete(rc);
+    }
+    for (auto o : obstacles) {
+        delete(o);
     }
 }
-
 
 
 void MainWindow::keyPressEvent(QKeyEvent *event) {
@@ -155,8 +158,9 @@ void MainWindow::updateScene() {
         rumba->testMove();
         if (CheckCollision(rumba))
             rumba->changeDirection();
-        else
+        else {
             rumba->move();
+        }
     }
 
     for (auto rumba : rumbasRC) {
@@ -396,8 +400,36 @@ void MainWindow::on_spinBox_3_valueChanged(int arg1)
 }
 
 
+void MainWindow::on_loadBtn_clicked()
+{
+    loading = true;
+    newGame();
+    std::cout << "loading" << std::endl;
+    stateManager->loadStateFromJson("./test.json", this);
+    loading = false;
+}
 
 
+void MainWindow::on_pauseBtn_clicked()
+{
+    if (isPaused) {
+        timer->start(timeStep);
+        isPaused = false;
+        pauseAction->setText("Pause Game");
+        ui->pauseBtn->setText("Pause");
+    } else {
+        timer->stop();
+        isPaused = true;
+        pauseAction->setText("Resume Game");
+        ui->pauseBtn->setText("Resume");
+    }
+}
+
+
+void MainWindow::on_quitBtn_clicked()
+{
+    QApplication::quit();
+}
 
 
 //JSON saving
@@ -406,7 +438,6 @@ void MainWindow::setRumbas(std::vector<Rumba::s> v){
     ui->spinBox->setValue(v.size());
     for (Rumba::s rumbaStruct : v) {
         auto [x, y, last_x, last_y, radius, speed, rotationStep, rotation, detectionLen, direction] = rumbaStruct;
-        std::cout<< x << " " << y << std::endl;
         auto r = new Rumba(x, y, last_x, last_y, radius, speed, rotationStep, rotation, detectionLen, direction);
         scene->addItem(r);
         rumbas.push_back(r);
@@ -448,7 +479,7 @@ std::vector<Obstacle*> MainWindow::getObstacles(){
     return this->obstacles;
 }
 
-void MainWindow::on_pushButton_clicked(bool checked)
+void MainWindow::on_saveBtn_clicked()
 {
     std::cout << "saving" << std::endl;
     stateManager->saveStateToJson("./test.json", this);
@@ -461,12 +492,3 @@ MainWindow::otherAtributes MainWindow::getOtherAtr() {
     };
     return atr;
 };
-
-void MainWindow::on_pushButton_2_clicked()
-{
-    loading = true;
-    std::cout << "loading" << std::endl;
-    stateManager->loadStateFromJson("./test.json", this);
-    loading = false;
-}
-

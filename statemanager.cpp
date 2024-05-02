@@ -91,12 +91,7 @@ void StateManager::loadStateFromJson(const QString& fileName, MainWindow *parent
         Obstacle::s obstacleStruct = jsonToObstacleStruct(obstacleObject);
         obstacles.push_back(obstacleStruct);
     }
-    parent->setObstacles(obstacles); // Assuming setObstacles function exists in MainWindow
-
-    // Load other attributes (if applicable)
-    // QJsonObject attributesObject = jsonObject["otherAttributes"];
-    // ... (logic to load other attributes and set them in MainWindow)
-    std::cout << "here" << std::endl;
+    parent->setObstacles(obstacles);
     file.close();
 }
 

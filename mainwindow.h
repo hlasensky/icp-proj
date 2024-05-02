@@ -84,7 +84,6 @@ public slots:
     bool CheckCollision(Obstacle *o);
     bool CheckCollision (RumbaRC *rumba);
     void keyPressEvent(QKeyEvent *event);
-    void onPauseGame();
 
 private slots:
     void on_spinBox_valueChanged(int arg1);
@@ -95,8 +94,11 @@ private slots:
     void on_radioButton_toggled(bool checked);
     void on_horizontalSlider_3_valueChanged(int value);
     void on_spinBox_3_valueChanged(int arg1);
-    void on_pushButton_clicked(bool checked);
-    void on_pushButton_2_clicked();
+    void on_loadBtn_clicked();
+    void on_saveBtn_clicked();
+    void on_pauseBtn_clicked();
+    void on_quitBtn_clicked();
+    void newGame();
 };
 
 class StateManager {
