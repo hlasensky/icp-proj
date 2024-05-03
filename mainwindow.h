@@ -2,12 +2,12 @@
  * @file mainwindow.h
  * @author Tomáš Hlásenský (xhlase01)
  * @author Michael Babušík (xbabus01)
- * @brief 
+ * @brief
  * @version 0.1
  * @date 2024-05-03
- * 
+ *
  * @copyright Copyright (c) 2024
- * 
+ *
  */
 
 #ifndef MAINWINDOW_H
@@ -54,12 +54,6 @@ public:
     std::vector<Rumba *> getRumbas();
     std::vector<RumbaRC *> getRumbasRC();
     std::vector<Obstacle *> getObstacles();
-    struct otherAtributes
-    {
-        QWidget *activeItem;
-        Qt::Key lastKeyPressed;
-    };
-    otherAtributes getOtherAtr();
     void setRumbas(std::vector<Rumba::s> v);
     void setRumbasRC(std::vector<RumbaRC::s> v);
     void setObstacles(std::vector<Obstacle::s> v);
@@ -98,11 +92,13 @@ private:
     bool isPaused;
     int timeStep;
 
-public slots:
+    void newGame();
     void updateScene();
     bool CheckCollision(Rumba *r);
     bool CheckCollision(Obstacle *o);
     bool CheckCollision(RumbaRC *rumba);
+
+public slots:
     void keyPressEvent(QKeyEvent *event);
 
 private slots:
@@ -118,7 +114,6 @@ private slots:
     void on_saveBtn_clicked();
     void on_pauseBtn_clicked();
     void on_quitBtn_clicked();
-    void newGame();
     void on_newGameBtn_clicked();
     void on_wKey_clicked();
     void on_aKey_clicked();
