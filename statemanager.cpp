@@ -26,7 +26,7 @@ void StateManager::saveStateToJson(const QString& fileName, MainWindow *perent) 
         jsonObstacleArray.append(jsonObject);
     }
 
-    MainWindow::otherAtributes atr = perent->getOtherAtr();
+    //MainWindow::otherAtributes atr = perent->getOtherAtr();
 
 
     QJsonObject jsonObject;
@@ -63,7 +63,6 @@ void StateManager::loadStateFromJson(const QString& fileName, MainWindow *parent
 
     QJsonObject jsonObject = doc.object();
 
-    // Load Rumba data
     QJsonArray rumbaArray = jsonObject["rumbas"].toArray();
     std::vector<Rumba::s> rumbas;
     for (int i = 0; i < rumbaArray.size(); ++i) {
@@ -72,7 +71,6 @@ void StateManager::loadStateFromJson(const QString& fileName, MainWindow *parent
         rumbas.push_back(rumbaStruct);
     }
 
-    // Load RumbaRC data (similar to Rumba)
     QJsonArray rumbaRCArray = jsonObject["rumbasRC"].toArray();
     std::vector<RumbaRC::s> rumbaRCs;
     for (int i = 0; i < rumbaRCArray.size(); ++i) {
@@ -81,7 +79,6 @@ void StateManager::loadStateFromJson(const QString& fileName, MainWindow *parent
         rumbaRCs.push_back(rumbaRCStruct);
     }
 
-    // Load Obstacle data (similar to Rumba)
     QJsonArray obstacleArray = jsonObject["obstacles"].toArray();
     std::vector<Obstacle::s> obstacles;
     for (int i = 0; i < obstacleArray.size(); ++i) {
@@ -89,9 +86,11 @@ void StateManager::loadStateFromJson(const QString& fileName, MainWindow *parent
         Obstacle::s obstacleStruct = jsonToObstacleStruct(obstacleObject);
         obstacles.push_back(obstacleStruct);
     }
+
+
     parent->setObstacles(obstacles);
-
-
+    parent->setRumbasRC(rumbaRCs);
+    parent->setRumbas(rumbas);
 
     file.close();
 }
