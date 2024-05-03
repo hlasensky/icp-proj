@@ -9,20 +9,20 @@ class Obstacle : public QWidget , public QGraphicsRectItem
     Q_OBJECT
 public:
     // Constructor
-    Obstacle(int x, int y, int width, int height);
+    Obstacle(qreal x, qreal y, qreal width, qreal height);
     struct s{
         qreal x;
         qreal y;
-        int width;
-        int height;
+        qreal width;
+        qreal height;
     };
     s getAtributes();
 
 private:
     qreal x;
     qreal y;
-    int width;
-    int height;
+    qreal width;
+    qreal height;
 };
 
 #endif // OBSTACLE_H

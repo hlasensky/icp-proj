@@ -18,6 +18,7 @@
 #include <QJsonArray>
 #include <QMenuBar>
 #include <QMenu>
+#include <QStyleFactory>
 
 #include "rumba.h"
 #include "obstacle.h"
@@ -68,9 +69,9 @@ private:
     std::vector<RumbaRC*> rumbasRC;
     std::vector<Obstacle*> obstacles;
 
-    Rumba *isActiveR = NULL;
-    RumbaRC *isActiveRRC = NULL;
-    Obstacle *isActiveO = NULL;
+    Rumba *isActiveR = nullptr;
+    RumbaRC *isActiveRRC = nullptr;
+    Obstacle *isActiveO = nullptr;
     QWidget* activeItem = nullptr;
     Qt::Key lastKeyPressed = Qt::Key_unknown;
 
@@ -86,19 +87,20 @@ public slots:
     void keyPressEvent(QKeyEvent *event);
 
 private slots:
-    void on_spinBox_valueChanged(int arg1);
-    void on_horizontalSlider_valueChanged(int value);
-    void on_horizontalSlider_2_valueChanged(int value);
-    void on_spinBox_2_valueChanged(int arg1);
+    void on_numOfRumbas_valueChanged(int arg1);
+    void on_detectionLenSlider_valueChanged(int value);
+    void on_obstacleWidthSlider_valueChanged(int value);
+    void on_numOfObstacles_valueChanged(int arg1);
     void on_dial_valueChanged(int value);
     void on_radioButton_toggled(bool checked);
-    void on_horizontalSlider_3_valueChanged(int value);
-    void on_spinBox_3_valueChanged(int arg1);
+    void on_obstacleHeightSlider_valueChanged(int value);
+    void on_numOfRumbasRC_valueChanged(int arg1);
     void on_loadBtn_clicked();
     void on_saveBtn_clicked();
     void on_pauseBtn_clicked();
     void on_quitBtn_clicked();
     void newGame();
+    void on_newGameBtn_clicked();
 };
 
 class StateManager {

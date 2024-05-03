@@ -30,8 +30,8 @@ void StateManager::saveStateToJson(const QString& fileName, MainWindow *perent) 
 
 
     QJsonObject jsonObject;
-//    jsonObject["activeItem"] = structToJson(atr.activeItem);
-    jsonObject["lastKeyPressed"] = atr.lastKeyPressed;
+    //jsonObject["activeItem"] = structToJson(atr.activeItem);
+    //jsonObject["lastKeyPressed"] = atr.lastKeyPressed;
 
 
     jsonObject["rumbas"] = jsonRumbaArray;
@@ -71,7 +71,6 @@ void StateManager::loadStateFromJson(const QString& fileName, MainWindow *parent
         Rumba::s rumbaStruct = jsonToRumbaStruct(rumbaObject);
         rumbas.push_back(rumbaStruct);
     }
-    parent->setRumbas(rumbas); // Assuming setRumbas function exists in MainWindow
 
     // Load RumbaRC data (similar to Rumba)
     QJsonArray rumbaRCArray = jsonObject["rumbasRC"].toArray();
@@ -81,7 +80,6 @@ void StateManager::loadStateFromJson(const QString& fileName, MainWindow *parent
         RumbaRC::s rumbaRCStruct = jsonToRumbaRCStruct(rumbaRCObject);
         rumbaRCs.push_back(rumbaRCStruct);
     }
-    parent->setRumbasRC(rumbaRCs); // Assuming setRumbaRCs function exists in MainWindow
 
     // Load Obstacle data (similar to Rumba)
     QJsonArray obstacleArray = jsonObject["obstacles"].toArray();
@@ -92,6 +90,9 @@ void StateManager::loadStateFromJson(const QString& fileName, MainWindow *parent
         obstacles.push_back(obstacleStruct);
     }
     parent->setObstacles(obstacles);
+
+
+
     file.close();
 }
 

@@ -43,6 +43,8 @@ MainWindow::MainWindow(QWidget *parent)
     int width = ui->graphicsView->width()-10;
     int height = ui->graphicsView->height()-10;
 
+    setFixedSize(1330, 700);
+
     scene = new QGraphicsScene(this);
     scene->setSceneRect(0, 0, width, height);
     scene->setBackgroundBrush(QColor(0, 0, 30));
@@ -59,42 +61,53 @@ MainWindow::MainWindow(QWidget *parent)
     pen.setWidth(4);
 
     // Set all boundaries
-    QGraphicsRectItem *viewBoundaryTop = new QGraphicsRectItem(-5, -5, width + 10, 5);
+    QGraphicsLineItem *viewBoundaryTop = new QGraphicsLineItem(-3, -3, width+10, -3, nullptr);
     viewBoundaryTop->setPen(pen);
     scene->addItem(viewBoundaryTop);
 
-    QGraphicsRectItem *viewBoundaryLeft = new QGraphicsRectItem(-5, -5, 5, height + 10);
+    QGraphicsLineItem *viewBoundaryLeft = new QGraphicsLineItem(-3, -3, -3, height+10, nullptr);
     viewBoundaryLeft->setPen(pen);
     scene->addItem(viewBoundaryLeft);
 
-    QGraphicsRectItem *viewBoundaryRight = new QGraphicsRectItem(width, -5, 5, height + 10);
+    QGraphicsLineItem *viewBoundaryRight = new QGraphicsLineItem(width+5, -5, width+5, height+10, nullptr);
     viewBoundaryRight->setPen(pen);
     scene->addItem(viewBoundaryRight);
 
-    QGraphicsRectItem *viewBoundaryBottom = new QGraphicsRectItem(-5, height, width + 10, 5);
+    QGraphicsLineItem *viewBoundaryBottom = new QGraphicsLineItem(-5, height+4, width+5, height+4, nullptr);
     viewBoundaryBottom->setPen(pen);
     scene->addItem(viewBoundaryBottom);
 
-    // ui colors
-    this->setStyleSheet("background-color: #2E2E2E; color: #FFFFFF;");
-    ui->tabWidget->setStyleSheet("background: #444C54;");
-    ui->tabWidget->tabBar()->setAutoFillBackground(false);
-    ui->tabWidget->tabBar()->setStyleSheet("color: #32383E;");
+
 
     show();
 }
 
 void MainWindow::newGame() {
+    loading = true;
     activeItem = nullptr;
+
     for (auto r : rumbas) {
-        delete(r);
+        scene->removeItem(r);
+        delete r;
     }
+    rumbas.clear();
+    ui->numOfRumbas->setValue(0);
+
     for (auto rc : rumbasRC) {
-        delete(rc);
+        scene->removeItem(rc);
+        delete rc;
     }
+    rumbasRC.clear();
+    ui->numOfRumbasRC->setValue(0);
+
     for (auto o : obstacles) {
-        delete(o);
+        scene->removeItem(o);
+        delete o;
     }
+    obstacles.clear();
+    ui->numOfObstacles->setValue(0);
+
+    loading = false;
 }
 
 
@@ -127,12 +140,15 @@ void MainWindow::keyPressEvent(QKeyEvent *event) {
     }
 }
 
+
+
 void MainWindow::updateScene() {
+    if (loading) return;
+
     // Update Rumba positions and handle collisions
     isActiveR = dynamic_cast<Rumba*>(activeItem);
     isActiveRRC = dynamic_cast<RumbaRC*>(activeItem);
     isActiveO = dynamic_cast<Obstacle*>(activeItem);
-
 
     for (auto rumba : rumbas) {
         if (rumba->isUnderMouse() && QApplication::mouseButtons() & Qt::LeftButton) {
@@ -148,7 +164,7 @@ void MainWindow::updateScene() {
             ui->detectionLenDisplay->display(isActiveR->getAtributes().detectionLen);
             ui->rotationDisplay->display(isActiveR->getAtributes().rotationStep);
             ui->dial->setValue(isActiveR->getAtributes().rotationStep);
-            ui->horizontalSlider->setValue(isActiveR->getAtributes().detectionLen);
+            ui->detectionLenSlider->setValue(isActiveR->getAtributes().detectionLen);
 
             if (isActiveR->getAtributes().direction)
                 ui->radioButton->setChecked(true);
@@ -177,7 +193,7 @@ void MainWindow::updateScene() {
             //set UI on active rc rumba's values
             isActiveRRC->setBrush(Qt::darkGreen);
             ui->detectionLenDisplay->display(isActiveRRC->getAtributes().detectionLen);
-            ui->horizontalSlider->setValue(isActiveRRC->getAtributes().detectionLen);
+            ui->detectionLenSlider->setValue(isActiveRRC->getAtributes().detectionLen);
             ui->dial->setValue(isActiveRRC->getAtributes().rotation);
             ui->rotationDisplay->display(isActiveRRC->getAtributes().rotation);
 
@@ -205,8 +221,8 @@ void MainWindow::updateScene() {
         {
             //set UI on active obstacle's values
             isActiveO->setBrush(Qt::red);
-            ui->horizontalSlider_2->setValue(isActiveO->QGraphicsRectItem::rect().width());
-            ui->horizontalSlider_3->setValue(isActiveO->QGraphicsRectItem::rect().height());
+            ui->obstacleWidthSlider->setValue(isActiveO->QGraphicsRectItem::rect().width());
+            ui->obstacleHeightSlider->setValue(isActiveO->QGraphicsRectItem::rect().height());
         }
     }
 }
@@ -239,41 +255,43 @@ MainWindow::~MainWindow()
 
 //menu for Rumba class
 
-void MainWindow::on_spinBox_valueChanged(int arg1)
+void MainWindow::on_numOfRumbas_valueChanged(int arg1)
 {
-    if (!loading)
+    if (loading) return;
+
+    if (rumbas.size() < arg1)
     {
-        if (rumbas.size() < arg1)
-        {
-            int radius = 25;
-            for (int hI = 0; hI < ui->graphicsView->height(); hI = (hI + radius * 2)) {
-                for (int wI = 0; wI < ui->graphicsView->width(); wI = (wI + radius * 2)) {
-                    auto r = new Rumba(wI, hI, 0, 0, radius, 5, 10, 45, 10, 1);
-                    scene->addItem(r);
-                    if (!CheckCollision(r))
-                    {
-                        r->setAcceptedMouseButtons(Qt::LeftButton);
-                        rumbas.push_back(r);
-                        return;
-                    }
-                    else
-                    {
-                        scene->removeItem(r);
-                        continue;
-                    }
-
-                };
+        int radius = 20;
+        for (int hI = 0; hI < ui->graphicsView->height(); hI = (hI + radius * 2)) {
+            for (int wI = 0; wI < ui->graphicsView->width(); wI = (wI + radius * 2)) {
+                auto r = new Rumba(wI, hI, 0, 0, radius, 5, 10, 45, 10, 1);
+                scene->addItem(r);
+                if (!CheckCollision(r))
+                {
+                    r->setAcceptedMouseButtons(Qt::LeftButton);
+                    rumbas.push_back(r);
+                    return;
+                }
+                else
+                {
+                    scene->removeItem(r);
+                    delete r;
+                }
             };
+        };
 
-        } else
-        {
-            scene->removeItem(rumbas.back());
-            rumbas.pop_back();
-        }
+    } else
+    {
+        auto last = rumbas.back();
+        if (last == activeItem) activeItem = nullptr;
+        scene->removeItem(last);
+        delete last;
+        rumbas.pop_back();
     }
+
 }
 
-void MainWindow::on_horizontalSlider_valueChanged(int value)
+void MainWindow::on_detectionLenSlider_valueChanged(int value)
 {
     if (isActiveR != nullptr)
     {
@@ -306,7 +324,7 @@ void MainWindow::on_radioButton_toggled(bool checked)
 /**
 * Change width of active obstacle
 */
-void MainWindow::on_horizontalSlider_2_valueChanged(int value)
+void MainWindow::on_obstacleWidthSlider_valueChanged(int value)
 {
     if (isActiveO != nullptr)
     {
@@ -318,87 +336,97 @@ void MainWindow::on_horizontalSlider_2_valueChanged(int value)
 /**
 * Change height of active obstacle
 */
-void MainWindow::on_horizontalSlider_3_valueChanged(int value)
+void MainWindow::on_obstacleHeightSlider_valueChanged(int value)
 {
     if (isActiveO != nullptr)
     {
+
         isActiveO->setRect(isActiveO->QGraphicsRectItem::rect().x(), isActiveO->QGraphicsRectItem::rect().y(), isActiveO->QGraphicsRectItem::rect().width(), value);
         ui->heightObstacleDisplay->display(value);
     }
 }
 
-void MainWindow::on_spinBox_2_valueChanged(int arg1)
+void MainWindow::on_numOfObstacles_valueChanged(int arg1)
 {
-    if (!loading)
-    {
-        if (obstacles.size() < arg1)
-        {
-            int width = randomGen->bounded(50, 300);
-            int height = randomGen->bounded(50, 300);
-            for (int hI = 0; hI < ui->graphicsView->height(); hI = (hI + width)) {
-                for (int wI = 0; wI < ui->graphicsView->width(); wI = (wI + height)) {
-                    auto o = new Obstacle(wI, hI, width, height);
-                    scene->addItem(o);
-                    if (!CheckCollision(o))
-                    {
-                        o->setAcceptedMouseButtons(Qt::LeftButton);
-                        obstacles.push_back(o);
-                        return;
-                    }
-                    else
-                    {
-                        scene->removeItem(o);
-                        continue;
-                    }
+    if (loading) return;
 
-                };
+    if (obstacles.size() < arg1)
+    {
+        int width = randomGen->bounded(ui->obstacleWidthSlider->minimum(), ui->obstacleWidthSlider->maximum());
+        int height = randomGen->bounded(ui->obstacleHeightSlider->minimum(), ui->obstacleHeightSlider->maximum());
+        for (int hI = 0; hI < ui->graphicsView->height(); hI = (hI + width)) {
+            for (int wI = 0; wI < ui->graphicsView->width(); wI = (wI + height)) {
+                auto o = new Obstacle(wI, hI, width, height);
+                scene->addItem(o);
+                if (!CheckCollision(o))
+                {
+                    o->setAcceptedMouseButtons(Qt::LeftButton);
+                    obstacles.push_back(o);
+                    return;
+                }
+                else
+                {
+                    scene->removeItem(o);
+                    delete o;
+                }
+
             };
-            ui->spinBox_2->setValue(obstacles.size());
-        } else if (obstacles.size() > arg1)
-        {
-            scene->removeItem(obstacles.back());
-            obstacles.pop_back();
-        }
+        };
+        ui->numOfObstacles->setValue(obstacles.size());
+    } else if (obstacles.size() > arg1)
+    {
+        auto last = obstacles.back();
+        if (last == activeItem) activeItem = nullptr;
+        scene->removeItem(last);
+        delete last;
+        obstacles.pop_back();
     }
+
 }
 
 
 //Menu for RumbaRC class
 
-void MainWindow::on_spinBox_3_valueChanged(int arg1)
+void MainWindow::on_numOfRumbasRC_valueChanged(int arg1)
 {
-    if (!loading)
+    if (loading) return;
+
+    if (rumbasRC.size() < arg1)
     {
-        if (rumbasRC.size() < arg1)
-        {
-            int radius = 25;
-            for (int hI = 0; hI < ui->graphicsView->height(); hI = (hI + radius * 2)) {
-                for (int wI = 0; wI < ui->graphicsView->width(); wI = (wI + radius * 2)) {
-                    auto r = new RumbaRC(wI, hI, 0, 0, radius, 0, 0, 10);
-                    scene->addItem(r);
-                    if (!CheckCollision(r))
-                    {
-                        r->setAcceptedMouseButtons(Qt::LeftButton);
-                        rumbasRC.push_back(r);
-                        return;
-                    }
-                    else
-                    {
-                        scene->removeItem(r);
-                        continue;
-                    }
-
-                };
+        int radius = 20;
+        for (int hI = 0; hI < ui->graphicsView->height(); hI = (hI + radius * 2)) {
+            for (int wI = 0; wI < ui->graphicsView->width(); wI = (wI + radius * 2)) {
+                auto r = new RumbaRC(wI, hI, 0, 0, radius, 0, 0, 10);
+                scene->addItem(r);
+                if (!CheckCollision(r))
+                {
+                    r->setAcceptedMouseButtons(Qt::LeftButton);
+                    rumbasRC.push_back(r);
+                    return;
+                }
+                else
+                {
+                    scene->removeItem(r);
+                    delete r;
+                }
             };
+        };
 
-        } else
-        {
-            scene->removeItem(rumbasRC.back());
-            rumbasRC.pop_back();
-        }
+    } else
+    {
+        auto last = rumbasRC.back();
+        if (last == activeItem) activeItem = nullptr;
+        scene->removeItem(last);
+        delete last;
+        rumbasRC.pop_back();
     }
+
 }
 
+void MainWindow::on_newGameBtn_clicked()
+{
+    newGame();
+}
 
 void MainWindow::on_loadBtn_clicked()
 {
@@ -435,7 +463,7 @@ void MainWindow::on_quitBtn_clicked()
 //JSON saving
 
 void MainWindow::setRumbas(std::vector<Rumba::s> v){
-    ui->spinBox->setValue(v.size());
+    ui->numOfRumbas->setValue(v.size());
     for (Rumba::s rumbaStruct : v) {
         auto [x, y, last_x, last_y, radius, speed, rotationStep, rotation, detectionLen, direction] = rumbaStruct;
         auto r = new Rumba(x, y, last_x, last_y, radius, speed, rotationStep, rotation, detectionLen, direction);
@@ -445,7 +473,7 @@ void MainWindow::setRumbas(std::vector<Rumba::s> v){
 }
 
 void MainWindow::setRumbasRC(std::vector<RumbaRC::s> v){
-    ui->spinBox_2->setValue(v.size());
+    ui->numOfRumbasRC->setValue(v.size());
     for (RumbaRC::s  rumbaRCStruct: v) {
         auto [x, y, last_x, last_y, radius, speed, rotation, detectionLen] = rumbaRCStruct;
         auto r = new RumbaRC(x, y, last_x, last_y, radius, speed, rotation, detectionLen);
@@ -456,7 +484,7 @@ void MainWindow::setRumbasRC(std::vector<RumbaRC::s> v){
 }
 
 void MainWindow::setObstacles(std::vector<Obstacle::s> v){
-    ui->spinBox_3->setValue(v.size());
+    ui->numOfObstacles->setValue(v.size());
     for (Obstacle::s obstacleStruct: v) {
         auto [x, y, width, height] = obstacleStruct;
         auto o = new Obstacle(x, y, width, height);
@@ -492,3 +520,6 @@ MainWindow::otherAtributes MainWindow::getOtherAtr() {
     };
     return atr;
 };
+
+
+

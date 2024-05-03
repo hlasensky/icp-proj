@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1487</width>
-    <height>857</height>
+    <width>1336</width>
+    <height>715</height>
    </rect>
   </property>
   <property name="palette">
@@ -51,9 +51,12 @@
      <rect>
       <x>310</x>
       <y>10</y>
-      <width>1061</width>
-      <height>791</height>
+      <width>901</width>
+      <height>641</height>
      </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::NoFrame</enum>
     </property>
     <property name="backgroundBrush">
      <brush brushstyle="SolidPattern">
@@ -79,8 +82,8 @@
      <rect>
       <x>10</x>
       <y>10</y>
-      <width>281</width>
-      <height>791</height>
+      <width>291</width>
+      <height>641</height>
      </rect>
     </property>
     <property name="currentIndex">
@@ -96,7 +99,7 @@
         <x>10</x>
         <y>0</y>
         <width>261</width>
-        <height>749</height>
+        <height>511</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayoutR">
@@ -115,7 +118,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QSlider" name="horizontalSlider">
+        <widget class="QSlider" name="detectionLenSlider">
          <property name="minimum">
           <number>25</number>
          </property>
@@ -238,7 +241,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QSpinBox" name="spinBox"/>
+        <widget class="QSpinBox" name="numOfRumbas"/>
        </item>
       </layout>
      </widget>
@@ -252,8 +255,8 @@
        <rect>
         <x>10</x>
         <y>0</y>
-        <width>261</width>
-        <height>721</height>
+        <width>271</width>
+        <height>511</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayoutRC">
@@ -272,7 +275,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QSpinBox" name="spinBox_3"/>
+        <widget class="QSpinBox" name="numOfRumbasRC"/>
        </item>
        <item>
         <layout class="QGridLayout" name="gridLayout">
@@ -332,7 +335,7 @@
         <x>10</x>
         <y>0</y>
         <width>261</width>
-        <height>749</height>
+        <height>511</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayoutO">
@@ -351,12 +354,12 @@
         </widget>
        </item>
        <item>
-        <widget class="QSlider" name="horizontalSlider_2">
+        <widget class="QSlider" name="obstacleWidthSlider">
          <property name="minimum">
-          <number>100</number>
+          <number>50</number>
          </property>
          <property name="maximum">
-          <number>400</number>
+          <number>200</number>
          </property>
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
@@ -387,12 +390,12 @@
         </widget>
        </item>
        <item>
-        <widget class="QSlider" name="horizontalSlider_3">
+        <widget class="QSlider" name="obstacleHeightSlider">
          <property name="minimum">
-          <number>100</number>
+          <number>50</number>
          </property>
          <property name="maximum">
-          <number>400</number>
+          <number>200</number>
          </property>
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
@@ -423,7 +426,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QSpinBox" name="spinBox_2"/>
+        <widget class="QSpinBox" name="numOfObstacles"/>
        </item>
       </layout>
      </widget>
@@ -432,7 +435,7 @@
    <widget class="QWidget" name="verticalLayoutWidget_2">
     <property name="geometry">
      <rect>
-      <x>1380</x>
+      <x>1230</x>
       <y>10</y>
       <width>83</width>
       <height>231</height>
@@ -470,6 +473,13 @@
        </property>
       </widget>
      </item>
+     <item>
+      <widget class="QPushButton" name="newGameBtn">
+       <property name="text">
+        <string>New Game</string>
+       </property>
+      </widget>
+     </item>
     </layout>
    </widget>
   </widget>
@@ -478,7 +488,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1487</width>
+     <width>1336</width>
      <height>23</height>
     </rect>
    </property>
@@ -492,11 +502,11 @@
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <tabstops>
-  <tabstop>horizontalSlider</tabstop>
+  <tabstop>detectionLenSlider</tabstop>
   <tabstop>dial</tabstop>
   <tabstop>radioButton</tabstop>
   <tabstop>radioButton_2</tabstop>
-  <tabstop>spinBox</tabstop>
+  <tabstop>numOfRumbas</tabstop>
   <tabstop>graphicsView</tabstop>
  </tabstops>
  <resources/>

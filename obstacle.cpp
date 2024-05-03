@@ -1,6 +1,6 @@
 #include "obstacle.h"
 
-Obstacle::Obstacle(int x, int y, int width, int height) : QGraphicsRectItem(0, 0, width, height)
+Obstacle::Obstacle(qreal x, qreal y, qreal width, qreal height) : QGraphicsRectItem(0, 0, width, height)
 {
     this->x = x;
     this->y = y;
@@ -16,6 +16,10 @@ Obstacle::Obstacle(int x, int y, int width, int height) : QGraphicsRectItem(0, 0
 
 Obstacle::s Obstacle::getAtributes()
 {
-    Obstacle::s atr = {x,y,width, height};
+    Obstacle::s atr = {this->QGraphicsRectItem::pos().x(),
+                       this->QGraphicsRectItem::pos().y(),
+        this->QGraphicsRectItem::rect().width(),
+        this->QGraphicsRectItem::rect().height()
+    };
     return atr;
 }
