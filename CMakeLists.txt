@@ -28,6 +28,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
 
         obstacle.h obstacle.cpp
         statemanager.cpp
+        rumbaRC.h
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET icp_v4 APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR

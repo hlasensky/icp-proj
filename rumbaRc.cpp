@@ -1,6 +1,18 @@
-#include "rumba.h"
+/**
+ * @file rumbaRc.cpp
+ * @author Tomáš Hlásenský (xhlase01)
+ * @author Michael Babušík (xbabus01)
+ * @brief 
+ * @version 0.1
+ * @date 2024-05-03
+ * 
+ * @copyright Copyright (c) 2024
+ * 
+ */
 
-RumbaRC::RumbaRC(qreal x_in, qreal y_in, qreal last_x_in, qreal last_y_in, int radius_in, int speed_in , int rotation_in, int detectionLen_in)
+#include "rumbaRC.h"
+
+RumbaRC::RumbaRC(qreal x_in, qreal y_in, qreal last_x_in, qreal last_y_in, int radius_in, int speed_in, int rotation_in, int detectionLen_in)
     : QGraphicsEllipseItem(0, 0, radius_in * 2, radius_in * 2)
 {
     x = x_in;
@@ -12,22 +24,20 @@ RumbaRC::RumbaRC(qreal x_in, qreal y_in, qreal last_x_in, qreal last_y_in, int r
     speed = speed_in;
     detectionLen = detectionLen_in + radius;
 
-
     directionIndicator = new QGraphicsLineItem(0, 0, radius, 0, this);
     directionIndicator->setPen(QPen(Qt::black, 4));
     directionIndicator->setZValue(1);
 
-    setInitialDirection(rotation);
+    setDirection();
 
     setTransformOriginPoint(radius, radius);
 
     setPos(x, y);
 }
 
-void RumbaRC::setInitialDirection(qreal initialRotation)
+void RumbaRC::setDirection()
 {
-    setRotation(initialRotation);
-    directionIndicator->setRotation(initialRotation);
+    directionIndicator->setRotation(rotation);
     directionIndicator->setPos(radius, radius);
 }
 
@@ -72,7 +82,8 @@ void RumbaRC::move()
 
 void RumbaRC::testMove(Qt::Key key)
 {
-    switch (key) {
+    switch (key)
+    {
     case Qt::Key_Left:
         rotation -= 10;
         break;
@@ -90,8 +101,7 @@ void RumbaRC::testMove(Qt::Key key)
         break;
     }
 
-    directionIndicator->setRotation(rotation);
-    directionIndicator->setPos(radius, radius);
+    setDirection();
     last_x = x;
     last_y = y;
 
@@ -101,3 +111,7 @@ void RumbaRC::testMove(Qt::Key key)
     setPos(x, y);
 }
 
+RumbaRC::~RumbaRC()
+{
+    delete directionIndicator;
+}

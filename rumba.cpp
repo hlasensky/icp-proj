@@ -1,7 +1,18 @@
+/**
+ * @file rumba.cpp
+ * @author Tomáš Hlásenský (xhlase01)
+ * @author Michael Babušík (xbabus01)
+ * @brief 
+ * @version 0.1
+ * @date 2024-05-03
+ * 
+ * @copyright Copyright (c) 2024
+ * 
+ */
+
 #include "rumba.h"
 
-Rumba::Rumba(qreal x_in, qreal y_in, qreal last_x_in, qreal last_y_in, int radius_in, int speed_in, int rotationStep_in, int rotation_in, int detectionLen_in, bool direction_in):
-    QGraphicsEllipseItem(0, 0, radius_in * 2 , radius_in *2)
+Rumba::Rumba(qreal x_in, qreal y_in, qreal last_x_in, qreal last_y_in, int radius_in, int speed_in, int rotationStep_in, int rotation_in, int detectionLen_in, bool direction_in) : QGraphicsEllipseItem(0, 0, radius_in * 2, radius_in * 2)
 {
     x = x_in;
     y = y_in;
@@ -16,38 +27,39 @@ Rumba::Rumba(qreal x_in, qreal y_in, qreal last_x_in, qreal last_y_in, int radiu
 
     setBrush(Qt::blue);
 
-
-    setTransformOriginPoint(x/2, y/2);
+    setTransformOriginPoint(x / 2, y / 2);
     setPos(x, y);
 }
 
 Rumba::s Rumba::getAtributes()
 {
-   Rumba::s atr ={
-    x,
-    y,
-    last_x,
-    last_y,
-    radius,
-    speed,
-    rotationStep,
-    rotation,
-    detectionLen,
-    direction
-    };
+    Rumba::s atr = {
+        x,
+        y,
+        last_x,
+        last_y,
+        radius,
+        speed,
+        rotationStep,
+        rotation,
+        detectionLen,
+        direction};
 
-   return atr;
+    return atr;
 }
 
-void Rumba::changeDetectionLen(int val){
+void Rumba::changeDetectionLen(int val)
+{
     detectionLen = val;
 }
 
-void Rumba::changeRotation(int val){
+void Rumba::changeRotation(int val)
+{
     rotationStep = val;
 }
 
-void Rumba::changeDirection(bool val){
+void Rumba::changeDirection(bool val)
+{
     direction = val;
 }
 
@@ -85,5 +97,4 @@ void Rumba::changeDirection()
         rotation = (rotation - rotationStep) % 360;
     else
         rotation = (rotation + rotationStep) % 360;
-
 }

@@ -1,5 +1,5 @@
 /**
- * @file rumba.h
+ * @file rumbaRC.h
  * @author Tomáš Hlásenský (xhlase01)
  * @author Michael Babušík (xbabus01)
  * @brief 
@@ -10,44 +10,29 @@
  * 
  */
 
-#ifndef RUMBA_H
-#define RUMBA_H
+#ifndef RUMBARC_H
+#define RUMBARC_H
 
 #include <QWidget>
 #include <QGraphicsEllipseItem>
-#include <iostream>
 #include <QPen>
 #include <QKeyEvent>
 #include <QGraphicsLineItem>
 #include <QGradient>
 
-class Rumba : public QWidget, public QGraphicsEllipseItem
+class RumbaRC : public QWidget, public QGraphicsEllipseItem
 {
     Q_OBJECT
 public:
-    Rumba(qreal x, qreal y, qreal last_x, qreal last_y, int radius, int speed, int rotationStep, int rotation, int detectionLen, bool direction);
-
+    RumbaRC(qreal x, qreal y, qreal last_x, qreal last_y, int radius, int speed, int rotation, int detectionLen);
+    ~RumbaRC();
     void move();
-    void testMove();
+    void testMove(Qt::Key key);
     void changeDirection();
     void changeDetectionLen(int val);
-    void changeRotation(int val);
-    void changeDirection(bool val);
-
-protected:
-    qreal x;
-    qreal y;
-    qreal last_x;
-    qreal last_y;
-    int radius;
-    int speed;
-    int rotationStep;
-
-    int rotation;
-    int detectionLen;
-    bool direction;
-
-public:
+    void stop();
+    void updateDirectionIndicator();
+    void setDirection();
     struct s
     {
         qreal x;
@@ -56,12 +41,21 @@ public:
         qreal last_y;
         int radius;
         int speed;
-        int rotationStep;
         int rotation;
         int detectionLen;
-        bool direction;
     };
     s getAtributes();
+
+protected:
+    qreal x;
+    qreal y;
+    qreal last_x;
+    qreal last_y;
+    int radius;
+    int speed;
+    int rotation;
+    int detectionLen;
+    QGraphicsLineItem *directionIndicator;
 };
 
-#endif // RUMBA_H
+#endif // RUMBARC_H

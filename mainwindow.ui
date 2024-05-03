@@ -87,7 +87,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>2</number>
     </property>
     <widget class="QWidget" name="tab_2">
      <attribute name="title">
@@ -136,7 +136,7 @@
        <item>
         <widget class="QLCDNumber" name="detectionLenDisplay">
          <property name="segmentStyle">
-          <enum>QLCDNumber::Filled</enum>
+          <enum>QLCDNumber::Flat</enum>
          </property>
         </widget>
        </item>
@@ -179,7 +179,7 @@
           <bool>false</bool>
          </property>
          <property name="segmentStyle">
-          <enum>QLCDNumber::Filled</enum>
+          <enum>QLCDNumber::Flat</enum>
          </property>
         </widget>
        </item>
@@ -367,7 +367,11 @@
         </widget>
        </item>
        <item>
-        <widget class="QLCDNumber" name="widthObstacleDisplay"/>
+        <widget class="QLCDNumber" name="widthObstacleDisplay">
+         <property name="segmentStyle">
+          <enum>QLCDNumber::Flat</enum>
+         </property>
+        </widget>
        </item>
        <item>
         <spacer name="verticalSpacer_5">
@@ -403,7 +407,11 @@
         </widget>
        </item>
        <item>
-        <widget class="QLCDNumber" name="heightObstacleDisplay"/>
+        <widget class="QLCDNumber" name="heightObstacleDisplay">
+         <property name="segmentStyle">
+          <enum>QLCDNumber::Flat</enum>
+         </property>
+        </widget>
        </item>
        <item>
         <spacer name="verticalSpacer_4">

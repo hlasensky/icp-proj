@@ -1,52 +1,68 @@
+/**
+ * @file statemanager.cpp
+ * @author Tomáš Hlásenský (xhlase01)
+ * @author Michael Babušík (xbabus01)
+ * @brief 
+ * @version 0.1
+ * @date 2024-05-03
+ * 
+ * @copyright Copyright (c) 2024
+ * 
+ */
+
 #include "mainwindow.h"
 
 StateManager::StateManager() {}
 
-void StateManager::saveStateToJson(const QString& fileName, MainWindow *perent) {
+void StateManager::saveStateToJson(const QString &fileName, MainWindow *perent)
+{
     QFile file(fileName);
-    if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
+    {
         qWarning() << "Couldn't open file for writing:" << file.errorString();
         return;
     }
     QJsonArray jsonRumbaArray;
-    for (auto rumba : perent->getRumbas()) {
+    for (auto rumba : perent->getRumbas())
+    {
         QJsonObject jsonObject = structToJson(rumba->getAtributes()); // Serialize Rumba attributes
         jsonRumbaArray.append(jsonObject);
     }
 
     QJsonArray jsonRumbaRCArray;
-    for (auto rumbaRC : perent->getRumbasRC()) {
+    for (auto rumbaRC : perent->getRumbasRC())
+    {
         QJsonObject jsonObject = structToJson(rumbaRC->getAtributes()); // Serialize RumbaRC attributes
         jsonRumbaRCArray.append(jsonObject);
     }
 
     QJsonArray jsonObstacleArray;
-    for (auto obstacle : perent->getObstacles()) {
+    for (auto obstacle : perent->getObstacles())
+    {
         QJsonObject jsonObject = structToJson(obstacle->getAtributes()); // Serialize Rumba attributes
         jsonObstacleArray.append(jsonObject);
     }
 
-    //MainWindow::otherAtributes atr = perent->getOtherAtr();
-
+    // MainWindow::otherAtributes atr = perent->getOtherAtr();
 
     QJsonObject jsonObject;
-    //jsonObject["activeItem"] = structToJson(atr.activeItem);
-    //jsonObject["lastKeyPressed"] = atr.lastKeyPressed;
-
+    // jsonObject["activeItem"] = structToJson(atr.activeItem);
+    // jsonObject["lastKeyPressed"] = atr.lastKeyPressed;
 
     jsonObject["rumbas"] = jsonRumbaArray;
     jsonObject["rumbasRC"] = jsonRumbaRCArray;
     jsonObject["obstacles"] = jsonObstacleArray;
-
 
     QJsonDocument doc(jsonObject);
     file.write(doc.toJson());
     file.close();
 }
 
-void StateManager::loadStateFromJson(const QString& fileName, MainWindow *parent) {
+void StateManager::loadStateFromJson(const QString &fileName, MainWindow *parent)
+{
     QFile file(fileName);
-    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
         qWarning() << "Couldn't open file for reading:" << file.errorString();
         return;
     }
@@ -55,7 +71,8 @@ void StateManager::loadStateFromJson(const QString& fileName, MainWindow *parent
     QJsonDocument doc(QJsonDocument::fromJson(data));
 
     // Check if the file parsing was successful
-    if (doc.isNull()) {
+    if (doc.isNull())
+    {
         qWarning() << "Failed to parse JSON file";
         file.close();
         return;
@@ -65,7 +82,8 @@ void StateManager::loadStateFromJson(const QString& fileName, MainWindow *parent
 
     QJsonArray rumbaArray = jsonObject["rumbas"].toArray();
     std::vector<Rumba::s> rumbas;
-    for (int i = 0; i < rumbaArray.size(); ++i) {
+    for (int i = 0; i < rumbaArray.size(); ++i)
+    {
         QJsonObject rumbaObject = rumbaArray[i].toObject();
         Rumba::s rumbaStruct = jsonToRumbaStruct(rumbaObject);
         rumbas.push_back(rumbaStruct);
@@ -73,7 +91,8 @@ void StateManager::loadStateFromJson(const QString& fileName, MainWindow *parent
 
     QJsonArray rumbaRCArray = jsonObject["rumbasRC"].toArray();
     std::vector<RumbaRC::s> rumbaRCs;
-    for (int i = 0; i < rumbaRCArray.size(); ++i) {
+    for (int i = 0; i < rumbaRCArray.size(); ++i)
+    {
         QJsonObject rumbaRCObject = rumbaRCArray[i].toObject();
         RumbaRC::s rumbaRCStruct = jsonToRumbaRCStruct(rumbaRCObject);
         rumbaRCs.push_back(rumbaRCStruct);
@@ -81,12 +100,12 @@ void StateManager::loadStateFromJson(const QString& fileName, MainWindow *parent
 
     QJsonArray obstacleArray = jsonObject["obstacles"].toArray();
     std::vector<Obstacle::s> obstacles;
-    for (int i = 0; i < obstacleArray.size(); ++i) {
+    for (int i = 0; i < obstacleArray.size(); ++i)
+    {
         QJsonObject obstacleObject = obstacleArray[i].toObject();
         Obstacle::s obstacleStruct = jsonToObstacleStruct(obstacleObject);
         obstacles.push_back(obstacleStruct);
     }
-
 
     parent->setObstacles(obstacles);
     parent->setRumbasRC(rumbaRCs);
@@ -95,11 +114,11 @@ void StateManager::loadStateFromJson(const QString& fileName, MainWindow *parent
     file.close();
 }
 
-
-QJsonObject  StateManager::structToJson( QWidget *obj) {
-    Rumba *isActiveR = dynamic_cast<Rumba*>(obj);
-    RumbaRC *isActiveRRC = dynamic_cast<RumbaRC*>(obj);
-    Obstacle *isActiveO = dynamic_cast<Obstacle*>(obj);
+QJsonObject StateManager::structToJson(QWidget *obj)
+{
+    Rumba *isActiveR = dynamic_cast<Rumba *>(obj);
+    RumbaRC *isActiveRRC = dynamic_cast<RumbaRC *>(obj);
+    Obstacle *isActiveO = dynamic_cast<Obstacle *>(obj);
 
     if (isActiveR)
         return structToJson(isActiveR->getAtributes());
@@ -109,7 +128,8 @@ QJsonObject  StateManager::structToJson( QWidget *obj) {
         return structToJson(isActiveO->getAtributes());
 }
 
-QJsonObject  StateManager::structToJson( Rumba::s Rumba) {
+QJsonObject StateManager::structToJson(Rumba::s Rumba)
+{
     QJsonObject jsonObject;
     jsonObject["x"] = Rumba.x;
     jsonObject["y"] = Rumba.y;
@@ -124,7 +144,8 @@ QJsonObject  StateManager::structToJson( Rumba::s Rumba) {
     return jsonObject;
 }
 
-Rumba::s  StateManager::jsonToRumbaStruct(const QJsonObject& jsonObject) {
+Rumba::s StateManager::jsonToRumbaStruct(const QJsonObject &jsonObject)
+{
     Rumba::s myStruct;
     myStruct.x = jsonObject["x"].toDouble();
     myStruct.y = jsonObject["y"].toDouble();
@@ -139,7 +160,8 @@ Rumba::s  StateManager::jsonToRumbaStruct(const QJsonObject& jsonObject) {
     return myStruct;
 }
 
-QJsonObject  StateManager::structToJson( RumbaRC::s rumbaRc) {
+QJsonObject StateManager::structToJson(RumbaRC::s rumbaRc)
+{
     QJsonObject jsonObject;
     jsonObject["x"] = rumbaRc.x;
     jsonObject["y"] = rumbaRc.y;
@@ -152,7 +174,8 @@ QJsonObject  StateManager::structToJson( RumbaRC::s rumbaRc) {
     return jsonObject;
 }
 
-RumbaRC::s  StateManager::jsonToRumbaRCStruct(const QJsonObject& jsonObject) {
+RumbaRC::s StateManager::jsonToRumbaRCStruct(const QJsonObject &jsonObject)
+{
     RumbaRC::s myStruct;
     myStruct.x = jsonObject["x"].toDouble();
     myStruct.y = jsonObject["y"].toDouble();
@@ -165,7 +188,8 @@ RumbaRC::s  StateManager::jsonToRumbaRCStruct(const QJsonObject& jsonObject) {
     return myStruct;
 }
 
-QJsonObject  StateManager::structToJson( Obstacle::s obstacle) {
+QJsonObject StateManager::structToJson(Obstacle::s obstacle)
+{
     QJsonObject jsonObject;
     jsonObject["x"] = obstacle.x;
     jsonObject["y"] = obstacle.y;
@@ -174,7 +198,8 @@ QJsonObject  StateManager::structToJson( Obstacle::s obstacle) {
     return jsonObject;
 }
 
-Obstacle::s StateManager::jsonToObstacleStruct(const QJsonObject& jsonObject){
+Obstacle::s StateManager::jsonToObstacleStruct(const QJsonObject &jsonObject)
+{
     Obstacle::s myStruct;
     myStruct.x = jsonObject["x"].toDouble();
     myStruct.y = jsonObject["y"].toDouble();
@@ -182,4 +207,3 @@ Obstacle::s StateManager::jsonToObstacleStruct(const QJsonObject& jsonObject){
     myStruct.height = jsonObject["height"].toInt();
     return myStruct;
 }
-
