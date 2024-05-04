@@ -31,6 +31,9 @@
 #include <QMenuBar>
 #include <QMenu>
 #include <QStyleFactory>
+#include <iostream>
+#include <tuple>
+
 
 #include "rumba.h"
 #include "rumbaRC.h"
