@@ -371,7 +371,7 @@ void MainWindow::on_numOfRumbas_valueChanged(int arg1)
     if (loading)
         return;
 
-    if (rumbas.size() < arg1)
+    if (rumbas.size() < static_cast<unsigned long long>(arg1))
     {
         int radius = 20;
         for (int hI = 0; hI < ui->graphicsView->height(); hI = (hI + radius * 2))
@@ -493,7 +493,7 @@ void MainWindow::on_numOfObstacles_valueChanged(int arg1)
     if (loading)
         return;
 
-    if (obstacles.size() < arg1)
+    if (obstacles.size() < static_cast<unsigned long long>(arg1))
     {
         int width = randomGen->bounded(ui->obstacleWidthSlider->minimum(), ui->obstacleWidthSlider->maximum());
         int height = randomGen->bounded(ui->obstacleHeightSlider->minimum(), ui->obstacleHeightSlider->maximum());
@@ -594,7 +594,7 @@ void MainWindow::on_numOfRumbasRC_valueChanged(int arg1)
     if (loading)
         return;
 
-    if (rumbasRC.size() < arg1)
+    if (rumbasRC.size() < static_cast<unsigned long long>(arg1))
     {
         int radius = 20;
         for (int hI = 0; hI < ui->graphicsView->height(); hI = (hI + radius * 2))
