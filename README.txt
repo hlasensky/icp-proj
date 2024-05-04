@@ -1,6 +1,6 @@
 # icp-proj
 
-	Projektový popis
+PROJEKTOVÝ POPIS
 
    Tento projekt vytváří hru v prostředí Qt Creatoru, ve které se odehrává simulace s RC roboty, autonomními roboty a překážkami.
 
@@ -13,5 +13,11 @@
 
    Překážky: Překážky jsou statické objekty na mapě, které brání pohybu robotů. Hra umožňuje umístit překážky na libovolné místo na mapě a měnit jejich šířku a výšku. Překážky lze umístit i na sebe navzájem. Jakmile je překážka umístěna na robotovi, znehybní ho  a nemůže se pohybovat.
 
-//*** na konec
-Tento projekt nabízí interaktivní a dynamické prostředí, ve kterém hráč může experimentovat s různými druhy robotů a překážek a zkoumat jejich chování a interakci na herní mapě.
+
+HLAVNÍ STRUKTURA
+  
+- Aplikace začíná vytvořením instance třídy QApplication, následuje vytvoření hlavního okna MainWindow, které se zobrazí pomocí metody show(), a nakonec spuštění aplikační smyčky pomocí a.exec(), která udržuje aplikaci aktivní a reaguje na události.
+- Konstruktor třídy MainWindow inicializuje UI, nastavuje pohled (view) jako viewport pro graphicsView, připravuje stavy hry a časovač pro periodické aktualizace scény.
+- Uživatel může přidávat roboty a překážky do scény pomocí tlačítek v uživatelském rozhraní. Objekty jsou přidávány pomocí metod setRumbas, setRumbasRC a setObstacles. Po přidání objektů je možné je upravovat kliknutím levým tlačítkem myši.
+- RC robot a autonomní robot jsou vytvářeny pomocí konstruktorů tříd RumbaRC a Rumba s nastavením atributů. RC robotovi je také vytvořen směrový indikátor pro lepší orientaci.
+- Hlavní smyčka programu: Metoda updateScene() zajišťuje průchod všemi objekty ve scéně a průběžně kontroluje kolize. Pokud kolize nastane, krok se vrátí zpět. Dále se nastavuje aktivní prvek na základě kliknutí myši a barevné označení objektu na červenou.
