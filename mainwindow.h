@@ -44,6 +44,16 @@ namespace Ui
 }
 QT_END_NAMESPACE
 
+/**
+ * @brief The main window class for the application.
+
+ * This class serves as the central hub for the application's graphical user interface (GUI) and manages the overall game state. It inherits from QMainWindow and provides various functionalities, including:
+ *
+ * - Creating and initializing the GUI elements (menu bar, buttons, scene, etc.)
+ * - Handling user interactions (key presses, button clicks)
+ * - Managing the game loop, including updating the scene, checking for collisions, and applying movement rules
+ * - Providing methods for accessing and modifying game data (e.g., Rumba objects, obstacles, game state)
+ */
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -121,6 +131,13 @@ private slots:
     void on_dKey_clicked();
 };
 
+/**
+ * @brief Class responsible for persisting game state.
+
+ * This class provides functionalities for saving and loading the game state to and from JSON files. It allows the application to resume gameplay from a previous session or store the current game progress for later use.
+
+ * The `StateManager` interacts with the `MainWindow` object to access and update game data during the saving and loading processes.
+ */
 class StateManager
 {
 public:
