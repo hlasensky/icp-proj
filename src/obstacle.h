@@ -20,7 +20,6 @@
  * @brief Class representing a Obstacle object.
  * This class inherits from QWidget and QGraphicsRectItem.
  * It encapsulates class methods, a structure, and protected data related to the Obstacle.
- *
  */
 class Obstacle : public QWidget, public QGraphicsRectItem
 {
