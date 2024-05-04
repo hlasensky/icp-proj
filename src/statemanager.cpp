@@ -27,11 +27,11 @@ StateManager::StateManager() {}
  */
 int StateManager::saveStateToJson(const QString &fileName, MainWindow *perent)
 {
-    //qDebug() << "path:        .." + QDir::separator() + "examples" + QDir::separator() + fileName;
-    QFile file("../examples/"+ fileName);
+    std::string path = "../examples/" + fileName;
+    QFile file("../examples/" + fileName);
     if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
     {
-        qWarning() << "Couldn't open file for writing:" << file.errorString();
+        qWarning() << "Couldn't open file for writing:" << file.errorString() << " " << path;
         return 1;
     }
     QJsonArray jsonRumbaArray;
