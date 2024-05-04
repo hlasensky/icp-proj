@@ -13,6 +13,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include <QtGlobal>
 #include <QMainWindow>
 #include <QtWidgets>
 #include <QtCore>
@@ -72,7 +73,7 @@ public:
 private:
     StateManager *stateManager;
 
-    QRandomGenerator *randomGen = QRandomGenerator::global();
+    //QRandomGenerator *randomGen = QRandomGenerator::global();
     Ui::MainWindow *ui;
     QGraphicsScene *scene;
     QGraphicsView *view;
