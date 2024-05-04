@@ -27,7 +27,10 @@ StateManager::StateManager() {}
  */
 int StateManager::saveStateToJson(const QString &fileName, MainWindow *perent)
 {
-    QString filePath = QString("..") + QDir::separator() + QString("examples") + QDir::separator() + fileName;
+    QDir projectDir(QCoreApplication::applicationDirPath());
+    projectDir.cdUp();
+    QString examplesPath = projectDir.filePath("examples");
+    QString filePath = examplesPath + QDir::separator() + fileName;
 
     qDebug() << filePath;
 
@@ -82,8 +85,11 @@ int StateManager::saveStateToJson(const QString &fileName, MainWindow *perent)
  */
 int StateManager::loadStateFromJson(const QString &fileName, MainWindow *parent)
 {
-    QString filePath = QString("..") + QDir::separator() + QString("examples") + QDir::separator() + fileName;
-
+    QDir projectDir(QCoreApplication::applicationDirPath());
+    projectDir.cdUp();
+    QString examplesPath = projectDir.filePath("examples");
+    QString filePath = examplesPath + QDir::separator() + fileName;
+    
     qDebug() << filePath;
 
     QFile file(filePath);
