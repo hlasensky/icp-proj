@@ -15,7 +15,12 @@
 StateManager::StateManager() {}
 
 /**
- * @brief TODO
+ * @brief This method saves all Rumba's, RumbaRC's and Obstacle's data into json file.
+ *
+ *This method uses getter methods:
+ *  rumba->getAtributes()
+ *  rumbaRC->getAtributes()
+ *  obstacle->getAtributes()
  *
  * @param fileName
  * @param perent
@@ -61,7 +66,12 @@ int StateManager::saveStateToJson(const QString &fileName, MainWindow *perent)
 }
 
 /**
- * @brief TODO
+ * @brief This method loads all Rumba's, RumbaRC's and Obstacle's data from json file and returns them to perent using setter methods.
+ *
+ *The setter methods:
+ *  parent->setObstacles(obstacles);
+ *  parent->setRumbasRC(rumbaRCs);
+ *  parent->setRumbas(rumbas);
  *
  * @param fileName
  * @param parent
@@ -124,10 +134,14 @@ int StateManager::loadStateFromJson(const QString &fileName, MainWindow *parent)
 }
 
 /**
- * @brief TODO
+ * @brief Converts a QWidget subclass instance (Rumba, RumbaRC, or Obstacle) to a QJsonObject representation of its attributes.
  *
- * @param obj
- * @return QJsonObject
+ * This function performs a dynamic cast to determine the specific type of the QWidget subclass (`obj`).
+ * Based on the type, it calls the corresponding `structToJson` function for that subclass to convert
+ * its attributes to a QJsonObject.
+ *
+ * @param obj The QWidget subclass instance to convert.
+ * @return A QJsonObject containing the attributes of the provided QWidget subclass.
  */
 QJsonObject StateManager::structToJson(QWidget *obj)
 {
@@ -144,7 +158,7 @@ QJsonObject StateManager::structToJson(QWidget *obj)
 }
 
 /**
- * @brief TODO
+ * @brief Converts a Rumba struct to a QJsonObject representation of its attributes.
  *
  * @param Rumba
  * @return QJsonObject
@@ -166,7 +180,7 @@ QJsonObject StateManager::structToJson(Rumba::s Rumba)
 }
 
 /**
- * @brief TODO
+ * @brief Converts a QJsonObject to a Rumba struct representation.
  *
  * @param jsonObject
  * @return Rumba::s
@@ -188,7 +202,7 @@ Rumba::s StateManager::jsonToRumbaStruct(const QJsonObject &jsonObject)
 }
 
 /**
- * @brief TODO
+ * @brief Converts a RumbaRC struct to a QJsonObject representation of its attributes.
  *
  * @param rumbaRc
  * @return QJsonObject
@@ -208,7 +222,7 @@ QJsonObject StateManager::structToJson(RumbaRC::s rumbaRc)
 }
 
 /**
- * @brief TODO
+ * @brief Converts a QJsonObject to a RumbaRC struct representation.
  *
  * @param jsonObject
  * @return RumbaRC::s
@@ -228,7 +242,7 @@ RumbaRC::s StateManager::jsonToRumbaRCStruct(const QJsonObject &jsonObject)
 }
 
 /**
- * @brief TODO
+ * @brief Converts a Obstacle struct to a QJsonObject representation of its attributes.
  *
  * @param obstacle
  * @return QJsonObject
@@ -244,7 +258,7 @@ QJsonObject StateManager::structToJson(Obstacle::s obstacle)
 }
 
 /**
- * @brief TODO
+ * @brief Converts a QJsonObject to a Obstacle struct representation.
  *
  * @param jsonObject
  * @return Obstacle::s
