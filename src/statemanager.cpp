@@ -32,8 +32,6 @@ int StateManager::saveStateToJson(const QString &fileName, MainWindow *perent)
     QString examplesPath = projectDir.filePath("examples");
     QString filePath = examplesPath + QDir::separator() + fileName;
 
-    qDebug() << filePath;
-
     QFile file(filePath);
     if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
     {
@@ -89,8 +87,6 @@ int StateManager::loadStateFromJson(const QString &fileName, MainWindow *parent)
     projectDir.cdUp();
     QString examplesPath = projectDir.filePath("examples");
     QString filePath = examplesPath + QDir::separator() + fileName;
-    
-    qDebug() << filePath;
 
     QFile file(filePath);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
