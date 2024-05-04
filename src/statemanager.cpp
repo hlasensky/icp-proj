@@ -27,7 +27,8 @@ StateManager::StateManager() {}
  */
 int StateManager::saveStateToJson(const QString &fileName, MainWindow *perent)
 {
-    QFile file(fileName);
+    qDebug() << QDir::currentPath() + QDir::separator()+ ".." + QDir::separator() + "examples" + QDir::separator() + fileName;
+    QFile file(QDir::currentPath() + QDir::separator()+ ".." + QDir::separator() + "examples" + QDir::separator() + fileName);
     if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
     {
         qWarning() << "Couldn't open file for writing:" << file.errorString();
@@ -78,7 +79,7 @@ int StateManager::saveStateToJson(const QString &fileName, MainWindow *perent)
  */
 int StateManager::loadStateFromJson(const QString &fileName, MainWindow *parent)
 {
-    QFile file(fileName);
+    QFile file(QDir::currentPath() + QDir::separator() + ".." + QDir::separator() + "examples" + QDir::separator() + fileName);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
     {
         qWarning() << "Couldn't open file for reading:" << file.errorString();
