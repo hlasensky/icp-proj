@@ -27,11 +27,16 @@ StateManager::StateManager() {}
  */
 int StateManager::saveStateToJson(const QString &fileName, MainWindow *perent)
 {
-    std::string path = "../examples/" + fileName;
-    QFile file("../examples/" + fileName);
+    QDir projectDir(QCoreApplication::applicationDirPath());
+    QString srcPath = projectDir.filePath("examples");
+    QString filePath = srcPath + QDir::separator() + fileName;
+
+    qDebug() << filePath;
+
+    QFile file(filePath);
     if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
     {
-        qWarning() << "Couldn't open file for writing:" << file.errorString() << " " << path;
+        qWarning() << "Couldn't open file for writing:" << file.errorString();
         return 1;
     }
     QJsonArray jsonRumbaArray;
@@ -79,7 +84,13 @@ int StateManager::saveStateToJson(const QString &fileName, MainWindow *perent)
  */
 int StateManager::loadStateFromJson(const QString &fileName, MainWindow *parent)
 {
-    QFile file("../examples/"+ fileName);
+    QDir projectDir(QCoreApplication::applicationDirPath());
+    QString srcPath = projectDir.filePath("examples");
+    QString filePath = srcPath + QDir::separator() + fileName;
+
+    qDebug() << filePath;
+
+    QFile file(filePath);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
     {
         qWarning() << "Couldn't open file for reading:" << file.errorString();
