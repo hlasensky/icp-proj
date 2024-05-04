@@ -686,7 +686,17 @@ void MainWindow::setRumbas(std::vector<Rumba::s> rV)
     ui->numOfRumbas->setValue(rV.size());
     for (Rumba::s rumbaStruct : rV)
     {
-        auto [x, y, last_x, last_y, radius, speed, rotationStep, rotation, detectionLen, direction] = rumbaStruct;
+        qreal x;
+        qreal y;
+        qreal last_x;
+        qreal last_y;
+        int radius;
+        int speed;
+        int rotationStep;
+        int rotation;
+        int detectionLen;
+
+        std::tie(x, y, last_x, last_y, radius, speed, rotationStep, rotation, detectionLen, direction) = rumbaStruct;
         auto r = new Rumba(x, y, last_x, last_y, radius, speed, rotationStep, rotation, detectionLen, direction);
         scene->addItem(r);
         rumbas.push_back(r);
@@ -704,7 +714,16 @@ void MainWindow::setRumbasRC(std::vector<RumbaRC::s> rcV)
     ui->numOfRumbasRC->setValue(rcV.size());
     for (RumbaRC::s rumbaRCStruct : rcV)
     {
-        auto [x, y, last_x, last_y, radius, speed, rotation, detectionLen] = rumbaRCStruct;
+        qreal x;
+        qreal y;
+        qreal last_x;
+        qreal last_y;
+        int radius;
+        int speed;
+        int rotation;
+        int detectionLen;
+
+        std::tie(x, y, last_x, last_y, radius, speed, rotation, detectionLen) = rumbaRCStruct;
         auto r = new RumbaRC(x, y, last_x, last_y, radius, speed, rotation, detectionLen);
         scene->addItem(r);
         rumbasRC.push_back(r);
@@ -722,7 +741,11 @@ void MainWindow::setObstacles(std::vector<Obstacle::s> oV)
     ui->numOfObstacles->setValue(oV.size());
     for (Obstacle::s obstacleStruct : oV)
     {
-        auto [x, y, width, height] = obstacleStruct;
+        qreal x;
+        qreal y;
+        qreal width;
+        qreal height;
+        std::tie(x, y, width, height) = obstacleStruct;
         auto o = new Obstacle(x, y, width, height);
         scene->addItem(o);
         obstacles.push_back(o);
