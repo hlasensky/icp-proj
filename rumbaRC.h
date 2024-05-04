@@ -19,6 +19,7 @@
 #include <QKeyEvent>
 #include <QGraphicsLineItem>
 #include <QGradient>
+#include <math.h>
 
 /**
  * @brief TODO

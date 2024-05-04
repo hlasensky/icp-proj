@@ -107,8 +107,8 @@ void Rumba::move()
     x = last_x;
     y = last_y;
 
-    x += speed * qCos(qDegreesToRadians(rotation));
-    y += speed * qSin(qDegreesToRadians(rotation));
+    x += speed * cos(rotation * (M_PI / 180));
+    y += speed * sin(rotation * (M_PI / 180));
 
     setPos(x, y);
 }
@@ -123,8 +123,8 @@ void Rumba::testMove()
     last_x = x;
     last_y = y;
 
-    x += (speed + detectionLen) * qCos(qDegreesToRadians(rotation));
-    y += (speed + detectionLen) * qSin(qDegreesToRadians(rotation));
+    x += (speed + detectionLen) * cos(rotation * (M_PI / 180));
+    y += (speed + detectionLen) * sin(rotation * (M_PI / 180));
 
     setPos(x, y);
 }
