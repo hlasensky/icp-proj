@@ -27,7 +27,7 @@ StateManager::StateManager() {}
  */
 int StateManager::saveStateToJson(const QString &fileName, MainWindow *perent)
 {
-    QString filePath = ".." + QDir::separator() + "examples" + QDir::separator() + fileName;
+    QString filePath = QString("..") + QDir::separator() + QString("examples") + QDir::separator() + fileName;
 
     qDebug() << filePath;
 
@@ -82,7 +82,7 @@ int StateManager::saveStateToJson(const QString &fileName, MainWindow *perent)
  */
 int StateManager::loadStateFromJson(const QString &fileName, MainWindow *parent)
 {
-    QString filePath = ".." + QDir::separator() + "examples" + QDir::separator() + fileName;
+    QString filePath = QString("..") + QDir::separator() + QString("examples") + QDir::separator() + fileName;
 
     qDebug() << filePath;
 
