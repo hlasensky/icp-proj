@@ -19,6 +19,8 @@ set(PROJECT_SOURCES
         mainwindow.ui
 )
 
+get_filename_component(SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR} ABSOLUTE)
+
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(icp_v4
         MANUAL_FINALIZATION

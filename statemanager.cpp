@@ -2,12 +2,12 @@
  * @file statemanager.cpp
  * @author Tomáš Hlásenský (xhlase01)
  * @author Michael Babušík (xbabus01)
- * @brief 
+ * @brief
  * @version 0.1
  * @date 2024-05-03
- * 
+ *
  * @copyright Copyright (c) 2024
- * 
+ *
  */
 
 #include "mainwindow.h"
@@ -16,17 +16,17 @@ StateManager::StateManager() {}
 
 /**
  * @brief TODO
- * 
- * @param fileName 
- * @param perent 
+ *
+ * @param fileName
+ * @param perent
  */
-void StateManager::saveStateToJson(const QString &fileName, MainWindow *perent)
+int StateManager::saveStateToJson(const QString &fileName, MainWindow *perent)
 {
     QFile file(fileName);
     if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
     {
         qWarning() << "Couldn't open file for writing:" << file.errorString();
-        return;
+        return 1;
     }
     QJsonArray jsonRumbaArray;
     for (auto rumba : perent->getRumbas())
@@ -57,21 +57,22 @@ void StateManager::saveStateToJson(const QString &fileName, MainWindow *perent)
     QJsonDocument doc(jsonObject);
     file.write(doc.toJson());
     file.close();
+    return 0;
 }
 
 /**
  * @brief TODO
- * 
- * @param fileName 
- * @param parent 
+ *
+ * @param fileName
+ * @param parent
  */
-void StateManager::loadStateFromJson(const QString &fileName, MainWindow *parent)
+int StateManager::loadStateFromJson(const QString &fileName, MainWindow *parent)
 {
     QFile file(fileName);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
     {
         qWarning() << "Couldn't open file for reading:" << file.errorString();
-        return;
+        return 1;
     }
 
     QByteArray data = file.readAll();
@@ -82,7 +83,7 @@ void StateManager::loadStateFromJson(const QString &fileName, MainWindow *parent
     {
         qWarning() << "Failed to parse JSON file";
         file.close();
-        return;
+        return 1;
     }
 
     QJsonObject jsonObject = doc.object();
@@ -119,13 +120,14 @@ void StateManager::loadStateFromJson(const QString &fileName, MainWindow *parent
     parent->setRumbas(rumbas);
 
     file.close();
+    return 0;
 }
 
 /**
  * @brief TODO
- * 
- * @param obj 
- * @return QJsonObject 
+ *
+ * @param obj
+ * @return QJsonObject
  */
 QJsonObject StateManager::structToJson(QWidget *obj)
 {
@@ -143,9 +145,9 @@ QJsonObject StateManager::structToJson(QWidget *obj)
 
 /**
  * @brief TODO
- * 
- * @param Rumba 
- * @return QJsonObject 
+ *
+ * @param Rumba
+ * @return QJsonObject
  */
 QJsonObject StateManager::structToJson(Rumba::s Rumba)
 {
@@ -165,9 +167,9 @@ QJsonObject StateManager::structToJson(Rumba::s Rumba)
 
 /**
  * @brief TODO
- * 
- * @param jsonObject 
- * @return Rumba::s 
+ *
+ * @param jsonObject
+ * @return Rumba::s
  */
 Rumba::s StateManager::jsonToRumbaStruct(const QJsonObject &jsonObject)
 {
@@ -187,9 +189,9 @@ Rumba::s StateManager::jsonToRumbaStruct(const QJsonObject &jsonObject)
 
 /**
  * @brief TODO
- * 
- * @param rumbaRc 
- * @return QJsonObject 
+ *
+ * @param rumbaRc
+ * @return QJsonObject
  */
 QJsonObject StateManager::structToJson(RumbaRC::s rumbaRc)
 {
@@ -207,9 +209,9 @@ QJsonObject StateManager::structToJson(RumbaRC::s rumbaRc)
 
 /**
  * @brief TODO
- * 
- * @param jsonObject 
- * @return RumbaRC::s 
+ *
+ * @param jsonObject
+ * @return RumbaRC::s
  */
 RumbaRC::s StateManager::jsonToRumbaRCStruct(const QJsonObject &jsonObject)
 {
@@ -227,9 +229,9 @@ RumbaRC::s StateManager::jsonToRumbaRCStruct(const QJsonObject &jsonObject)
 
 /**
  * @brief TODO
- * 
- * @param obstacle 
- * @return QJsonObject 
+ *
+ * @param obstacle
+ * @return QJsonObject
  */
 QJsonObject StateManager::structToJson(Obstacle::s obstacle)
 {
@@ -243,9 +245,9 @@ QJsonObject StateManager::structToJson(Obstacle::s obstacle)
 
 /**
  * @brief TODO
- * 
- * @param jsonObject 
- * @return Obstacle::s 
+ *
+ * @param jsonObject
+ * @return Obstacle::s
  */
 Obstacle::s StateManager::jsonToObstacleStruct(const QJsonObject &jsonObject)
 {

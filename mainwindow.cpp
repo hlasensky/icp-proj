@@ -107,6 +107,10 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
     newGame();
+    delete viewBoundaryTop;
+    delete viewBoundaryLeft;
+    delete viewBoundaryRight;
+    delete viewBoundaryBottom;
     delete scene;
     delete view;
     delete menuBar;
@@ -117,10 +121,6 @@ MainWindow::~MainWindow()
     delete loadGameAction;
     delete quitAction;
     delete timer;
-    delete viewBoundaryTop;
-    delete viewBoundaryLeft;
-    delete viewBoundaryRight;
-    delete viewBoundaryBottom;
     delete ui;
 }
 
@@ -637,18 +637,7 @@ void MainWindow::on_newGameBtn_clicked()
     newGame();
 }
 
-/**
- * @brief Slot function connected to the "Load Game" button click.
- * This function calls newGame to reset, sets the loading flag, loads the game state from a JSON file using stateManager->loadStateFromJson, and then clears the loading flag.
- *
- */
-void MainWindow::on_loadBtn_clicked()
-{
-    newGame();
-    loading = true;
-    stateManager->loadStateFromJson("./save.json", this);
-    loading = false;
-}
+
 
 /**
  * @brief Slot function connected to the "Pause Game" button click.
@@ -769,10 +758,25 @@ std::vector<Obstacle *> MainWindow::getObstacles()
 }
 
 /**
+ * @brief Slot function connected to the "Load Game" button click.
+ * This function calls newGame to reset, sets the loading flag, loads the game state from a JSON file using stateManager->loadStateFromJson, and then clears the loading flag.
+ *
+ */
+void MainWindow::on_loadBtn_clicked()
+{
+    newGame();
+    loading = true;
+    if (stateManager->loadStateFromJson("savedGame.json", this))
+        on_quitBtn_clicked();
+    loading = false;
+}
+
+/**
  * @brief Slot function connected to the "Save Game" button click.
  * This function saves the current game state to a JSON file using stateManager->saveStateToJson.
  */
 void MainWindow::on_saveBtn_clicked()
 {
-    stateManager->saveStateToJson("./save.json", this);
+    if (stateManager->saveStateToJson("savedGame.json", this))
+        on_quitBtn_clicked();
 }

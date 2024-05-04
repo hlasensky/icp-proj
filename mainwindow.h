@@ -143,8 +143,8 @@ class StateManager
 public:
     StateManager();
 
-    void saveStateToJson(const QString &fileName, MainWindow *perent);
-    void loadStateFromJson(const QString &fileName, MainWindow *perent);
+    int saveStateToJson(const QString &fileName, MainWindow *perent);
+    int loadStateFromJson(const QString &fileName, MainWindow *perent);
 
 private:
     QJsonObject structToJson(QWidget *obj);
