@@ -24,7 +24,7 @@ HLAVNÍ STRUKTURA
 
 POUŽITÍ APLIKACE
 
-   Pro spuštění aplikace použijte příkaz make run. Po zobrazení okna budete mít přístup k ovládacímu menu na levé straně pro přidání objektů do scény. Objekty se přidávají pomocí tlačítka s šipkou nahoru vedle pole "Přidat/Odebrat". Při přidávání autonomního robota můžete nastavit vzdálenost detekce pomocí posuvníku, úhel rotace pomocí spineru a směr otočení pomocí kulatého tlačítka.
+   Pro spuštění aplikace použijte příkaz make run. Po zobrazení okna budete mít přístup k ovládacímu menu na levé straně pro přidání objektů do scény. Objekty se přidávají pomocí tlačítka s šipkou nahoru vedle pole "Přidat/Odebrat", šipka dolů odebere poslední přidaný objekt dané kategorie. Při přidávání autonomního robota můžete nastavit vzdálenost detekce pomocí posuvníku, úhel rotace pomocí spineru a směr otočení pomocí kulatého tlačítka.
    Ovládání RC robota je možné pomocí kláves W, A, S, D nebo tlačítek zobrazených na levé straně, na která můžete kliknout levým tlačítkem myši. Překážky lze upravovat také pomocí posuvníku.
    Na pravé straně obrazovky jsou tlačítka pro následující akce:
 	- Quit: Ukončí hru.
