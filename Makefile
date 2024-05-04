@@ -11,7 +11,7 @@ QMAKE_PRO = icp_v4.pro
 
 # Qmake target
 qmake:
-	qmake $(SRC_DIR)/$(QMAKE_PRO)
+	qmake $(SRC_DIR)/
 
 # Doxygen target
 doxygen:
@@ -23,8 +23,9 @@ clean:
 	$(MAKE) -C $(DOC_DIR) clean
 
 # Build target (depends on qmake)
-build: qmake
-	$(MAKE) -C $(BUILD_DIR)
+build: qmake \
+	$(MAKE) -C $(BUILD_DIR) \
+	doxygen
 
 # Help target
 help:
