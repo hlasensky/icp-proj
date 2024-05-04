@@ -13,17 +13,21 @@
 #include "rumbaRC.h"
 
 /**
- * @brief Construct a new Rumba R C:: Rumba R C object
- * TODO
- * 
- * @param x_in 
- * @param y_in 
- * @param last_x_in 
- * @param last_y_in 
- * @param radius_in 
- * @param speed_in 
- * @param rotation_in 
- * @param detectionLen_in 
+ * @brief Construct a new Rumba RC:: Rumba RC object
+ * This constructor takes incoming data and stores it in the Rumbas RC dataset and sets its color.
+ * It creates a Direction Indicator (DI) as a new object for the Rumba RC, indicating the direction to the player.
+ * The DI is set as a black, 4-pixel-wide line with a ZValue of 1.
+ * Afterwards, the function 'setDirectionIndicator' is called to determine the correct direction of the indicator.
+ * Finally, the midpoint of the Rumba RC is established and its position is set.
+ *
+ * @param x_in
+ * @param y_in
+ * @param last_x_in
+ * @param last_y_in
+ * @param radius_in
+ * @param speed_in
+ * @param rotation_in
+ * @param detectionLen_in
  */
 RumbaRC::RumbaRC(qreal x_in, qreal y_in, qreal last_x_in, qreal last_y_in, int radius_in, int speed_in, int rotation_in, int detectionLen_in)
     : QGraphicsEllipseItem(0, 0, radius_in * 2, radius_in * 2)
@@ -48,9 +52,10 @@ RumbaRC::RumbaRC(qreal x_in, qreal y_in, qreal last_x_in, qreal last_y_in, int r
     setPos(x, y);
 }
 
+
 /**
- * @brief TODO
- * 
+ * @brief This method sets position and rotation of DI.
+ *
  */
 void RumbaRC::setDirection()
 {
@@ -59,9 +64,9 @@ void RumbaRC::setDirection()
 }
 
 /**
- * @brief TODO
- * 
- * @return RumbaRC::s 
+ * @brief This method saves incoming data of Rumba RC to structure for loading.
+ *
+ * @return RumbaRC::s
  */
 RumbaRC::s RumbaRC::getAtributes()
 {
@@ -79,9 +84,9 @@ RumbaRC::s RumbaRC::getAtributes()
 }
 
 /**
- * @brief TODO
- * 
- * @param val 
+ * @brief This method sets detection length for Rumba RC.
+ *
+ * @param val
  */
 void RumbaRC::changeDetectionLen(int val)
 {
@@ -89,8 +94,8 @@ void RumbaRC::changeDetectionLen(int val)
 }
 
 /**
- * @brief TODO
- * 
+ * @brief This method stops the movement of Rumba RC.
+ *
  */
 void RumbaRC::stop()
 {
@@ -101,8 +106,8 @@ void RumbaRC::stop()
 }
 
 /**
- * @brief TODO
- * 
+ * @brief This method moves the RC Rumba in the intended direction.
+ *
  */
 void RumbaRC::move()
 {
@@ -116,9 +121,11 @@ void RumbaRC::move()
 }
 
 /**
- * @brief TODO
- * 
- * @param key 
+ * @brief This method tests movement due to collision.
+ * It processes incoming keys, if it's a rotation key, it adjusts the rotation; if it's a movement key, it sets the speed.
+ * Subsequently, it updates the Direction Indicator (DI) and sets the coordinates.
+ *
+ * @param key
  */
 void RumbaRC::testMove(Qt::Key key)
 {
@@ -152,9 +159,9 @@ void RumbaRC::testMove(Qt::Key key)
 }
 
 /**
- * @brief Destroy the Rumba R C:: Rumba R C object
- * TODO
- * 
+ * @brief Destroy the Rumba RC:: Rumba RC object
+ * This destructor deletes DI object
+ *
  */
 RumbaRC::~RumbaRC()
 {

@@ -13,11 +13,13 @@
 #include <QApplication>
 
 /**
- * @brief TODO
- * 
- * @param argc 
- * @param argv 
- * @return int 
+ * @brief Entry point of the application.
+ * This function initializes the application, sets its style to Fusion, creates the main window,
+ * and displays it.
+ *
+ * @param argc
+ * @param argv
+ * @return int
  */
 int main(int argc, char *argv[])
 {

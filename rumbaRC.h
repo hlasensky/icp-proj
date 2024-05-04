@@ -22,8 +22,11 @@
 #include <math.h>
 
 /**
- * @brief TODO
- * 
+ * @brief Class representing a Rumba RC object.
+ * This class inherits from QWidget and QGraphicsEllipseItem.
+ * It encapsulates class methods, a structure, and protected data related to the Rumba RC.
+ * It represents a robotic device capable of movement and rotation with WASD keys.
+ *
  */
 class RumbaRC : public QWidget, public QGraphicsEllipseItem
 {

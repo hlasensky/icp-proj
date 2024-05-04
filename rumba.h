@@ -24,8 +24,10 @@
 
 
 /**
- * @brief TODO
- * 
+ * @brief Class representing a Rumba object.
+ * This class inherits from QWidget and QGraphicsEllipseItem.
+ * It encapsulates class methods, a structure, and protected data related to the Rumba.
+ *
  */
 class Rumba : public QWidget, public QGraphicsEllipseItem
 {

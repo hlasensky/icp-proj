@@ -13,12 +13,12 @@
 
 /**
  * @brief Construct a new Obstacle:: Obstacle object
- * TODO
- * 
- * @param x 
- * @param y 
- * @param width 
- * @param height 
+ * This constructor takes incoming data and stores it in the Obstacle dates. Then it sets its flags.
+ *
+ * @param x
+ * @param y
+ * @param width
+ * @param height
  */
 Obstacle::Obstacle(qreal x, qreal y, qreal width, qreal height) : QGraphicsRectItem(0, 0, width, height)
 {
@@ -34,9 +34,9 @@ Obstacle::Obstacle(qreal x, qreal y, qreal width, qreal height) : QGraphicsRectI
 }
 
 /**
- * @brief TODO
- * 
- * @return Obstacle::s 
+ * @brief This method saves data of Obstacle to structure for loading.
+ *
+ * @return Obstacle::s
  */
 Obstacle::s Obstacle::getAtributes()
 {
