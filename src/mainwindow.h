@@ -82,11 +82,15 @@ private:
     QGraphicsView *view;
     QMenuBar *menuBar;
     QMenu *gameMenu;
+    QMenu *exampleMenu;
     QAction *pauseAction;
     QAction *newGameAction;
     QAction *saveGameAction;
     QAction *loadGameAction;
     QAction *quitAction;
+    QAction *ex1;
+    QAction *ex2;
+    QAction *ex3;
     QTimer *timer;
     QGraphicsLineItem *viewBoundaryTop;
     QGraphicsLineItem *viewBoundaryLeft;
@@ -110,6 +114,10 @@ private:
     bool CheckCollision(Rumba *r);
     bool CheckCollision(Obstacle *o);
     bool CheckCollision(RumbaRC *rumba);
+    void load_example_one();
+    void load_example_two();
+    void load_example_three();
+
 
 public slots:
     void updateScene();

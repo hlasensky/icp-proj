@@ -35,6 +35,9 @@ MainWindow::MainWindow(QWidget *parent)
     // Create a "Game" menu
     gameMenu = new QMenu("Game", this);
     menuBar->addMenu(gameMenu);
+    exampleMenu = new QMenu("Examples", this);
+    menuBar->addMenu(exampleMenu);
+
 
     pauseAction = new QAction("Pause Game", this);
     gameMenu->addAction(pauseAction);
@@ -57,6 +60,20 @@ MainWindow::MainWindow(QWidget *parent)
     quitAction = new QAction("Quit", this);
     gameMenu->addAction(quitAction);
     connect(quitAction, &QAction::triggered, qApp, QApplication::quit);
+
+
+    ex1 = new QAction("Example 1", this);
+    exampleMenu->addAction(ex1);
+    connect(ex1, &QAction::triggered, this, &MainWindow::load_example_one);
+
+    ex2 = new QAction("Example 2", this);
+    exampleMenu->addAction(ex2);
+    connect(ex2, &QAction::triggered, this, &MainWindow::load_example_two);
+
+    ex3 = new QAction("Example 3", this);
+    exampleMenu->addAction(ex3);
+    connect(ex3, &QAction::triggered, this, &MainWindow::load_example_three);
+
 
     // setting all thats needed for window, scene and view
     int width = ui->graphicsView->width() - 10;
@@ -114,7 +131,11 @@ MainWindow::~MainWindow()
     delete scene;
     delete view;
     delete menuBar;
+    delete exampleMenu;
     delete gameMenu;
+    delete ex1;
+    delete ex2;
+    delete ex3;
     delete pauseAction;
     delete newGameAction;
     delete saveGameAction;
@@ -804,3 +825,44 @@ void MainWindow::on_saveBtn_clicked()
     if (stateManager->saveStateToJson("savedGame.json", this))
         on_quitBtn_clicked();
 }
+
+/**
+ * @brief Slot function connected to the "Load Game" button click.
+ * This function calls newGame to reset, sets the loading flag, loads the game state from a JSON file using stateManager->loadStateFromJson, and then clears the loading flag.
+ *
+ */
+void MainWindow::load_example_one()
+{
+    newGame();
+    loading = true;
+    if (stateManager->loadStateFromJson("example1.json", this))
+        on_quitBtn_clicked();
+    loading = false;
+}
+/**
+ * @brief Slot function connected to the "Load Game" button click.
+ * This function calls newGame to reset, sets the loading flag, loads the game state from a JSON file using stateManager->loadStateFromJson, and then clears the loading flag.
+ *
+ */
+void MainWindow::load_example_two()
+{
+    newGame();
+    loading = true;
+    if (stateManager->loadStateFromJson("example2.json", this))
+        on_quitBtn_clicked();
+    loading = false;
+}
+/**
+ * @brief Slot function connected to the "Load Game" button click.
+ * This function calls newGame to reset, sets the loading flag, loads the game state from a JSON file using stateManager->loadStateFromJson, and then clears the loading flag.
+ *
+ */
+void MainWindow::load_example_three()
+{
+    newGame();
+    loading = true;
+    if (stateManager->loadStateFromJson("example3.json", this))
+        on_quitBtn_clicked();
+    loading = false;
+}
+
