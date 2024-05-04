@@ -1,44 +1,24 @@
-# Define project variables
-PROJECT_NAME = icp_v4
+DOC := doc
+ZIPFILE := xhlase01-xbabus01.zip
+ZIPFILES := src/* Makefile README.txt Doxyfile 
+BUILD_DIR := build
+TARGET := icp_v4 
+CXXFLAGS := -std=c++17
+# Targets
+.PHONY: all clean run doc
+all:$(TARGET)
 
-# Define directories
-SRC_DIR = src
-BUILD_DIR = build
-DOC_DIR = doc
-EXAMPLES_DIR = examples
-
-# Qmake target
-build:
-	mkdir $(BUILD_DIR)
-	qmake $(SRC_DIR)/$(PROJECT_NAME).pro 
-	make -f $(BUILD_DIR)/Makefile qmake_all
-
-# Doxygen target
-doxygen:
-	doxygen $(DOC_DIR)/Doxygen
-
-# Clean target
+$(TARGET):
+	mkdir -p build
+	cd build && qmake ../src/icp_v4.pro && make $(CXXFLAGS)
 clean:
-	rm -rf $(BUILD_DIR)
-	make -C $(DOC_DIR) clean
+	rm -rf $(BUILD_DIR) $(DOC) $(ZIPFILE)
 
-# Run target (for testing)
-run: build
-	./$(BUILD_DIR)/$(PROJECT_NAME)
+run: $(TARGET)
+	./$(BUILD_DIR)/$(TARGET)
 
-# Pack target (for submission)
-pack: clean build doxygen
-	mkdir -p $(PROJECT_NAME)
-	cp -r $(SRC_DIR) $(EXAMPLES_DIR) $(README.txt) $(MAKEFILE) $(PROJECT_NAME)
-	zip -r $(PROJECT_NAME).zip $(PROJECT_NAME)
+doxygen:
+	doxygen Doxyfile
 
-# Help target
-help:
-	@echo "Available targets:"
-	@echo "  qmake      - Run qmake to generate build files"
-	@echo "  build       - Build the project (requires qmake first)"
-	@echo "  doxygen     - Generate documentation using Doxygen"
-	@echo "  clean       - Remove build directory and Doxygen output"
-	@echo "  run         - Run the simulator (after build)"
-	@echo "  pack        - Package the project for submission"
-	@echo "  help        - Show this help message"
+pack:
+	zip $(ZIPFILE) $(ZIPFILES)
