@@ -1,46 +1,44 @@
 # Define project variables
-PROJECT_NAME = MyProject
+PROJECT_NAME = icp_v4
 
 # Define directories
 SRC_DIR = src
 BUILD_DIR = build
 DOC_DIR = doc
-
-QMAKE_PRO = icp_v4.pro
-# Include paths for Qt libraries (adjust based on your setup)
-# QMAKE_INCLUDE_PATH = /usr/include/qt5
+EXAMPLES_DIR = examples
 
 # Qmake target
-qmake:
-	qmake $(SRC_DIR)/$(QMAKE_PRO)
+build:
+	mkdir $(BUILD_DIR)
+	qmake $(SRC_DIR)/$(PROJECT_NAME).pro 
+	make -f $(BUILD_DIR)/Makefile qmake_all
 
 # Doxygen target
 doxygen:
-	$(MAKE) -C $(DOC_DIR)
+	doxygen $(DOC_DIR)/Doxygen
 
 # Clean target
 clean:
 	rm -rf $(BUILD_DIR)
-	$(MAKE) -C $(DOC_DIR) clean
+	make -C $(DOC_DIR) clean
 
-# Build target (depends on qmake)
-build: qmake
-	make -C $(BUILD_DIR)
+# Run target (for testing)
+run: build
+	./$(BUILD_DIR)/$(PROJECT_NAME)
+
+# Pack target (for submission)
+pack: clean build doxygen
+	mkdir -p $(PROJECT_NAME)
+	cp -r $(SRC_DIR) $(EXAMPLES_DIR) $(README.txt) $(MAKEFILE) $(PROJECT_NAME)
+	zip -r $(PROJECT_NAME).zip $(PROJECT_NAME)
 
 # Help target
 help:
 	@echo "Available targets:"
 	@echo "  qmake      - Run qmake to generate build files"
+	@echo "  build       - Build the project (requires qmake first)"
 	@echo "  doxygen     - Generate documentation using Doxygen"
 	@echo "  clean       - Remove build directory and Doxygen output"
-	@echo "  build       - Build the project (requires qmake first)"
+	@echo "  run         - Run the simulator (after build)"
+	@echo "  pack        - Package the project for submission"
 	@echo "  help        - Show this help message"
-
-# Include Doxygen configuration file (optional)
-ifeq ($(strip $(DOXYGEN_CONFIG)), )
-	DOXYGEN_CONFIG = Doxyfile
-endif
-$(DOC_DIR)/%.pdf: $(DOC_DIR)/%.dox $(DOXYGEN_CONFIG)
-	doxygen $(DOXYGEN_CONFIG)
-
-
