@@ -3,14 +3,13 @@ ZIPFILE := xhlase01-xbabus01.zip
 ZIPFILES := src/* Makefile README.txt Doxyfile 
 BUILD_DIR := build
 TARGET := icp_v4 
-CXXFLAGS := -std=c++17
 # Targets
 .PHONY: all clean run doc
 all:$(TARGET)
 
 $(TARGET):
 	mkdir -p build
-	cd build && qmake ../src/icp_v4.pro && make $(CXXFLAGS)
+	cd build && qmake ../src/icp_v4.pro && make
 clean:
 	rm -rf $(BUILD_DIR) $(DOC) $(ZIPFILE)
 
