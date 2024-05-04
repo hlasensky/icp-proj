@@ -1,4 +1,5 @@
-PROJECT_NAME = ICP
+# Define project variables
+PROJECT_NAME = MyProject
 
 # Define directories
 SRC_DIR = src
@@ -11,7 +12,7 @@ QMAKE_PRO = icp_v4.pro
 
 # Qmake target
 qmake:
-	qmake $(SRC_DIR)/
+	qmake $(SRC_DIR)/$(QMAKE_PRO)
 
 # Doxygen target
 doxygen:
@@ -23,9 +24,8 @@ clean:
 	$(MAKE) -C $(DOC_DIR) clean
 
 # Build target (depends on qmake)
-build: qmake \
-	$(MAKE) -C $(BUILD_DIR) \
-	doxygen
+build: qmake
+	make -C $(BUILD_DIR)
 
 # Help target
 help:
@@ -42,3 +42,5 @@ ifeq ($(strip $(DOXYGEN_CONFIG)), )
 endif
 $(DOC_DIR)/%.pdf: $(DOC_DIR)/%.dox $(DOXYGEN_CONFIG)
 	doxygen $(DOXYGEN_CONFIG)
+
+
