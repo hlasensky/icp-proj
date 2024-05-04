@@ -103,12 +103,12 @@ private:
     int timeStep;
 
     void newGame();
-    void updateScene();
     bool CheckCollision(Rumba *r);
     bool CheckCollision(Obstacle *o);
     bool CheckCollision(RumbaRC *rumba);
 
 public slots:
+    void updateScene();
     void keyPressEvent(QKeyEvent *event);
 
 private slots:
