@@ -36,7 +36,7 @@ int StateManager::saveStateToJson(const QString &fileName, MainWindow *perent)
     QFile file(filePath);
     if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
     {
-        qWarning() << "Couldn't open file for writing:" << file.errorString();
+        qWarning() << "Couldn't open file for writing:" << file.errorString() << filePath;
         return 1;
     }
     QJsonArray jsonRumbaArray;
@@ -93,7 +93,7 @@ int StateManager::loadStateFromJson(const QString &fileName, MainWindow *parent)
     QFile file(filePath);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
     {
-        qWarning() << "Couldn't open file for reading:" << file.errorString();
+        qWarning() << "Couldn't open file for reading:" << file.errorString() << filePath;
         return 1;
     }
 
