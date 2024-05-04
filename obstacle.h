@@ -16,6 +16,10 @@
 #include <QGraphicsRectItem>
 #include <QWidget>
 
+/**
+ * @brief TODO
+ * 
+ */
 class Obstacle : public QWidget, public QGraphicsRectItem
 {
     Q_OBJECT

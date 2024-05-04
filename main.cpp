@@ -12,6 +12,13 @@
 #include "mainwindow.h"
 #include <QApplication>
 
+/**
+ * @brief TODO
+ * 
+ * @param argc 
+ * @param argv 
+ * @return int 
+ */
 int main(int argc, char *argv[])
 {
     QApplication::setStyle(QStyleFactory::create("Fusion"));

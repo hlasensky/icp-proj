@@ -11,6 +11,15 @@
 
 #include "obstacle.h"
 
+/**
+ * @brief Construct a new Obstacle:: Obstacle object
+ * TODO
+ * 
+ * @param x 
+ * @param y 
+ * @param width 
+ * @param height 
+ */
 Obstacle::Obstacle(qreal x, qreal y, qreal width, qreal height) : QGraphicsRectItem(0, 0, width, height)
 {
     this->x = x;
@@ -24,6 +33,11 @@ Obstacle::Obstacle(qreal x, qreal y, qreal width, qreal height) : QGraphicsRectI
     setAcceptHoverEvents(true);
 }
 
+/**
+ * @brief TODO
+ * 
+ * @return Obstacle::s 
+ */
 Obstacle::s Obstacle::getAtributes()
 {
     Obstacle::s atr = {

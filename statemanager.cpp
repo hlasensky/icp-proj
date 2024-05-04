@@ -14,6 +14,12 @@
 
 StateManager::StateManager() {}
 
+/**
+ * @brief TODO
+ * 
+ * @param fileName 
+ * @param perent 
+ */
 void StateManager::saveStateToJson(const QString &fileName, MainWindow *perent)
 {
     QFile file(fileName);
@@ -43,12 +49,7 @@ void StateManager::saveStateToJson(const QString &fileName, MainWindow *perent)
         jsonObstacleArray.append(jsonObject);
     }
 
-    // MainWindow::otherAtributes atr = perent->getOtherAtr();
-
     QJsonObject jsonObject;
-    // jsonObject["activeItem"] = structToJson(atr.activeItem);
-    // jsonObject["lastKeyPressed"] = atr.lastKeyPressed;
-
     jsonObject["rumbas"] = jsonRumbaArray;
     jsonObject["rumbasRC"] = jsonRumbaRCArray;
     jsonObject["obstacles"] = jsonObstacleArray;
@@ -58,6 +59,12 @@ void StateManager::saveStateToJson(const QString &fileName, MainWindow *perent)
     file.close();
 }
 
+/**
+ * @brief TODO
+ * 
+ * @param fileName 
+ * @param parent 
+ */
 void StateManager::loadStateFromJson(const QString &fileName, MainWindow *parent)
 {
     QFile file(fileName);
@@ -114,6 +121,12 @@ void StateManager::loadStateFromJson(const QString &fileName, MainWindow *parent
     file.close();
 }
 
+/**
+ * @brief TODO
+ * 
+ * @param obj 
+ * @return QJsonObject 
+ */
 QJsonObject StateManager::structToJson(QWidget *obj)
 {
     Rumba *isActiveR = dynamic_cast<Rumba *>(obj);
@@ -128,6 +141,12 @@ QJsonObject StateManager::structToJson(QWidget *obj)
         return structToJson(isActiveO->getAtributes());
 }
 
+/**
+ * @brief TODO
+ * 
+ * @param Rumba 
+ * @return QJsonObject 
+ */
 QJsonObject StateManager::structToJson(Rumba::s Rumba)
 {
     QJsonObject jsonObject;
@@ -144,6 +163,12 @@ QJsonObject StateManager::structToJson(Rumba::s Rumba)
     return jsonObject;
 }
 
+/**
+ * @brief TODO
+ * 
+ * @param jsonObject 
+ * @return Rumba::s 
+ */
 Rumba::s StateManager::jsonToRumbaStruct(const QJsonObject &jsonObject)
 {
     Rumba::s myStruct;
@@ -160,6 +185,12 @@ Rumba::s StateManager::jsonToRumbaStruct(const QJsonObject &jsonObject)
     return myStruct;
 }
 
+/**
+ * @brief TODO
+ * 
+ * @param rumbaRc 
+ * @return QJsonObject 
+ */
 QJsonObject StateManager::structToJson(RumbaRC::s rumbaRc)
 {
     QJsonObject jsonObject;
@@ -174,6 +205,12 @@ QJsonObject StateManager::structToJson(RumbaRC::s rumbaRc)
     return jsonObject;
 }
 
+/**
+ * @brief TODO
+ * 
+ * @param jsonObject 
+ * @return RumbaRC::s 
+ */
 RumbaRC::s StateManager::jsonToRumbaRCStruct(const QJsonObject &jsonObject)
 {
     RumbaRC::s myStruct;
@@ -188,6 +225,12 @@ RumbaRC::s StateManager::jsonToRumbaRCStruct(const QJsonObject &jsonObject)
     return myStruct;
 }
 
+/**
+ * @brief TODO
+ * 
+ * @param obstacle 
+ * @return QJsonObject 
+ */
 QJsonObject StateManager::structToJson(Obstacle::s obstacle)
 {
     QJsonObject jsonObject;
@@ -198,6 +241,12 @@ QJsonObject StateManager::structToJson(Obstacle::s obstacle)
     return jsonObject;
 }
 
+/**
+ * @brief TODO
+ * 
+ * @param jsonObject 
+ * @return Obstacle::s 
+ */
 Obstacle::s StateManager::jsonToObstacleStruct(const QJsonObject &jsonObject)
 {
     Obstacle::s myStruct;

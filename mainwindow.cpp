@@ -706,7 +706,7 @@ void MainWindow::setRumbas(std::vector<Rumba::s> rV)
  * @brief Sets the rumbasRC in the scene based on a vector of RumbaRC structs RumbaRC::s.
  * This function iterates through the provided vector and creates new RumbaRC objects based on the data. It adds them to the scene and the internal rumbas list.
  *
- * @param rcV
+ * @param rcV std::vector<RumbaRC::s>
  */
 void MainWindow::setRumbasRC(std::vector<RumbaRC::s> rcV)
 {

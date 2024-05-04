@@ -12,6 +12,19 @@
 
 #include "rumbaRC.h"
 
+/**
+ * @brief Construct a new Rumba R C:: Rumba R C object
+ * TODO
+ * 
+ * @param x_in 
+ * @param y_in 
+ * @param last_x_in 
+ * @param last_y_in 
+ * @param radius_in 
+ * @param speed_in 
+ * @param rotation_in 
+ * @param detectionLen_in 
+ */
 RumbaRC::RumbaRC(qreal x_in, qreal y_in, qreal last_x_in, qreal last_y_in, int radius_in, int speed_in, int rotation_in, int detectionLen_in)
     : QGraphicsEllipseItem(0, 0, radius_in * 2, radius_in * 2)
 {
@@ -35,12 +48,21 @@ RumbaRC::RumbaRC(qreal x_in, qreal y_in, qreal last_x_in, qreal last_y_in, int r
     setPos(x, y);
 }
 
+/**
+ * @brief TODO
+ * 
+ */
 void RumbaRC::setDirection()
 {
     directionIndicator->setRotation(rotation);
     directionIndicator->setPos(radius, radius);
 }
 
+/**
+ * @brief TODO
+ * 
+ * @return RumbaRC::s 
+ */
 RumbaRC::s RumbaRC::getAtributes()
 {
     RumbaRC::s atr = {
@@ -56,11 +78,20 @@ RumbaRC::s RumbaRC::getAtributes()
     return atr;
 }
 
+/**
+ * @brief TODO
+ * 
+ * @param val 
+ */
 void RumbaRC::changeDetectionLen(int val)
 {
     detectionLen = val;
 }
 
+/**
+ * @brief TODO
+ * 
+ */
 void RumbaRC::stop()
 {
     x = last_x;
@@ -69,6 +100,10 @@ void RumbaRC::stop()
     setPos(x, y);
 }
 
+/**
+ * @brief TODO
+ * 
+ */
 void RumbaRC::move()
 {
     x = last_x;
@@ -80,6 +115,11 @@ void RumbaRC::move()
     setPos(x, y);
 }
 
+/**
+ * @brief TODO
+ * 
+ * @param key 
+ */
 void RumbaRC::testMove(Qt::Key key)
 {
     switch (key)
@@ -111,6 +151,11 @@ void RumbaRC::testMove(Qt::Key key)
     setPos(x, y);
 }
 
+/**
+ * @brief Destroy the Rumba R C:: Rumba R C object
+ * TODO
+ * 
+ */
 RumbaRC::~RumbaRC()
 {
     delete directionIndicator;

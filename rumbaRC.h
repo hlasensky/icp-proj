@@ -20,6 +20,10 @@
 #include <QGraphicsLineItem>
 #include <QGradient>
 
+/**
+ * @brief TODO
+ * 
+ */
 class RumbaRC : public QWidget, public QGraphicsEllipseItem
 {
     Q_OBJECT
