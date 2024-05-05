@@ -5,52 +5,54 @@
  *
  * \section intro_sec Introduction
  *
- *  Tento projekt vytváří hru v prostředí Qt Creatoru, ve které se odehrává simulace s RC roboty, autonomními roboty a překážkami.
+ *  This project creates a game environment in Qt Creator, where simulations with RC rumbas, autonomous rumbas, and obstacles take place.
  *
- *	Typy robotů a jejich chování
+ *	Types of rumbas and their behavior
  *
- *  RC roboti: Jsou to roboti na ovládání, které hráč může aktivně ovládat. Hra umožňuje přepínat mezi různými RC roboty, přičemž aktivní robot je možné ovládat, zatímco ostatní RC roboti jsou neaktivní a stojí na místě.
- *  Autonomní roboti: Tito roboti se pohybují samostatně, bez zásahu hráče. Hra umožňuje měnit různé atributy autonomních robotů, jako je vzdálenost detekce překážek nebo jiných robotů, směr otáčení po detekci překážky nebo jiného robota, a také velikost úhlu, o který se robot otočí.
+ *  RC rumbas: These are remote-controlled rumbas that the player can actively control. The game allows switching between different RC rumbas, with the active rumba controllable while other RC rumbas remain inactive and stationary.
+ *  Autonomous rumbas: These rumbas move independently without player intervention. The game allows changing various attributes of autonomous rumbas, such as obstacle or other rumba detection distance, direction of rotation after obstacle or other rumba detection, and the angle by which the rumba rotates.
  *
- *	Překážky a manipulace s nimi
+ *	Obstacles and manipulation with them
  *
- *  Překážky: Překážky jsou statické objekty na mapě, které brání pohybu robotů. Hra umožňuje umístit překážky na libovolné místo na mapě a měnit jejich šířku a výšku. Překážky lze umístit i na sebe navzájem. Jakmile je překážka umístěna na robotovi, znehybní ho  a nemůže se pohybovat.
+ *  Obstacles: Obstacles are static objects on the map that impede the movement of robots. The game allows placing obstacles anywhere on the map and changing their width and height. Obstacles can also be placed on top of each other. Once an obstacle is placed on a rumba, it immobilizes it and cannot move.
  *
  * \section implement_sec Implementation
  * 
- * Implementation was done with Factory Method which is a design pattern that creates infrastructure for making object from supper class MainWindow.
+ * Implementation was done with the Factory Method design pattern which creates infrastructure for making objects from the superclass MainWindow.
  *
  * \subsection structure 1: Main structure
- *	- Aplikace začíná vytvořením instance třídy QApplication, následuje vytvoření hlavního okna MainWindow, které se zobrazí pomocí metody show(), a nakonec spuštění aplikační smyčky pomocí a.exec(), která udržuje aplikaci aktivní a reaguje na události.
- *	- Konstruktor třídy MainWindow inicializuje UI, nastavuje pohled (view) jako viewport pro graphicsView, připravuje stavy hry a časovač pro periodické *aktualizace scény.
- *	- Uživatel může přidávat roboty a překážky do scény pomocí tlačítek v uživatelském rozhraní. Objekty jsou přidávány pomocí metod setRumbas, setRumbasRC a setObstacles. Po přidání objektů je možné je upravovat kliknutím levým tlačítkem myši.
- *	- RC robot a autonomní robot jsou vytvářeny pomocí konstruktorů tříd RumbaRC a Rumba s nastavením atributů. RC robotovi je také vytvořen směrový indikátor pro lepší orientaci.
- *	- Hlavní smyčka programu: Metoda updateScene() zajišťuje průchod všemi objekty ve scéně a průběžně kontroluje kolize. Pokud kolize nastane, krok se vrátí *pět. Dále se nastavuje aktivní prvek na základě kliknutí myši a barevné označení objektu na červenou.
+ *	- The application begins by creating an instance of the QApplication class, followed by creating the main MainWindow, which is displayed using the show() method, and finally running the application loop using a.exec(), which keeps the application active and responsive to events.
+ *	- The constructor of the MainWindow class initializes the UI, sets the view as the viewport for graphicsView, prepares game states, and a timer for periodic scene updates.
+ *	- Users can add rumbas and obstacles to the scene using buttons in the user interface. Objects are added using the setRumbas, setRumbasRC, and setObstacles methods. After adding objects, they can be modified by clicking with the left mouse button.
+ *	- RC rumbas and autonomous rumbas are created using the constructors of the RumbaRC and Rumba classes with attribute settings. A directional indicator is also created for RC rumbas for better orientation.
+ *	- Main program loop: The updateScene() method traverses all objects in the scene and continuously checks for collisions. If a collision occurs, the step is reverted. Furthermore, the active element is set based on mouse clicks, and objects are color-coded red.
  *
  * \section usage_sec Usage
- *  Pro spuštění aplikace použijte příkaz make run. Po zobrazení okna budete mít přístup k ovládacímu menu na levé straně pro přidání objektů do scény. Objekty se přidávají pomocí tlačítka s šipkou nahoru vedle pole "Přidat/Odebrat", šipka dolů odebere poslední přidaný objekt dané kategorie. Při přidávání autonomního robota můžete nastavit vzdálenost detekce pomocí posuvníku, úhel rotace pomocí spineru a směr otočení pomocí kulatého tlačítka.
- *  Ovládání RC robota je možné pomocí kláves W, A, S, D nebo tlačítek zobrazených na levé straně, na která můžete kliknout levým tlačítkem myši. Překážky lze upravovat také pomocí posuvníku.
- *   Na pravé straně obrazovky jsou tlačítka pro následující akce:
- *	- Quit: Ukončí hru.
- *	- Pause: Pozastaví hru.
- *	- Save: Uloží aktuální stav hry.
- *	- Load: Načte poslední uložený stav hry.
- *	- New Game: Vymaže aktuální hru a zobrazí prázdné hrací pole.
+ *  To launch the application, use the command make run. After the window is displayed, you will have access to the control menu on the left side to add objects to the scene. Objects are added using the button with an upward arrow next to the "Add/Remove" field, and the downward arrow removes the last added object of the respective category. When adding an autonomous rumba, you can set the detection distance using a slider, rotation angle using a spinner, and rotation direction using a circular button.
+ *  Controlling the RC rumba is possible using the keys W, A, S, D or the buttons displayed on the left side, which can be clicked with the left mouse button. Obstacles can also be adjusted using a slider.
+ *   On the right side of the screen, there are buttons for the following actions:
+ *	- Quit: Exits the game.
+ *	- Pause: Pauses the game.
+ *	- Save: Saves the current game state.
+ *	- Load: Loads the last saved game state.
+ *	- New Game: Clears the current game and displays an empty playing field.
  *
- *  V horní liště jsou dvě nabídky:
- *	- Game: Obsahuje tlačítka pro hru (jako na pravé straně).
- *	- Examples: Obsahuje tlačítka pro zobrazení ukázkových her
- *
+ *  In the top bar, there are two menus:
+ *	- Game: Contains buttons for game actions (similar to those on the right side).
+ *	- Examples: Contains buttons for displaying example games.
+ * 
+ * \section concept_sec Conceptual Design
+ * \image html firstLook.png The initial layout design. width=800px
  * \section test_sec Testing
- * \image html stressTest.png Stress testing with more then 500 Rumbas width=800px
+ * \image html stressTest.png Stress testing with more than 500 Rumbas. width=800px
  * 
  * \section flaw_sec Known flaws
- *  \bug When dragging Obstacle you can place it on Rumba and RumbaRC objects and they stay stack under the Object.
+ *  \bug When dragging an Obstacle, you can place it on Rumba and RumbaRC objects, and they remain stacked under the Object.
  * 
- *  \bug When specifically pressed menu buttons it is possible that game will not show until Resume button is pressed. 
- *  Specifically when Pause -> New Game -> Load Game or Examples are pressed in this order. After Resume button click the game shows and play normaly.
+ *  \bug When specifically pressing menu buttons, it is possible that the game will not show until the Resume button is pressed. 
+ *  Specifically when Pause -> New Game -> Load Game or Examples are pressed in this order. After clicking the Resume button, the game shows and plays normally.
  * 
- * \bug When adding objects to scene it is possible that the object would not find place without collisions so it is not going to be added, but spinBox is going to show higher number.
+ * \bug When adding objects to the scene, it is possible that the object would not find a place without collisions, so it is not going to be added, but the spinBox is going to show a higher number.
  *
  * \section biblio_sec Bibliography
  * \cite guru_2014
@@ -59,3 +61,4 @@
  * \subsection step1 Step 1: Opening the box
  *
  */
+
