@@ -20,17 +20,18 @@
  * \section implement_sec Implementation
  * 
  * Implementation was done with the Factory Method design pattern which creates infrastructure for making objects from the superclass MainWindow.
- *
+ * \cite guru2014
+
  * \subsection structure 1: Main structure
  *	- The application begins by creating an instance of the QApplication class, followed by creating the main MainWindow, which is displayed using the show() method, and finally running the application loop using a.exec(), which keeps the application active and responsive to events.
  *	- The constructor of the MainWindow class initializes the UI, sets the view as the viewport for graphicsView, prepares game states, and a timer for periodic scene updates.
- *	- Users can add rumbas and obstacles to the scene using buttons in the user interface. Objects are added using the setRumbas, setRumbasRC, and setObstacles methods. After adding objects, they can be modified by clicking with the left mouse button.
+ *	- Users can add rumbas and obstacles to the scene using buttons in the user interface. Objects are added using the on_numOfRumbas_valueChanged(), on_numOfObstacles_valueChanged(), and on_numOfRumbasRC_valueChanged() methods. After adding objects, they can be modified by clicking with the left mouse button.
  *	- RC rumbas and autonomous rumbas are created using the constructors of the RumbaRC and Rumba classes with attribute settings. A directional indicator is also created for RC rumbas for better orientation.
  *	- Main program loop: The updateScene() method traverses all objects in the scene and continuously checks for collisions. If a collision occurs, the step is reverted. Furthermore, the active element is set based on mouse clicks, and objects are color-coded red.
  *
  * \section usage_sec Usage
  *  To launch the application, use the command make run. After the window is displayed, you will have access to the control menu on the left side to add objects to the scene. Objects are added using the button with an plus next to the "Add/Remove" field, and the minus removes the last added object of the respective category. When adding an autonomous rumba, you can set the detection distance using a slider, rotation angle using a spinner, and rotation direction using a circular button.
- *  Controlling the RC rumba is possible using the keys W, A, S, D or the buttons displayed on the left side, which can be clicked with the left mouse button. Obstacles can also be adjusted using a slider.
+ *  Controlling the RC rumba is possible using the keys W, A, S, D or the buttons displayed on the left side, which can be clicked with the left mouse button. Obstacles can also be adjusted using a slider and if its active it can be draged to the different coordinates using mouse.
  *   On the right side of the screen, there are buttons for the following actions:
  *	- Quit: Exits the game.
  *	- Pause: Pauses the game.
@@ -42,10 +43,12 @@
  *	- Game: Contains buttons for game actions (similar to those on the right side).
  *	- Examples: Contains buttons for displaying example games.
  * 
- * \section concept_sec Conceptual Design
+ * \section design_sec Design
+ *
+ * \subsection concept_sec Conceptual Design
  * \image html firstLook.png The initial layout design. width=600px
  *
- * \section final_sec Final Design
+ * \subsection final_sec Final Design
  * \image html finalLook.png The final layout design. width=600px
  *
  * \section concept_diagram_sec Conceptual diagram
@@ -71,12 +74,7 @@
  * 
  *  \bug When adding objects to the scene, it is possible that the object would not find a place without collisions, so it is not going to be added, but the spinBox is going to show a higher number.
  *
- *  \bug When adding object to the scene, it will automaticly start game time. So it is not possible to presets the game scenario.
- * \section biblio_sec Bibliography
- * \cite guru_2014
- * 
- *
- * \subsection step1 Step 1: Opening the box
- *
+ *  \bug When adding object to the scene, it will automaticly start game time. So it is not possible to presets the game scenario. 
+ *  
  */
 
