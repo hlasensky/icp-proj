@@ -2,7 +2,7 @@
  * @file rumba.h
  * @author Tomáš Hlásenský (xhlase01)
  * @author Michael Babušík (xbabus01)
- * @brief
+ * @brief File containing header of Rumba
  * @version 0.1
  * @date 2024-05-03
  *

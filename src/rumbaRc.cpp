@@ -2,7 +2,7 @@
  * @file rumbaRc.cpp
  * @author Tomáš Hlásenský (xhlase01)
  * @author Michael Babušík (xbabus01)
- * @brief 
+ * @brief File containing implementation of RumbaRC
  * @version 0.1
  * @date 2024-05-03
  * 

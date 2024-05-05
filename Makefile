@@ -1,3 +1,6 @@
+# Tomáš Hlásenský (xhlase01)
+# author Michael Babušík (xbabus01)
+
 DOC := doc
 ZIPFILE := xhlase01-xbabus01.zip
 ZIPFILES := src/* Makefile README.txt Doxyfile 
