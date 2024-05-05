@@ -2,7 +2,7 @@
  * @file statemanager.cpp
  * @author Tomáš Hlásenský (xhlase01)
  * @author Michael Babušík (xbabus01)
- * @brief
+ * @brief File containing implementation of StateManager
  * @version 0.1
  * @date 2024-05-03
  *

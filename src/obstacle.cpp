@@ -1,7 +1,8 @@
 /**
  * @file obstacle.cpp
  * @author Tomáš Hlásenský (xhlase01)
- * @author Michael Babušík (xbabus01) * @brief 
+ * @author Michael Babušík (xbabus01) 
+ * @brief File containing implementation of Obstacle
  * @version 0.1
  * @date 2024-05-03
  * 

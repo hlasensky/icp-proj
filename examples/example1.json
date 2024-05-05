@@ -1,0 +1,218 @@
+{
+    "obstacles": [
+        {
+            "height": 200,
+            "width": 200,
+            "x": 342,
+            "y": 1
+        },
+        {
+            "height": 50,
+            "width": 114,
+            "x": 724,
+            "y": 217
+        },
+        {
+            "height": 50,
+            "width": 115,
+            "x": 52,
+            "y": 220
+        },
+        {
+            "height": 109,
+            "width": 126,
+            "x": 382,
+            "y": 200
+        }
+    ],
+    "rumbas": [
+        {
+            "detectionLen": 30,
+            "direction": true,
+            "last_x": 696.1048454783955,
+            "last_y": 268.2378577363975,
+            "radius": 20,
+            "rotation": -175,
+            "rotationStep": 10,
+            "speed": 5,
+            "x": 691.1238719879368,
+            "y": 267.8020790226592
+        },
+        {
+            "detectionLen": 30,
+            "direction": false,
+            "last_x": 99.4226926703716,
+            "last_y": 49.64535322108512,
+            "radius": 20,
+            "rotation": 39,
+            "rotationStep": 67,
+            "speed": 5,
+            "x": 103.30842247765646,
+            "y": 52.791955176334305
+        },
+        {
+            "detectionLen": 30,
+            "direction": true,
+            "last_x": 31.513882231800267,
+            "last_y": 579.5667938478226,
+            "radius": 20,
+            "rotation": -345,
+            "rotationStep": 10,
+            "speed": 5,
+            "x": 36.34351136324561,
+            "y": 580.8608890733352
+        },
+        {
+            "detectionLen": 39,
+            "direction": false,
+            "last_x": 757.8157086642066,
+            "last_y": 502.7650028301696,
+            "radius": 20,
+            "rotation": 23,
+            "rotationStep": 56,
+            "speed": 5,
+            "x": 762.4182329314688,
+            "y": 504.71865847261597
+        },
+        {
+            "detectionLen": 30,
+            "direction": true,
+            "last_x": 695.6263157537462,
+            "last_y": 407.9938767261856,
+            "radius": 20,
+            "rotation": -75,
+            "rotationStep": 10,
+            "speed": 5,
+            "x": 696.9204109792588,
+            "y": 403.16424759474023
+        },
+        {
+            "detectionLen": 30,
+            "direction": true,
+            "last_x": 748.4077393525644,
+            "last_y": 365.6008005473931,
+            "radius": 20,
+            "rotation": -95,
+            "rotationStep": 10,
+            "speed": 5,
+            "x": 747.9719606388261,
+            "y": 360.61982705693435
+        },
+        {
+            "detectionLen": 30,
+            "direction": true,
+            "last_x": 240.23858822075715,
+            "last_y": 446.7900702330073,
+            "radius": 20,
+            "rotation": -205,
+            "rotationStep": 10,
+            "speed": 5,
+            "x": 235.7070492855739,
+            "y": 448.9031615417108
+        },
+        {
+            "detectionLen": 30,
+            "direction": true,
+            "last_x": 791.2852403204645,
+            "last_y": 318.51250685311334,
+            "radius": 20,
+            "rotation": -95,
+            "rotationStep": 10,
+            "speed": 5,
+            "x": 790.8494616067262,
+            "y": 313.5315333626546
+        },
+        {
+            "detectionLen": 38,
+            "direction": false,
+            "last_x": 652.5780367291375,
+            "last_y": 349.4545001338712,
+            "radius": 20,
+            "rotation": 191,
+            "rotationStep": 71,
+            "speed": 5,
+            "x": 647.6699008118992,
+            "y": 348.5004551569885
+        },
+        {
+            "detectionLen": 30,
+            "direction": true,
+            "last_x": 318.415148585193,
+            "last_y": 576.7214425232809,
+            "radius": 20,
+            "rotation": -5,
+            "rotationStep": 10,
+            "speed": 5,
+            "x": 323.3961220756517,
+            "y": 576.2856638095426
+        },
+        {
+            "detectionLen": 30,
+            "direction": true,
+            "last_x": 275.469828107279,
+            "last_y": 533.9961540140528,
+            "radius": 20,
+            "rotation": -5,
+            "rotationStep": 10,
+            "speed": 5,
+            "x": 280.4508015977377,
+            "y": 533.5603753003145
+        },
+        {
+            "detectionLen": 51,
+            "direction": true,
+            "last_x": 63.856927450233066,
+            "last_y": 399.12806000421176,
+            "radius": 20,
+            "rotation": -169,
+            "rotationStep": 37,
+            "speed": 5,
+            "x": 58.94879153299475,
+            "y": 398.17401502732906
+        },
+        {
+            "detectionLen": 30,
+            "direction": true,
+            "last_x": 835.8949752995366,
+            "last_y": 295.1959179772032,
+            "radius": 20,
+            "rotation": -135,
+            "rotationStep": 10,
+            "speed": 5,
+            "x": 832.3594413936038,
+            "y": 291.6603840712704
+        }
+    ],
+    "rumbasRC": [
+        {
+            "detectionLen": 50,
+            "last_x": 413.8986526690506,
+            "last_y": 419.2555799633497,
+            "radius": 20,
+            "rotation": 270,
+            "speed": 0,
+            "x": 413.8986526690506,
+            "y": 419.2555799633497
+        },
+        {
+            "detectionLen": 50,
+            "last_x": 217.4219501159468,
+            "last_y": 221.7840684726455,
+            "radius": 20,
+            "rotation": -590,
+            "speed": 0,
+            "x": 217.4219501159468,
+            "y": 221.7840684726455
+        },
+        {
+            "detectionLen": 50,
+            "last_x": 604.9569177467113,
+            "last_y": 225.5563024446475,
+            "radius": 20,
+            "rotation": 10,
+            "speed": 0,
+            "x": 604.9569177467113,
+            "y": 225.5563024446475
+        }
+    ]
+}

@@ -2,7 +2,7 @@
  * @file mainwindow.h
  * @author Tomáš Hlásenský (xhlase01)
  * @author Michael Babušík (xbabus01)
- * @brief
+ * @brief File containing header of MainWindow and StateManager
  * @version 0.1
  * @date 2024-05-03
  *
