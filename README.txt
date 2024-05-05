@@ -37,13 +37,15 @@
  *	- Examples: Obsahuje tlačítka pro zobrazení ukázkových her
  *
  * \section test_sec Testing
- * 
+ * \image html stressTest.png Stress testing with more then 500 Rumbas width=800px
  * 
  * \section flaw_sec Known flaws
- *  \bug When holding Obstacle with drag you can place them on Rumba and RumbaRC objects and they stay stack under the Object.
+ *  \bug When dragging Obstacle you can place it on Rumba and RumbaRC objects and they stay stack under the Object.
  * 
  *  \bug When specifically pressed menu buttons it is possible that game will not show until Resume button is pressed. 
  *  Specifically when Pause -> New Game -> Load Game or Examples are pressed in this order. After Resume button click the game shows and play normaly.
+ * 
+ * \bug When adding objects to scene it is possible that the object would not find place without collisions so it is not going to be added, but spinBox is going to show higher number.
  *
  * \section install_sec Installation
  *

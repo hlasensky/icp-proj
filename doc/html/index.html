@@ -87,7 +87,7 @@ $(document).ready(function(){initNavTree('index.html',''); initResizable(); });
 <div class="contents">
 <div class="textblock"><h1><a class="anchor" id="intro_sec"></a>
 Introduction</h1>
-<p>Tento projekt vytváří hru v prostředí Qt Creatoru, ve které se odehrává simulace s RC roboty, autonomními roboty a překážkami.*</p>
+<p>Tento projekt vytváří hru v prostředí Qt Creatoru, ve které se odehrává simulace s RC roboty, autonomními roboty a překážkami.</p>
 <p>Typy robotů a jejich chování</p>
 <p>RC roboti: Jsou to roboti na ovládání, které hráč může aktivně ovládat. Hra umožňuje přepínat mezi různými RC roboty, přičemž aktivní robot je možné ovládat, zatímco ostatní RC roboti jsou neaktivní a stojí na místě. Autonomní roboti: Tito roboti se pohybují samostatně, bez zásahu hráče. Hra umožňuje měnit různé atributy autonomních robotů, jako je vzdálenost detekce překážek nebo jiných robotů, směr otáčení po detekci překážky nebo jiného robota, a také velikost úhlu, o který se robot otočí.</p>
 <p>Překážky a manipulace s nimi</p>
@@ -116,10 +116,17 @@ Usage</h1>
 <li>Game: Obsahuje tlačítka pro hru (jako na pravé straně).</li>
 <li>Examples: Obsahuje tlačítka pro zobrazení ukázkových her</li>
 </ul>
+<h1><a class="anchor" id="test_sec"></a>
+Testing</h1>
+<div class="image">
+<img src="stressTest.png" alt="" width="800px"/>
+<div class="caption">
+Stress testing with more then 500 Rumbas </div></div>
 <h1><a class="anchor" id="flaw_sec"></a>
 Known flaws</h1>
-<dl class="bug"><dt><b><a class="el" href="bug.html#_bug000001">Bug:</a></b></dt><dd>When holding <a class="el" href="classObstacle.html" title="Class representing a Obstacle object. This class inherits from QWidget and QGraphicsRectItem....">Obstacle</a> with drag you can place them on <a class="el" href="classRumba.html" title="Class representing a Rumba object. This class inherits from QWidget and QGraphicsEllipseItem....">Rumba</a> and <a class="el" href="classRumbaRC.html" title="Class representing a RumbaRC object. This class inherits from QWidget and QGraphicsEllipseItem....">RumbaRC</a> objects and they stay stack under the Object.</dd></dl>
+<dl class="bug"><dt><b><a class="el" href="bug.html#_bug000001">Bug:</a></b></dt><dd>When dragging <a class="el" href="classObstacle.html" title="Class representing a Obstacle object. This class inherits from QWidget and QGraphicsRectItem....">Obstacle</a> you can place it on <a class="el" href="classRumba.html" title="Class representing a Rumba object. This class inherits from QWidget and QGraphicsEllipseItem....">Rumba</a> and <a class="el" href="classRumbaRC.html" title="Class representing a RumbaRC object. This class inherits from QWidget and QGraphicsEllipseItem....">RumbaRC</a> objects and they stay stack under the Object.</dd></dl>
 <dl class="bug"><dt><b><a class="el" href="bug.html#_bug000002">Bug:</a></b></dt><dd>When specifically pressed menu buttons it is possible that game will not show until Resume button is pressed. Specifically when Pause -&gt; New Game -&gt; Load Game or Examples are pressed in this order. After Resume button click the game shows and play normaly.</dd></dl>
+<dl class="bug"><dt><b><a class="el" href="bug.html#_bug000003">Bug:</a></b></dt><dd>When adding objects to scene it is possible that the object would not find place without collisions so it is not going to be added, but spinBox is going to show higher number.</dd></dl>
 <h1><a class="anchor" id="install_sec"></a>
 Installation</h1>
 <h2><a class="anchor" id="step1"></a>

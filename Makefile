@@ -3,7 +3,7 @@
 
 DOC := doc
 ZIPFILE := xhlase01-xbabus01.zip
-ZIPFILES := src/* Makefile README.txt Doxyfile 
+ZIPFILES := src/* doc/images/* build/ Makefile README.txt Doxyfile 
 BUILD_DIR := build
 TARGET := icp_v4 
 # Targets
