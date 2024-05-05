@@ -1,5 +1,8 @@
 /*! \mainpage ICP Project Index Page
  *
+ * \author Tomáš Hlásenský (xhlase01)
+ * \author Michael Babušík (xbabus01)
+ *
  * \section intro_sec Introduction
  *
  *  Tento projekt vytváří hru v prostředí Qt Creatoru, ve které se odehrává simulace s RC roboty, autonomními roboty a překážkami.
@@ -14,6 +17,8 @@
  *  Překážky: Překážky jsou statické objekty na mapě, které brání pohybu robotů. Hra umožňuje umístit překážky na libovolné místo na mapě a měnit jejich šířku a výšku. Překážky lze umístit i na sebe navzájem. Jakmile je překážka umístěna na robotovi, znehybní ho  a nemůže se pohybovat.
  *
  * \section implement_sec Implementation
+ * 
+ * Implementation was done with Factory Method which is a design pattern that creates infrastructure for making object from supper class MainWindow.
  *
  * \subsection structure 1: Main structure
  *	- Aplikace začíná vytvořením instance třídy QApplication, následuje vytvoření hlavního okna MainWindow, které se zobrazí pomocí metody show(), a nakonec spuštění aplikační smyčky pomocí a.exec(), která udržuje aplikaci aktivní a reaguje na události.
@@ -47,7 +52,9 @@
  * 
  * \bug When adding objects to scene it is possible that the object would not find place without collisions so it is not going to be added, but spinBox is going to show higher number.
  *
- * \section install_sec Installation
+ * \section biblio_sec Bibliography
+ * \cite guru_2014
+ * 
  *
  * \subsection step1 Step 1: Opening the box
  *
