@@ -146,7 +146,7 @@ MainWindow::~MainWindow()
 }
 
 /**
- * @brief This function deletes all items from arrays rumbas, rumbasRC and obstacles and clears the arrays
+ * @brief This method deletes all items from arrays rumbas, rumbasRC and obstacles and clears the arrays
  *
  */
 void MainWindow::newGame()
@@ -182,7 +182,7 @@ void MainWindow::newGame()
 }
 
 /**
- * @brief This function gets QKeyEvent and check if it's w,a,s,d and passes this information to rumbaRC
+ * @brief This method gets QKeyEvent and check if it's w,a,s,d and passes this information to rumbaRC
  *
  * @param event
  */
@@ -228,13 +228,13 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
 
 /**
  * @brief Updates the scene with rumba movements, collisions, and UI interactions.
- * This function iterates through all rumbas, rumbaRCs (remote controlled rumbas), and obstacles in the scene. It performs the following actions:
+ * This method iterates through all rumbas, rumbaRCs (remote controlled rumbas), and obstacles in the scene. It performs the following actions:
  * - Checks for left mouse button click: If a rumba, rumbaRC, or obstacle is clicked with the left mouse button, it becomes the active item, and the corresponding tab in the UI is switched.
  * - Updates rumba, rumbaRC and obstacle colors: Sets the brush color of all items and the active on (if any) to red.
  * - Updates UI with active item values: If an item is active (rumba, rumbaRC, or obstacle), its attributes are displayed in the corresponding UI elements (detection length, rotation, speed, size sliders, etc.).
- * - Moves rumbas: Calls the testMove function on all rumbas to simulate movement and handle potential collisions. If a collision occurs, the rumba changes direction. This process is repeated for actual movement if no collision is detected during the test move.
- * - Moves rumbaRCs: Calls the testMove function on all rumbaRCs with the last pressed key as input (for remote control). If a collision occurs or the speed is zero, the rumbaRC stops. Otherwise, it moves and checks for collisions again.
- * - Ignores updates during loading: If the loading flag is set, the function exits without updating the scene.
+ * - Moves rumbas: Calls the testMove method on all rumbas to simulate movement and handle potential collisions. If a collision occurs, the rumba changes direction. This process is repeated for actual movement if no collision is detected during the test move.
+ * - Moves rumbaRCs: Calls the testMove method on all rumbaRCs with the last pressed key as input (for remote control). If a collision occurs or the speed is zero, the rumbaRC stops. Otherwise, it moves and checks for collisions again.
+ * - Ignores updates during loading: If the loading flag is set, the method exits without updating the scene.
  */
 void MainWindow::updateScene()
 {
@@ -338,7 +338,7 @@ void MainWindow::updateScene()
 
 /**
  * @brief Checks for collisions between a rumba and other items in the scene.
- * This function uses rumba->collidingItems() to retrieve a list of all items colliding with the rumba. It then checks if the list is empty and returns the corresponding boolean value.
+ * This method uses rumba->collidingItems() to retrieve a list of all items colliding with the rumba. It then checks if the list is empty and returns the corresponding boolean value.
  *
  * @param rumba
  * @return true
@@ -352,7 +352,7 @@ bool MainWindow::CheckCollision(Rumba *rumba)
 
 /**
  * @brief Checks for collisions between a rumbaRC and other items in the scene.
- * This function uses rumbaRC->collidingItems() to retrieve a list of all items colliding with the rumbaRC. It then checks if the list is empty and returns the corresponding boolean value.
+ * This method uses rumbaRC->collidingItems() to retrieve a list of all items colliding with the rumbaRC. It then checks if the list is empty and returns the corresponding boolean value.
  *
  * @param rumbaRC
  * @return true
@@ -366,7 +366,7 @@ bool MainWindow::CheckCollision(RumbaRC *rumbaRC)
 
 /**
  * @brief Checks for collisions between a obstacle and other items in the scene.
- * This function uses obstacle->collidingItems() to retrieve a list of all items colliding with the obstacle. It then checks if the list is empty and returns the corresponding boolean value.
+ * This method uses obstacle->collidingItems() to retrieve a list of all items colliding with the obstacle. It then checks if the list is empty and returns the corresponding boolean value.
  *
  * @param obstacle
  * @return true
@@ -380,8 +380,8 @@ bool MainWindow::CheckCollision(Obstacle *obstacle)
 
 // menu for Rumba class
 /**
- * @brief Slot function connected to the "Number of Rumbas" spin box value change.
- * This function checks for the loading flag and exits if true (prevents updates during loading).
+ * @brief Slot method connected to the "Number of Rumbas" spin box value change.
+ * This method checks for the loading flag and exits if true (prevents updates during loading).
  * If the number of rumbas needs to be increased, it creates new Rumba object within grid created with size of a rumba within the scene boundaries and adds them if no collision occurs.
  * Otherwise, it removes the last rumba and updates the UI and internal list.
  *
@@ -427,7 +427,7 @@ void MainWindow::on_numOfRumbas_valueChanged(int arg1)
 }
 
 /**
- * @brief This function updates the active rumba's detection length value and UI display.
+ * @brief This method updates the active rumba's detection length value and UI display.
  *
  * @param value
  */
@@ -441,7 +441,7 @@ void MainWindow::on_detectionLenSlider_valueChanged(int value)
 }
 
 /**
- * @brief This function updates the active rumba's rotation value and UI display.
+ * @brief This method updates the active rumba's rotation value and UI display.
  *
  * @param value
  */
@@ -455,7 +455,7 @@ void MainWindow::on_dial_valueChanged(int value)
 }
 
 /**
- * @brief This function updates the active rumba's side of rotation.
+ * @brief This method updates the active rumba's side of rotation.
  *
  * @param checked
  */
@@ -470,7 +470,7 @@ void MainWindow::on_radioButton_toggled(bool checked)
 // Menu for Obstacle class
 
 /**
- * @brief This function updates the active obstacle's width value and UI display.
+ * @brief This method updates the active obstacle's width value and UI display.
  *
  * @param value
  */
@@ -484,7 +484,7 @@ void MainWindow::on_obstacleWidthSlider_valueChanged(int value)
 }
 
 /**
- * @brief This function updates the active obstacle's height value and UI display.
+ * @brief This method updates the active obstacle's height value and UI display.
  *
  * @param value
  */
@@ -502,8 +502,8 @@ void MainWindow::on_obstacleHeightSlider_valueChanged(int value)
 }
 
 /**
- * @brief Slot function connected to the "Number of Obstacles" spin box value change.
- * This function checks for the loading flag and exits if true (prevents updates during loading).
+ * @brief Slot method connected to the "Number of Obstacles" spin box value change.
+ * This method checks for the loading flag and exits if true (prevents updates during loading).
  * If the number of obstacles needs to be increased, it creates new Obstacle object within grid created with size of a obstacle within the scene boundaries and adds them if no collision occurs.
  * Otherwise, it removes the last obstacle and updates the UI and internal list.
  *
@@ -555,7 +555,7 @@ void MainWindow::on_numOfObstacles_valueChanged(int arg1)
 // Menu for RumbaRC class
 
 /**
- * @brief This function sets the lastKeyPressed variable to Qt::Key_Up to indicate the "Up" movement for the active RumbaRC.
+ * @brief This method sets the lastKeyPressed variable to Qt::Key_Up to indicate the "Up" movement for the active RumbaRC.
  *
  */
 void MainWindow::on_wKey_clicked()
@@ -568,7 +568,7 @@ void MainWindow::on_wKey_clicked()
 }
 
 /**
- * @brief This function sets the lastKeyPressed variable to Qt::Key_Down to indicate the "Stop" movement for the active RumbaRC.
+ * @brief This method sets the lastKeyPressed variable to Qt::Key_Down to indicate the "Stop" movement for the active RumbaRC.
  *
  */
 void MainWindow::on_sKey_clicked()
@@ -581,7 +581,7 @@ void MainWindow::on_sKey_clicked()
 }
 
 /**
- * @brief This function sets the lastKeyPressed variable to Qt::Key_Left to indicate the "left" movement for the active RumbaRC.
+ * @brief This method sets the lastKeyPressed variable to Qt::Key_Left to indicate the "left" movement for the active RumbaRC.
  *
  */
 void MainWindow::on_aKey_clicked()
@@ -593,7 +593,7 @@ void MainWindow::on_aKey_clicked()
 }
 
 /**
- * @brief This function sets the lastKeyPressed variable to Qt::Key_Right to indicate the "Right" movement for the active RumbaRC.
+ * @brief This method sets the lastKeyPressed variable to Qt::Key_Right to indicate the "Right" movement for the active RumbaRC.
  *
  */
 void MainWindow::on_dKey_clicked()
@@ -605,8 +605,8 @@ void MainWindow::on_dKey_clicked()
 }
 
 /**
- * @brief Slot function connected to the "Number of RumbasRC" spin box value change.
- * This function checks for the loading flag and exits if true (prevents updates during loading).
+ * @brief Slot method connected to the "Number of RumbasRC" spin box value change.
+ * This method checks for the loading flag and exits if true (prevents updates during loading).
  * If the number of rumbasRC needs to be increased, it creates new RumbaRC object within grid created with size of a rumbaRC within the scene boundaries and adds them if no collision occurs.
  * Otherwise, it removes the last rumbaRC and updates the UI and internal list.
  *
@@ -652,8 +652,8 @@ void MainWindow::on_numOfRumbasRC_valueChanged(int arg1)
 }
 
 /**
- * @brief Slot function connected to the "New Game" button click.
- * This function calls the newGame function to reset the game state.
+ * @brief Slot method connected to the "New Game" button click.
+ * This method calls the newGame method to reset the game state.
  */
 void MainWindow::on_newGameBtn_clicked()
 {
@@ -663,8 +663,8 @@ void MainWindow::on_newGameBtn_clicked()
 
 
 /**
- * @brief Slot function connected to the "Pause Game" button click.
- * This function toggles the pause state of the game.
+ * @brief Slot method connected to the "Pause Game" button click.
+ * This method toggles the pause state of the game.
  * It uses timer->start(timeStep) for resuming the game and times->stop() for stopping.
  */
 void MainWindow::on_pauseBtn_clicked()
@@ -686,8 +686,8 @@ void MainWindow::on_pauseBtn_clicked()
 }
 
 /**
- * @brief Slot function connected to the "Quit Game" button click.
- * This function closes the application using QApplication::quit.
+ * @brief Slot method connected to the "Quit Game" button click.
+ * This method closes the application using QApplication::quit.
  */
 void MainWindow::on_quitBtn_clicked()
 {
@@ -698,7 +698,7 @@ void MainWindow::on_quitBtn_clicked()
 
 /**
  * @brief Sets the rumbas in the scene based on a vector of Rumba structs Rumba::s.
- * This function iterates through the provided vector and creates new Rumba objects based on the data. It adds them to the scene and the internal rumbas list.
+ * This method iterates through the provided vector and creates new Rumba objects based on the data. It adds them to the scene and the internal rumbas list.
  *
  * @param rV
  */
@@ -726,7 +726,7 @@ void MainWindow::setRumbas(std::vector<Rumba::s> rV)
 
 /**
  * @brief Sets the rumbasRC in the scene based on a vector of RumbaRC structs RumbaRC::s.
- * This function iterates through the provided vector and creates new RumbaRC objects based on the data. It adds them to the scene and the internal rumbas list.
+ * This method iterates through the provided vector and creates new RumbaRC objects based on the data. It adds them to the scene and the internal rumbas list.
  *
  * @param rcV std::vector<RumbaRC::s>
  */
@@ -752,7 +752,7 @@ void MainWindow::setRumbasRC(std::vector<RumbaRC::s> rcV)
 
 /**
  * @brief Sets the obstacles in the scene based on a vector of Obstacle structs Obstacle::s.
- * This function iterates through the provided vector and creates new Obstacle objects based on the data. It adds them to the scene and the internal obstacles list.
+ * This method iterates through the provided vector and creates new Obstacle objects based on the data. It adds them to the scene and the internal obstacles list.
  *
  * @param oV
  */
@@ -773,7 +773,7 @@ void MainWindow::setObstacles(std::vector<Obstacle::s> oV)
 }
 
 /**
- * @brief Getter function to access the list of Rumba objects in the scene.
+ * @brief Getter method to access the list of Rumba objects in the scene.
  *
  * @return std::vector<Rumba *>
  */
@@ -783,7 +783,7 @@ std::vector<Rumba *> MainWindow::getRumbas()
 }
 
 /**
- * @brief Getter function to access the list of RumbaRC objects in the scene.
+ * @brief Getter method to access the list of RumbaRC objects in the scene.
  *
  * @return std::vector<RumbaRC *>
  */
@@ -793,7 +793,7 @@ std::vector<RumbaRC *> MainWindow::getRumbasRC()
 }
 
 /**
- * @brief Getter function to access the list of Obstacle objects in the scene.
+ * @brief Getter method to access the list of Obstacle objects in the scene.
  *
  * @return std::vector<Obstacle *>
  */
@@ -803,8 +803,8 @@ std::vector<Obstacle *> MainWindow::getObstacles()
 }
 
 /**
- * @brief Slot function connected to the "Load Game" button click.
- * This function calls newGame to reset, sets the loading flag, loads the game state from a JSON file using stateManager->loadStateFromJson, and then clears the loading flag.
+ * @brief Slot method connected to the "Load Game" button click.
+ * This method calls newGame to reset, sets the loading flag, loads the game state from a JSON file using stateManager->loadStateFromJson, and then clears the loading flag.
  *
  */
 void MainWindow::on_loadBtn_clicked()
@@ -817,8 +817,8 @@ void MainWindow::on_loadBtn_clicked()
 }
 
 /**
- * @brief Slot function connected to the "Save Game" button click.
- * This function saves the current game state to a JSON file using stateManager->saveStateToJson.
+ * @brief Slot method connected to the "Save Game" button click.
+ * This method saves the current game state to a JSON file using stateManager->saveStateToJson.
  */
 void MainWindow::on_saveBtn_clicked()
 {
@@ -827,8 +827,8 @@ void MainWindow::on_saveBtn_clicked()
 }
 
 /**
- * @brief Slot function connected to the "Load Game" button click.
- * This function calls newGame to reset, sets the loading flag, loads the game state from a JSON file using stateManager->loadStateFromJson, and then clears the loading flag.
+ * @brief Slot method connected to the "Load Game" button click.
+ * This method calls newGame to reset, sets the loading flag, loads the game state from a JSON file using stateManager->loadStateFromJson, and then clears the loading flag.
  *
  */
 void MainWindow::load_example_one()
@@ -840,8 +840,8 @@ void MainWindow::load_example_one()
     loading = false;
 }
 /**
- * @brief Slot function connected to the "Load Game" button click.
- * This function calls newGame to reset, sets the loading flag, loads the game state from a JSON file using stateManager->loadStateFromJson, and then clears the loading flag.
+ * @brief Slot method connected to the "Load Game" button click.
+ * This method calls newGame to reset, sets the loading flag, loads the game state from a JSON file using stateManager->loadStateFromJson, and then clears the loading flag.
  *
  */
 void MainWindow::load_example_two()
@@ -853,8 +853,8 @@ void MainWindow::load_example_two()
     loading = false;
 }
 /**
- * @brief Slot function connected to the "Load Game" button click.
- * This function calls newGame to reset, sets the loading flag, loads the game state from a JSON file using stateManager->loadStateFromJson, and then clears the loading flag.
+ * @brief Slot method connected to the "Load Game" button click.
+ * This method calls newGame to reset, sets the loading flag, loads the game state from a JSON file using stateManager->loadStateFromJson, and then clears the loading flag.
  *
  */
 void MainWindow::load_example_three()

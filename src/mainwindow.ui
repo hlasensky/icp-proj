@@ -87,7 +87,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>2</number>
     </property>
     <widget class="QWidget" name="tab_2">
      <attribute name="title">
@@ -241,7 +241,14 @@
         </widget>
        </item>
        <item>
-        <widget class="QSpinBox" name="numOfRumbas"/>
+        <widget class="QSpinBox" name="numOfRumbas">
+         <property name="buttonSymbols">
+          <enum>QAbstractSpinBox::PlusMinus</enum>
+         </property>
+         <property name="maximum">
+          <number>99</number>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>
@@ -275,7 +282,11 @@
         </widget>
        </item>
        <item>
-        <widget class="QSpinBox" name="numOfRumbasRC"/>
+        <widget class="QSpinBox" name="numOfRumbasRC">
+         <property name="buttonSymbols">
+          <enum>QAbstractSpinBox::PlusMinus</enum>
+         </property>
+        </widget>
        </item>
        <item>
         <layout class="QGridLayout" name="gridLayout">
@@ -434,7 +445,14 @@
         </widget>
        </item>
        <item>
-        <widget class="QSpinBox" name="numOfObstacles"/>
+        <widget class="QSpinBox" name="numOfObstacles">
+         <property name="readOnly">
+          <bool>false</bool>
+         </property>
+         <property name="buttonSymbols">
+          <enum>QAbstractSpinBox::PlusMinus</enum>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>
