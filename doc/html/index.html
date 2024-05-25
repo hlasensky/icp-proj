@@ -88,54 +88,77 @@ $(document).ready(function(){initNavTree('index.html',''); initResizable(); });
 <div class="textblock"><dl class="section author"><dt>Author</dt><dd>Tomáš Hlásenský (xhlase01) </dd>
 <dd>
 Michael Babušík (xbabus01)</dd></dl>
+<p>We had lot of meetings were we discussed our project plans and goals. Functionality was done mainly together, when we used one week sprints. </p>
 <h1><a class="anchor" id="intro_sec"></a>
 Introduction</h1>
-<p>Tento projekt vytváří hru v prostředí Qt Creatoru, ve které se odehrává simulace s RC roboty, autonomními roboty a překážkami.</p>
-<p>Typy robotů a jejich chování</p>
-<p>RC roboti: Jsou to roboti na ovládání, které hráč může aktivně ovládat. Hra umožňuje přepínat mezi různými RC roboty, přičemž aktivní robot je možné ovládat, zatímco ostatní RC roboti jsou neaktivní a stojí na místě. Autonomní roboti: Tito roboti se pohybují samostatně, bez zásahu hráče. Hra umožňuje měnit různé atributy autonomních robotů, jako je vzdálenost detekce překážek nebo jiných robotů, směr otáčení po detekci překážky nebo jiného robota, a také velikost úhlu, o který se robot otočí.</p>
-<p>Překážky a manipulace s nimi</p>
-<p>Překážky: Překážky jsou statické objekty na mapě, které brání pohybu robotů. Hra umožňuje umístit překážky na libovolné místo na mapě a měnit jejich šířku a výšku. Překážky lze umístit i na sebe navzájem. Jakmile je překážka umístěna na robotovi, znehybní ho a nemůže se pohybovat.</p>
+<p>This project creates a game environment in Qt Creator, where simulations with RC rumbas, autonomous rumbas, and obstacles take place.</p>
+<p>Types of rumbas and their behavior</p>
+<p>RC rumbas: These are remote-controlled rumbas that the player can actively control. The game allows switching between different RC rumbas, with the active rumba controllable while other RC rumbas remain inactive and stationary. Autonomous rumbas: These rumbas move independently without player intervention. The game allows changing various attributes of autonomous rumbas, such as obstacle or other rumba detection distance, direction of rotation after obstacle or other rumba detection, and the angle by which the rumba rotates.</p>
+<p>Obstacles and manipulation with them</p>
+<p>Obstacles: Obstacles are static objects on the map that impede the movement of robots. The game allows placing obstacles anywhere on the map and changing their width and height. Obstacles can also be placed on top of each other. Once an obstacle is placed on a rumba, it immobilizes it and cannot move.</p>
 <h1><a class="anchor" id="implement_sec"></a>
 Implementation</h1>
-<p>Implementation was done with Factory Method which is a design pattern that creates infrastructure for making object from supper class <a class="el" href="classMainWindow.html" title="The main window class for the application.">MainWindow</a>.</p>
+<p>Implementation was done with the Factory Method design pattern which creates infrastructure for making objects from the superclass <a class="el" href="classMainWindow.html" title="The main window class for the application.">MainWindow</a>. <b>[guru2014]</b></p>
 <h2><a class="anchor" id="structure"></a>
 1: Main structure</h2>
 <ul>
-<li>Aplikace začíná vytvořením instance třídy QApplication, následuje vytvoření hlavního okna <a class="el" href="classMainWindow.html" title="The main window class for the application.">MainWindow</a>, které se zobrazí pomocí metody show(), a nakonec spuštění aplikační smyčky pomocí a.exec(), která udržuje aplikaci aktivní a reaguje na události.</li>
-<li>Konstruktor třídy <a class="el" href="classMainWindow.html" title="The main window class for the application.">MainWindow</a> inicializuje UI, nastavuje pohled (view) jako viewport pro graphicsView, připravuje stavy hry a časovač pro periodické *aktualizace scény.</li>
-<li>Uživatel může přidávat roboty a překážky do scény pomocí tlačítek v uživatelském rozhraní. Objekty jsou přidávány pomocí metod setRumbas, setRumbasRC a setObstacles. Po přidání objektů je možné je upravovat kliknutím levým tlačítkem myši.</li>
-<li>RC robot a autonomní robot jsou vytvářeny pomocí konstruktorů tříd <a class="el" href="classRumbaRC.html" title="Class representing a RumbaRC object. This class inherits from QWidget and QGraphicsEllipseItem....">RumbaRC</a> a <a class="el" href="classRumba.html" title="Class representing a Rumba object. This class inherits from QWidget and QGraphicsEllipseItem....">Rumba</a> s nastavením atributů. RC robotovi je také vytvořen směrový indikátor pro lepší orientaci.</li>
-<li>Hlavní smyčka programu: Metoda updateScene() zajišťuje průchod všemi objekty ve scéně a průběžně kontroluje kolize. Pokud kolize nastane, krok se vrátí *pět. Dále se nastavuje aktivní prvek na základě kliknutí myši a barevné označení objektu na červenou.</li>
+<li>The application begins by creating an instance of the QApplication class, followed by creating the main <a class="el" href="classMainWindow.html" title="The main window class for the application.">MainWindow</a>, which is displayed using the show() method, and finally running the application loop using a.exec(), which keeps the application active and responsive to events.</li>
+<li>The constructor of the <a class="el" href="classMainWindow.html" title="The main window class for the application.">MainWindow</a> class initializes the UI, sets the view as the viewport for graphicsView, prepares game states, and a timer for periodic scene updates.</li>
+<li>Users can add rumbas and obstacles to the scene using buttons in the user interface. Objects are added using the on_numOfRumbas_valueChanged(), on_numOfObstacles_valueChanged(), and on_numOfRumbasRC_valueChanged() methods. After adding objects, they can be modified by clicking with the left mouse button.</li>
+<li>RC rumbas and autonomous rumbas are created using the constructors of the <a class="el" href="classRumbaRC.html" title="Class representing a RumbaRC object. This class inherits from QWidget and QGraphicsEllipseItem....">RumbaRC</a> and <a class="el" href="classRumba.html" title="Class representing a Rumba object. This class inherits from QWidget and QGraphicsEllipseItem....">Rumba</a> classes with attribute settings. A directional indicator is also created for RC rumbas for better orientation.</li>
+<li>Main program loop: The updateScene() method traverses all objects in the scene and continuously checks for collisions. If a collision occurs, the step is reverted. Furthermore, the active element is set based on mouse clicks, and objects are color-coded red.</li>
 </ul>
 <h1><a class="anchor" id="usage_sec"></a>
 Usage</h1>
-<p>Pro spuštění aplikace použijte příkaz make run. Po zobrazení okna budete mít přístup k ovládacímu menu na levé straně pro přidání objektů do scény. Objekty se přidávají pomocí tlačítka s šipkou nahoru vedle pole "Přidat/Odebrat", šipka dolů odebere poslední přidaný objekt dané kategorie. Při přidávání autonomního robota můžete nastavit vzdálenost detekce pomocí posuvníku, úhel rotace pomocí spineru a směr otočení pomocí kulatého tlačítka. Ovládání RC robota je možné pomocí kláves W, A, S, D nebo tlačítek zobrazených na levé straně, na která můžete kliknout levým tlačítkem myši. Překážky lze upravovat také pomocí posuvníku. Na pravé straně obrazovky jsou tlačítka pro následující akce:</p><ul>
-<li>Quit: Ukončí hru.</li>
-<li>Pause: Pozastaví hru.</li>
-<li>Save: Uloží aktuální stav hry.</li>
-<li>Load: Načte poslední uložený stav hry.</li>
-<li>New Game: Vymaže aktuální hru a zobrazí prázdné hrací pole.</li>
+<p>To launch the application, use the command make run. After the window is displayed, you will have access to the control menu on the left side to add objects to the scene. Objects are added using the button with an plus next to the "Add/Remove" field, and the minus removes the last added object of the respective category. When adding an autonomous rumba, you can set the detection distance using a slider, rotation angle using a spinner, and rotation direction using a circular button. Controlling the RC rumba is possible using the keys W, A, S, D or the buttons displayed on the left side, which can be clicked with the left mouse button. Obstacles can also be adjusted using a slider and if its active it can be dragged to the different coordinates using mouse. On the right side of the screen, there are buttons for the following actions:</p><ul>
+<li>Quit: Exits the game.</li>
+<li>Pause: Pauses the game.</li>
+<li>Save: Saves the current game state.</li>
+<li>Load: Loads the last saved game state.</li>
+<li>New Game: Clears the current game and displays an empty playing field.</li>
 </ul>
-<p>V horní liště jsou dvě nabídky:</p><ul>
-<li>Game: Obsahuje tlačítka pro hru (jako na pravé straně).</li>
-<li>Examples: Obsahuje tlačítka pro zobrazení ukázkových her</li>
+<p>In the top bar, there are two menus:</p><ul>
+<li>Game: Contains buttons for game actions (similar to those on the right side).</li>
+<li>Examples: Contains buttons for displaying example games.</li>
 </ul>
+<h1><a class="anchor" id="design_sec"></a>
+Design</h1>
+<h2><a class="anchor" id="concept_sec"></a>
+Conceptual Design</h2>
+<div class="image">
+<img src="firstLook.png" alt="" width="600px"/>
+<div class="caption">
+The initial layout design. </div></div>
+<h2><a class="anchor" id="final_sec"></a>
+Final Design</h2>
+<div class="image">
+<img src="finalLook.png" alt="" width="600px"/>
+<div class="caption">
+The final layout design. </div></div>
+<h1><a class="anchor" id="concept_diagram_sec"></a>
+Conceptual diagram</h1>
+<div class="image">
+<img src="Conceptual_diagram.png" alt="" width="800px"/>
+</div>
 <h1><a class="anchor" id="test_sec"></a>
 Testing</h1>
+<p>Testing was done mainly by playing with ui and trying to break the program. This lead to discovering bugs in bug section. <a class="el" href="index.html#flaw_sec">Known flaws</a> Some testing was done also in area of stressing the program as image bellow. When more then 500 Rumbas was added to scene and the program was left to run and by miracle everything ran smoothly.</p>
 <div class="image">
 <img src="stressTest.png" alt="" width="800px"/>
 <div class="caption">
-Stress testing with more then 500 Rumbas </div></div>
+Stress testing with more than 500 Rumbas. </div></div>
+<h1><a class="anchor" id="dream_sec"></a>
+What could have been done</h1>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000001">Todo:</a></b></dt><dd>Deleting active Rumbas, RumbasRC and Obstacles.</dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000002">Todo:</a></b></dt><dd>Saving more games and could rewrite it or load specific game. Now is possible to save only one game and load it.</dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000003">Todo:</a></b></dt><dd>Drag and drop Rumbas and RumbasRC.</dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000004">Todo:</a></b></dt><dd>Also we thought about some interactive element like shooting others Rumbas and count their score.</dd></dl>
 <h1><a class="anchor" id="flaw_sec"></a>
 Known flaws</h1>
-<dl class="bug"><dt><b><a class="el" href="bug.html#_bug000001">Bug:</a></b></dt><dd>When dragging <a class="el" href="classObstacle.html" title="Class representing a Obstacle object. This class inherits from QWidget and QGraphicsRectItem....">Obstacle</a> you can place it on <a class="el" href="classRumba.html" title="Class representing a Rumba object. This class inherits from QWidget and QGraphicsEllipseItem....">Rumba</a> and <a class="el" href="classRumbaRC.html" title="Class representing a RumbaRC object. This class inherits from QWidget and QGraphicsEllipseItem....">RumbaRC</a> objects and they stay stack under the Object.</dd></dl>
-<dl class="bug"><dt><b><a class="el" href="bug.html#_bug000002">Bug:</a></b></dt><dd>When specifically pressed menu buttons it is possible that game will not show until Resume button is pressed. Specifically when Pause -&gt; New Game -&gt; Load Game or Examples are pressed in this order. After Resume button click the game shows and play normaly.</dd></dl>
-<dl class="bug"><dt><b><a class="el" href="bug.html#_bug000003">Bug:</a></b></dt><dd>When adding objects to scene it is possible that the object would not find place without collisions so it is not going to be added, but spinBox is going to show higher number.</dd></dl>
-<h1><a class="anchor" id="biblio_sec"></a>
-Bibliography</h1>
-<p><b>[guru_2014]</b></p>
-<h2><a class="anchor" id="step1"></a>
-Step 1: Opening the box</h2>
+<dl class="bug"><dt><b><a class="el" href="bug.html#_bug000001">Bug:</a></b></dt><dd>When dragging an <a class="el" href="classObstacle.html" title="Class representing a Obstacle object. This class inherits from QWidget and QGraphicsRectItem....">Obstacle</a>, you can place it on <a class="el" href="classRumba.html" title="Class representing a Rumba object. This class inherits from QWidget and QGraphicsEllipseItem....">Rumba</a> and <a class="el" href="classRumbaRC.html" title="Class representing a RumbaRC object. This class inherits from QWidget and QGraphicsEllipseItem....">RumbaRC</a> objects, and they remain stacked under the Object.</dd></dl>
+<dl class="bug"><dt><b><a class="el" href="bug.html#_bug000002">Bug:</a></b></dt><dd>When specifically pressing menu buttons, it is possible that the game will not show until the Resume button is pressed. Specifically when Pause -&gt; New Game -&gt; Load Game or Examples are pressed in this order. After clicking the Resume button, the game shows and plays normally.</dd></dl>
+<dl class="bug"><dt><b><a class="el" href="bug.html#_bug000003">Bug:</a></b></dt><dd>When adding objects to the scene, it is possible that the object would not find a place without collisions, so it is not going to be added, but the spinBox is going to show a higher number.</dd></dl>
+<dl class="bug"><dt><b><a class="el" href="bug.html#_bug000004">Bug:</a></b></dt><dd>When adding object to the scene, it will automatically start game time. So it is not possible to presets the game scenario.</dd></dl>
 </div></div><!-- PageDoc -->
 </div><!-- contents -->
 </div><!-- doc-content -->

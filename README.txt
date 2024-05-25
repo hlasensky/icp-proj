@@ -3,7 +3,7 @@
  * \author Tomáš Hlásenský (xhlase01)
  * \author Michael Babušík (xbabus01)
  *
- * We had lot of meetings were we discussed our project plans and goals. Functionality was done mainly together, when we used one week sprints.  
+ * We had lot of meetings were we discussed our project plans and goals. Functionality was done mainly together, when we used one week sprints.
  * \section intro_sec Introduction
  *
  *  This project creates a game environment in Qt Creator, where simulations with RC rumbas, autonomous rumbas, and obstacles take place.
@@ -18,7 +18,7 @@
  *  Obstacles: Obstacles are static objects on the map that impede the movement of robots. The game allows placing obstacles anywhere on the map and changing their width and height. Obstacles can also be placed on top of each other. Once an obstacle is placed on a rumba, it immobilizes it and cannot move.
  *
  * \section implement_sec Implementation
- * 
+ *
  * Implementation was done with the Factory Method design pattern which creates infrastructure for making objects from the superclass MainWindow.
  * \cite guru2014
 
@@ -31,7 +31,7 @@
  *
  * \section usage_sec Usage
  *  To launch the application, use the command make run. After the window is displayed, you will have access to the control menu on the left side to add objects to the scene. Objects are added using the button with an plus next to the "Add/Remove" field, and the minus removes the last added object of the respective category. When adding an autonomous rumba, you can set the detection distance using a slider, rotation angle using a spinner, and rotation direction using a circular button.
- *  Controlling the RC rumba is possible using the keys W, A, S, D or the buttons displayed on the left side, which can be clicked with the left mouse button. Obstacles can also be adjusted using a slider and if its active it can be draged to the different coordinates using mouse.
+ *  Controlling the RC rumba is possible using the keys W, A, S, D or the buttons displayed on the left side, which can be clicked with the left mouse button. Obstacles can also be adjusted using a slider and if its active it can be dragged to the different coordinates using mouse.
  *   On the right side of the screen, there are buttons for the following actions:
  *	- Quit: Exits the game.
  *	- Pause: Pauses the game.
@@ -42,7 +42,7 @@
  *  In the top bar, there are two menus:
  *	- Game: Contains buttons for game actions (similar to those on the right side).
  *	- Examples: Contains buttons for displaying example games.
- * 
+ *
  * \section design_sec Design
  *
  * \subsection concept_sec Conceptual Design
@@ -55,26 +55,30 @@
  * \image html Conceptual_diagram.png width=800px
  *
  * \section test_sec Testing
+ * 
+ * Testing was done mainly by playing with ui and trying to break the program. This lead to discovering bugs in bug section.
+ * \ref flaw_sec
+ * Some testing was done also in area of stressing the program as image bellow. When more then 500 Rumbas was added to scene and the program was left to run and by miracle everything ran smoothly.
+ * 
  * \image html stressTest.png Stress testing with more than 500 Rumbas. width=800px
  *
  * \section dream_sec What could have been done
- * \todo Deleting active Rumbas, RumbasRC and Obstacles. 
+ * \todo Deleting active Rumbas, RumbasRC and Obstacles.
  *
  * \todo Saving more games and could rewrite it or load specific game. Now is possible to save only one game and load it.
  *
  * \todo Drag and drop Rumbas and RumbasRC.
  *
- * \todo Also we thought about some interactive element like shooting others Rumbas and count their score. 
- * 
+ * \todo Also we thought about some interactive element like shooting others Rumbas and count their score.
+ *
  * \section flaw_sec Known flaws
  *  \bug When dragging an Obstacle, you can place it on Rumba and RumbaRC objects, and they remain stacked under the Object.
- * 
- *  \bug When specifically pressing menu buttons, it is possible that the game will not show until the Resume button is pressed. 
+ *
+ *  \bug When specifically pressing menu buttons, it is possible that the game will not show until the Resume button is pressed.
  *  Specifically when Pause -> New Game -> Load Game or Examples are pressed in this order. After clicking the Resume button, the game shows and plays normally.
- * 
+ *
  *  \bug When adding objects to the scene, it is possible that the object would not find a place without collisions, so it is not going to be added, but the spinBox is going to show a higher number.
  *
- *  \bug When adding object to the scene, it will automaticly start game time. So it is not possible to presets the game scenario. 
- *  
+ *  \bug When adding object to the scene, it will automatically start game time. So it is not possible to presets the game scenario.
+ *
  */
-

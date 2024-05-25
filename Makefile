@@ -4,7 +4,7 @@
 DOC_HTML := doc/html
 DOC_LATEX := doc/latex
 ZIPFILE := xhlase01-xbabus01.zip
-ZIPFILES := src/* doc/images/* Makefile README.txt Doxyfile 
+ZIPFILES := src/* doc/images/* doc/bibliography/* Makefile README.txt conceptual_implementation.pdf Doxyfile 
 BUILD_DIR := build
 TARGET := icp_v4 
 
