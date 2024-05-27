@@ -516,10 +516,10 @@ void MainWindow::on_numOfObstacles_valueChanged(int arg1)
 
     if (obstacles.size() < static_cast<unsigned long long>(arg1))
     {
-        //int width = randomGen->bounded(ui->obstacleWidthSlider->minimum(), ui->obstacleWidthSlider->maximum());
-        //int height = randomGen->bounded(ui->obstacleHeightSlider->minimum(), ui->obstacleHeightSlider->maximum());
-        int width = 50;
-        int height = 50;
+        int width = randomGen->bounded(ui->obstacleWidthSlider->minimum(), ui->obstacleWidthSlider->maximum());
+        int height = randomGen->bounded(ui->obstacleHeightSlider->minimum(), ui->obstacleHeightSlider->maximum());
+        //int width = 50;
+        // int height = 50;
         for (int hI = 0; hI < ui->graphicsView->height(); hI = (hI + width))
         {
             for (int wI = 0; wI < ui->graphicsView->width(); wI = (wI + height))
